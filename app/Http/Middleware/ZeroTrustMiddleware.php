@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Throwable;
 use Illuminate\Http\Request;
 use App\Helpers\Classes\Aes256Gcm;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,24 +13,37 @@ class ZeroTrustMiddleware
     /**
      * Handle an incoming request.
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if($request->has('envelope')){
-            $decodedPayload = base64_decode($request->envelope, true);
-            $payload = json_decode($decodedPayload, true, 512, JSON_THROW_ON_ERROR);
+        if (!$request->has('seal')) return $next($request);
 
-            // $iv = base64_decode($payload->iv, true);
-            // $tag = base64_decode($payload->tag, true);
-            // $value = base64_decode($payload->value, true);
+        try {
+            $encryptedData = $request->seal;
+            // Validate base64 format
+            if (!preg_match('/^[a-zA-Z0-9\/\r\n+]*={0,2}$/', $encryptedData)) return response(null, 422);
+            // Validate and decode base64
+            $base64DecodedData = base64_decode($encryptedData, true);
+            if ($base64DecodedData === false || base64_encode($base64DecodedData) !== $encryptedData) return response(null, 422);
+            // Decrypt and parse payload
+            $decryptedData = Aes256Gcm::decrypt($encryptedData);
+            $requestPayload = json_decode($decryptedData, true);
+            // Get and validate public key from metadata
+            $requestMetadata = json_decode($base64DecodedData, true);
+            if (!isset($requestMetadata['public_key'])) return response(null, 422);
+            // Add public key to payload
+            $requestPayload['client_public_key'] = $requestMetadata['public_key'];
+            // Validate final payload
+            if (json_last_error() !== JSON_ERROR_NONE || !is_array($requestPayload)) return response(null, 422);
 
-            // $dec = openssl_decrypt($value, 'aes-256-gcm', $sharedKey, OPENSSL_RAW_DATA, $iv, $tag);
-            return response()->json(['server' => Aes256Gcm::encrypt(Aes256Gcm::decrypt($request->envelope), $payload['public_key'])]);
-            // $request->merge([
-            //     'input_alpha' => Aes256Gcm::decrypt($request->envelope, $sharedKey),
-            // ]);
+            $request->merge($requestPayload);
+
+            return $next($request);
+        } catch (Throwable $error) {
+            return response($error->getMessage(), 500);
         }
-        return $next($request);
     }
 }

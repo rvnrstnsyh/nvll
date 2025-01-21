@@ -16,7 +16,7 @@ declare global {
   /**
    * Interface representing the encrypted payload structure
    */
-  interface CryptographyPayload {
+  interface Aes256GcmPayload {
     /**
      * Base64 encoded Initialization Vector
      */

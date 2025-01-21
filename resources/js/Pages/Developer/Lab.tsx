@@ -22,7 +22,7 @@ export default function Lab({ status }: Props) {
   const [processing, setProcessing] = useState<boolean>(false)
   const { data, setData, errors, setError } = useForm<LabValidationSchema>({ input_alpha: '' })
 
-  const submit: FormEventHandler = async (event) => {
+  const submit: FormEventHandler = async (event: React.FormEvent<Element>) => {
     event.preventDefault()
 
     const validation: z.SafeParseReturnType<typeof data, LabValidationSchema> = formSchema.safeParse(data)

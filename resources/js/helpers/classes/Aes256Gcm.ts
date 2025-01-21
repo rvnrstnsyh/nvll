@@ -11,10 +11,10 @@ interface ParamValidationCheck {
 }
 
 /**
- * Enhanced Cryptography class for secure key exchange, encryption, and authentication
- * Implements X25519 key exchange, AES-256-GCM encryption, and HMAC-SHA-512 authentication
+ * Enhanced Aes256Gcm class for secure key exchange, encryption, and authentication
+ * Implements X25519 key exchange, AES-256-GCM encryption, and HMAC-SHA-512 authentication.
  */
-export default class Cryptography {
+export default class Aes256Gcm {
   // Immutable configuration for cryptographic parameters
   private static readonly CONFIG: { [key: string]: number } = Object.freeze({
     KEY_LENGTH: 32, // 256-bit key
@@ -28,13 +28,13 @@ export default class Cryptography {
   private clientPrivateKey: Uint8Array | null = null
 
   /**
-   * Securely initializes the cryptography instance by decoding the server public key from the
+   * Securely initializes the Aes256Gcm instance by decoding the server public key from the
    * `VITE_APP_PUBLIC_KEY` environment variable. The key is expected to be a Base64-encoded string
    * prefixed with "base64:". If the key is not provided or is invalid, an error is thrown.
    */
   constructor() {
     try {
-      // Securely decode server public key from environment variable
+      // Securely decode server public key from environment variable.
       this.serverPublicKey = new Uint8Array(
         atob((import.meta.env.VITE_APP_PUBLIC_KEY as string).substring(7))
           .split('')
@@ -47,6 +47,7 @@ export default class Cryptography {
 
   /**
    * Validates the parameters for the {@link encrypt} method.
+   *
    * @param value The value to be encrypted, which must be a non-empty Uint8Array.
    * @param publicKey The public key to use for encryption, which must be a Uint8Array of length {@link CONFIG.KEY_LENGTH}.
    * @param hmacKey The HMAC key to use for authentication, which must be a Uint8Array of length at least {@link CONFIG.KEY_LENGTH}.
@@ -59,11 +60,11 @@ export default class Cryptography {
         message: 'Invalid value: Must be a non-empty Uint8Array'
       },
       {
-        condition: publicKey && (!(publicKey instanceof Uint8Array) || publicKey.length !== Cryptography.CONFIG.KEY_LENGTH),
+        condition: publicKey && (!(publicKey instanceof Uint8Array) || publicKey.length !== Aes256Gcm.CONFIG.KEY_LENGTH),
         message: 'Invalid public key'
       },
       {
-        condition: hmacKey && (!(hmacKey instanceof Uint8Array) || hmacKey.length < Cryptography.CONFIG.KEY_LENGTH),
+        condition: hmacKey && (!(hmacKey instanceof Uint8Array) || hmacKey.length < Aes256Gcm.CONFIG.KEY_LENGTH),
         message: 'Invalid HMAC key'
       },
       {
@@ -77,6 +78,7 @@ export default class Cryptography {
 
   /**
    * Validates the parameters for the {@link decrypt} method.
+   *
    * @throws {Error} If any of the parameters are invalid.
    * @param encryptedPayload The encrypted payload to be decrypted, which must be a non-empty string.
    * @param publicKey The public key to use for decryption, which must be a Uint8Array of length {@link CONFIG.KEY_LENGTH}.
@@ -90,11 +92,11 @@ export default class Cryptography {
         message: 'Invalid encrypted payload'
       },
       {
-        condition: publicKey && (!(publicKey instanceof Uint8Array) || publicKey.length !== Cryptography.CONFIG.KEY_LENGTH),
+        condition: publicKey && (!(publicKey instanceof Uint8Array) || publicKey.length !== Aes256Gcm.CONFIG.KEY_LENGTH),
         message: 'Invalid public key'
       },
       {
-        condition: hmacKey && (!(hmacKey instanceof Uint8Array) || hmacKey.length < Cryptography.CONFIG.KEY_LENGTH),
+        condition: hmacKey && (!(hmacKey instanceof Uint8Array) || hmacKey.length < Aes256Gcm.CONFIG.KEY_LENGTH),
         message: 'Invalid HMAC key'
       },
       {
@@ -112,13 +114,14 @@ export default class Cryptography {
 
   /**
    * Validates the payload of a decrypted message.
+   *
    * @throws {Error} If any of the required keys are missing or empty.
    * @param payload The decrypted payload to be validated.
    */
-  private validatePayload(payload: CryptographyPayload): void {
-    const requiredKeys: (keyof CryptographyPayload)[] = ['iv', 'tag', 'value', 'public_key', 'issued_at', 'mac']
+  private validatePayload(payload: Aes256GcmPayload): void {
+    const requiredKeys: (keyof Aes256GcmPayload)[] = ['iv', 'tag', 'value', 'public_key', 'issued_at', 'mac']
     // Check for missing or empty keys
-    const missingKeys: (keyof CryptographyPayload)[] = requiredKeys.filter(
+    const missingKeys: (keyof Aes256GcmPayload)[] = requiredKeys.filter(
       (key) => !payload[key] || (typeof payload[key] === 'string' && payload[key].length === 0)
     )
 
@@ -127,6 +130,7 @@ export default class Cryptography {
 
   /**
    * Determines if the client private key is initialized.
+   *
    * @returns {boolean} `true` if the key is initialized, `false` otherwise.
    */
   public isInitialized(): boolean {
@@ -135,12 +139,13 @@ export default class Cryptography {
 
   /**
    * Imports a client private key.
-   * @param {Uint8Array} buffer The private key to be imported, which must be a Uint8Array of length
+   *
+   * @param {Uint8Array} buffer The private key to be imported, which must be a Uint8Array of length.
    * {@link CONFIG.KEY_LENGTH}.
    * @throws {Error} If the buffer is invalid.
    */
   public importPrivateKey(buffer: Uint8Array): void {
-    if (!buffer || !(buffer instanceof Uint8Array) || buffer.length !== Cryptography.CONFIG.KEY_LENGTH) {
+    if (!buffer || !(buffer instanceof Uint8Array) || buffer.length !== Aes256Gcm.CONFIG.KEY_LENGTH) {
       throw new Error('Invalid private key')
     }
     this.clientPrivateKey = buffer
@@ -148,6 +153,7 @@ export default class Cryptography {
 
   /**
    * Exports the client private key as a Uint8Array.
+   *
    * @returns {Uint8Array} The client private key as a Uint8Array.
    * @throws {Error} If the client private key is not initialized.
    */
@@ -160,11 +166,12 @@ export default class Cryptography {
 
   /**
    * Rotates the client private key by generating a new one.
+   *
    * @throws {Error} If the key rotation fails.
    */
   public rotateKeys(): void {
     try {
-      this.clientPrivateKey = sodium.randombytes_buf(Cryptography.CONFIG.KEY_LENGTH)
+      this.clientPrivateKey = sodium.randombytes_buf(Aes256Gcm.CONFIG.KEY_LENGTH)
     } catch (error) {
       throw new Error(`Key rotation failed: ${error instanceof Error ? error.message : 'Unknown error'}`)
     }
@@ -172,6 +179,7 @@ export default class Cryptography {
 
   /**
    * Encrypts a value with AES-256-GCM and authenticates it with HMAC-SHA-512.
+   *
    * @param value The value to be encrypted, which must be a Uint8Array.
    * @param publicKey The public key to use for encryption, which must be a Uint8Array of length {@link CONFIG.KEY_LENGTH}.
    * @param hmacKey The HMAC key to use for authentication, which must be a Uint8Array of length at least {@link CONFIG.KEY_LENGTH}.
@@ -182,28 +190,28 @@ export default class Cryptography {
     // Validate parameters first
     this.validateEncryptionParams(value, publicKey, hmacKey)
     try {
-      await sodium.ready // Ensure sodium is fully initialized
+      await sodium.ready // Ensure sodium is fully initialized.
 
       const recipientPublicKey: string = publicKey ? sodium.to_hex(publicKey) : sodium.to_hex(this.serverPublicKey)
-      // Compute shared key with enhanced type conversion
+      // Compute shared key with enhanced type conversion.
       const sharedKey: Uint8Array = x25519.scalarMult(sodium.to_hex(this.clientPrivateKey!), recipientPublicKey)
-      // Enhanced key derivation (BLAKE2b)
-      const finalKey: Uint8Array = sodium.crypto_generichash(Cryptography.CONFIG.KEY_LENGTH, sharedKey)
-      // Generate cryptographically secure IV
-      const iv: Uint8Array = sodium.randombytes_buf(Cryptography.CONFIG.IV_LENGTH)
-      // Encrypt with AES-256-GCM
+      // Enhanced key derivation (BLAKE2b).
+      const finalKey: Uint8Array = sodium.crypto_generichash(Aes256Gcm.CONFIG.KEY_LENGTH, sharedKey)
+      // Generate cryptographically secure IV.
+      const iv: Uint8Array = sodium.randombytes_buf(Aes256Gcm.CONFIG.IV_LENGTH)
+      // Encrypt with AES-256-GCM.
       const encryptedContent: Uint8Array = await gcm(finalKey, iv).encrypt(value)
-      // Prepare payload
-      const payload: CryptographyPayload = {
-        iv: sodium.to_base64(iv, Cryptography.CONFIG.BASE64_VARIANT),
-        tag: sodium.to_base64(encryptedContent.subarray(-Cryptography.CONFIG.TAG_LENGTH), Cryptography.CONFIG.BASE64_VARIANT),
-        value: sodium.to_base64(encryptedContent.subarray(0, -Cryptography.CONFIG.TAG_LENGTH), Cryptography.CONFIG.BASE64_VARIANT),
-        public_key: sodium.to_base64(x25519.scalarMultBase(sodium.to_hex(this.clientPrivateKey!)), Cryptography.CONFIG.BASE64_VARIANT),
+      // Prepare payload.
+      const payload: Aes256GcmPayload = {
+        iv: sodium.to_base64(iv, Aes256Gcm.CONFIG.BASE64_VARIANT),
+        tag: sodium.to_base64(encryptedContent.subarray(-Aes256Gcm.CONFIG.TAG_LENGTH), Aes256Gcm.CONFIG.BASE64_VARIANT),
+        value: sodium.to_base64(encryptedContent.subarray(0, -Aes256Gcm.CONFIG.TAG_LENGTH), Aes256Gcm.CONFIG.BASE64_VARIANT),
+        public_key: sodium.to_base64(x25519.scalarMultBase(sodium.to_hex(this.clientPrivateKey!)), Aes256Gcm.CONFIG.BASE64_VARIANT),
         issued_at: Math.trunc(Date.now() / 1000),
         mac: ''
       }
-      // Compute HMAC with secure JSON serialization
-      const payloadForHmac: Omit<CryptographyPayload, 'mac'> = {
+      // Compute HMAC with secure JSON serialization.
+      const payloadForHmac: Omit<Aes256GcmPayload, 'mac'> = {
         iv: payload.iv,
         tag: payload.tag,
         value: payload.value,
@@ -212,8 +220,8 @@ export default class Cryptography {
       }
       const hmacValue: Uint8Array = hmac(sha512, hmacKey || finalKey, sodium.from_string(JSON.stringify(payloadForHmac)))
       // Set MAC
-      payload.mac = sodium.to_base64(hmacValue, Cryptography.CONFIG.BASE64_VARIANT)
-      // Return encrypted payload as Base64-encoded string
+      payload.mac = sodium.to_base64(hmacValue, Aes256Gcm.CONFIG.BASE64_VARIANT)
+      // Return encrypted payload as Base64-encoded string.
       return btoa(JSON.stringify(payload))
     } catch (error) {
       throw new Error(`Encryption failed: ${error instanceof Error ? error.message : 'Unknown error'}`)
@@ -222,6 +230,7 @@ export default class Cryptography {
 
   /**
    * Decrypts a value with AES-256-GCM and verifies its authenticity with HMAC-SHA-512.
+   *
    * @param encryptedPayload The encrypted value to be decrypted, which must be a Base64-encoded string.
    * @param publicKey The public key to use for decryption, which must be a Uint8Array of length {@link CONFIG.KEY_LENGTH}.
    * @param hmacKey The HMAC key to use for authentication, which must be a Uint8Array of length at least {@link CONFIG.KEY_LENGTH}.
@@ -230,29 +239,29 @@ export default class Cryptography {
    * @throws {Error} If the decryption or authentication fails.
    */
   public async decrypt(encryptedPayload: string, publicKey?: Uint8Array, hmacKey?: Uint8Array, maxAge?: number): Promise<Uint8Array> {
-    // Validate parameters first
+    // Validate parameters first.
     this.validateDecryptionParams(encryptedPayload, publicKey, hmacKey, maxAge)
     try {
-      await sodium.ready // Ensure sodium is fully initialized
+      await sodium.ready // Ensure sodium is fully initialized.
 
-      // Decode payload with error handling
-      const decodedPayload: CryptographyPayload = JSON.parse(atob(encryptedPayload))
-      // Validate payload structure
+      // Decode payload with error handling.
+      const decodedPayload: Aes256GcmPayload = JSON.parse(atob(encryptedPayload))
+      // Validate payload structure.
       this.validatePayload(decodedPayload)
-      // Check payload age with configurable max age
+      // Check payload age with configurable max age.
       const currentTime: number = Math.trunc(Date.now() / 1000)
-      const maxAgeLimit: number = maxAge || Cryptography.CONFIG.DEFAULT_MAX_AGE
+      const maxAgeLimit: number = maxAge || Aes256Gcm.CONFIG.DEFAULT_MAX_AGE
 
       if (currentTime - decodedPayload.issued_at > maxAgeLimit) throw new Error('Encrypted payload has expired')
 
-      // Compute shared key
+      // Compute shared key.
       const senderPublicKey: string = publicKey ? sodium.to_hex(publicKey) : sodium.to_hex(this.serverPublicKey)
-      // Compute shared key with enhanced type conversion
+      // Compute shared key with enhanced type conversion.
       const sharedKey: Uint8Array = x25519.scalarMult(sodium.to_hex(this.clientPrivateKey!), senderPublicKey)
-      // Enhanced key derivation (BLAKE2b)
-      const finalKey: Uint8Array = sodium.crypto_generichash(Cryptography.CONFIG.KEY_LENGTH, sharedKey)
-      // Verify HMAC with payload components
-      const payloadForHmac: Omit<CryptographyPayload, 'mac'> = {
+      // Enhanced key derivation (BLAKE2b).
+      const finalKey: Uint8Array = sodium.crypto_generichash(Aes256Gcm.CONFIG.KEY_LENGTH, sharedKey)
+      // Verify HMAC with payload components.
+      const payloadForHmac: Omit<Aes256GcmPayload, 'mac'> = {
         iv: decodedPayload.iv,
         tag: decodedPayload.tag,
         value: decodedPayload.value,
@@ -260,18 +269,18 @@ export default class Cryptography {
         issued_at: decodedPayload.issued_at
       }
       const computedHmac: Uint8Array = hmac(sha512, hmacKey || finalKey, sodium.from_string(JSON.stringify(payloadForHmac)))
-      // Decode MAC and perform timing-safe comparison
-      const providedMac: Uint8Array = sodium.from_base64(decodedPayload.mac, Cryptography.CONFIG.BASE64_VARIANT)
+      // Decode MAC and perform timing-safe comparison.
+      const providedMac: Uint8Array = sodium.from_base64(decodedPayload.mac, Aes256Gcm.CONFIG.BASE64_VARIANT)
 
       if (sodium.compare(computedHmac, providedMac) !== 0) throw new Error('Authentication failed')
 
-      // Decode and combine components
-      const iv: Uint8Array = sodium.from_base64(decodedPayload.iv, Cryptography.CONFIG.BASE64_VARIANT)
-      const tag: Uint8Array = sodium.from_base64(decodedPayload.tag, Cryptography.CONFIG.BASE64_VARIANT)
-      const cipherText: Uint8Array = sodium.from_base64(decodedPayload.value, Cryptography.CONFIG.BASE64_VARIANT)
-      // Combine cipher text and authentication tag
+      // Decode and combine components.
+      const iv: Uint8Array = sodium.from_base64(decodedPayload.iv, Aes256Gcm.CONFIG.BASE64_VARIANT)
+      const tag: Uint8Array = sodium.from_base64(decodedPayload.tag, Aes256Gcm.CONFIG.BASE64_VARIANT)
+      const cipherText: Uint8Array = sodium.from_base64(decodedPayload.value, Aes256Gcm.CONFIG.BASE64_VARIANT)
+      // Combine cipher text and authentication tag.
       const encryptedContent: Uint8Array = new Uint8Array([...cipherText, ...tag])
-      // Decrypt the payload
+      // Decrypt the payload.
       return await gcm(finalKey, iv).decrypt(encryptedContent)
     } catch (error) {
       throw new Error(`Decryption failed: ${error instanceof Error ? error.message : 'Unknown error'}`)

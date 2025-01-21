@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Developer;
 
+use App\Helpers\Classes\Aes256Gcm;
 use Inertia\Inertia;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Developer\LabRequest;
@@ -32,14 +33,22 @@ class LabController extends Controller
         $valid = $request->validated();
         $invalid = array_diff_key($request->all(), $valid);
 
-        return response()->json([
+        if (isset($valid['client_public_key'])) unset($valid['client_public_key']);
+
+        $payload = [
             'success' => true,
             'payload' => [
                 'valid' => $valid,
                 'invalid' => $invalid
             ],
             'received_at' => time()
-        ], 200);
+        ];
+
+        if ($request->has('client_public_key')) {
+            return response(Aes256Gcm::encrypt($payload, $request->client_public_key), 200);
+        } else {
+            return response()->json($payload, 200);
+        }
     }
 
     /**
