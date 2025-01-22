@@ -8,12 +8,15 @@ import Stepper from '@/Components/Stepper'
 import TextInput from '@/Components/TextInput'
 import TogglePassword from '@/Components/TogglePassword'
 import GuestLayout from '@/Layouts/GuestLayout'
+import axios from 'axios'
 
-import { Head, Link, useForm } from '@inertiajs/react'
+import { useZeroTrust } from '@/Context/ZeroTrust'
+import { Head, Link, router, useForm } from '@inertiajs/react'
+import { utf8ToBytes } from '@noble/ciphers/utils'
 import { FormEventHandler, useState } from 'react'
 import { z } from 'zod'
 
-const passwordRules = z
+const passwordRules: z.ZodString = z
   .string()
   .trim()
   .min(8, { message: 'Password must be at least 8 characters long.' })
@@ -39,14 +42,15 @@ type SignUpValidationSchema = z.infer<typeof formSchema>
 
 export default function SignUp() {
   const steps = [{ name: 'Account', description: 'Info' }, { name: 'Choose', description: 'Username' }, { name: 'Email Verification' }]
-  const [TaCandPP, setTaCandPP] = useState(false) // Terms and Conditions and Privacy Policy
-  const { data, setData, post, processing, errors, reset, setError } = useForm({
+  const { Aes } = useZeroTrust()
+  const [TaCandPP, setTaCandPP] = useState<boolean>(false) // Terms and Conditions and Privacy Policy.
+  const { data, setData, processing, errors, reset, setError } = useForm({
     name: '',
     email: '',
     password: '',
     password_confirmation: ''
   })
-  const strongPasswordOptions = {
+  const strongPasswordOptions: { [key: string]: string | number } = {
     target: '#hs-sign-up-password',
     hints: '#hs-sign-up-password-hints',
     minLength: 8,
@@ -61,25 +65,31 @@ export default function SignUp() {
       'mx-1'
     ].join(' ')
   }
-  const submit: FormEventHandler = (event) => {
+  const submit: FormEventHandler = async (event: React.FormEvent<Element>) => {
     event.preventDefault()
+
     const validation: z.SafeParseReturnType<typeof data, SignUpValidationSchema> = formSchema.safeParse(data)
     if (!validation.success) {
-      // Clear previous errors that are no longer present in current validation
+      // Clear previous errors that are no longer present in current validation.
       Object.keys(errors).forEach((key: string) => {
         if (!validation.error.errors.some((error) => error.path[0] === key)) setError(key as keyof typeof errors, '')
       })
-      // Set new validation errors
-      validation.error.errors.forEach((error) => {
+      // Set new validation errors.
+      validation.error.errors.forEach((error: z.ZodIssue) => {
         const key = error.path[0] as keyof typeof data
         setError(key, error.message)
       })
       return
     }
-    post(route('sign-up.store'), {
-      onFinish: () => reset('password', 'password_confirmation'),
-      onError: () => reset('password', 'password_confirmation')
-    })
+
+    const headers: { [key: string]: string } = { 'Content-Type': 'application/json' }
+    const seal: string = await Aes.encrypt(utf8ToBytes(JSON.stringify(data)))
+    await axios
+      .post(route('sign-up.store'), { seal }, { headers })
+      .then((response) => {
+        if (response.status === 201) router.visit(route('choose-username.create'), { method: 'get' })
+      })
+      .catch((_error) => reset('password', 'password_confirmation'))
   }
 
   return (
@@ -98,7 +108,7 @@ export default function SignUp() {
             autoComplete="name"
             isFocused={true}
             onChange={(event) => setData('name', event.target.value)}
-            placeholder="e.g. Satoshi Nakamoto"
+            placeholder="e.g. Tokyo Hiroshima"
           />
           <InputError message={errors.name} className="mt-2" />
         </div>

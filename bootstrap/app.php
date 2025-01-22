@@ -19,6 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->validateCsrfTokens(except: ['api/*']);
         $middleware->trimStrings(except: ['password', 'password_confirmation', 'current_password']);
         $middleware->alias([
+            'zerotrust' => App\Http\Middleware\ZeroTrustMiddleware::class,
             'developer' => App\Http\Middleware\DeveloperMiddleware::class,
             'abilities' => Laravel\Sanctum\Http\Middleware\CheckAbilities::class,
             'ability' => Laravel\Sanctum\Http\Middleware\CheckForAnyAbility::class

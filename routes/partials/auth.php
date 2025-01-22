@@ -7,6 +7,7 @@ Route::middleware('guest')->group(function () {
         ->name('sign-up.create');
 
     Route::post('sign-up', [App\Http\Controllers\Auth\SignUpUserController::class, 'store'])
+        ->middleware('zerotrust')
         ->name('sign-up.store');
 
     Route::get('sign-in', [App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'create'])
