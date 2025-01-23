@@ -32,7 +32,7 @@ const formSchema: z.ZodType = z
       .trim()
       .min(3, { message: 'Name must be at least 3 characters long.' })
       .max(255, { message: 'Name must be at most 255 characters long.' }),
-    email: z.string().trim().email({ message: 'The email field is required or invalid.' }),
+    email: z.string().trim().email({ message: 'The email field must be a valid email address.' }),
     password: passwordRules,
     password_confirmation: passwordRules
   })
@@ -92,9 +92,11 @@ export default function SignUp() {
         if (response.status === 201) router.visit(route('choose-username.create'), { method: 'get' })
       })
       .catch((error) => {
-        for (const [key, value] of Object.entries(error.response.data.errors)) {
-          setError(key as keyof typeof data, (value as string[])[0])
-        }
+        if (error.response.data.errors) {
+          for (const [key, value] of Object.entries(error.response.data.errors)) {
+            setError(key as keyof typeof data, (value as string[])[0])
+          }
+        } else setError('name', error.response.data.message)
         reset('password', 'password_confirmation')
         setProcessing(false)
       })

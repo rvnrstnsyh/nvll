@@ -20,7 +20,7 @@ interface Props {
 }
 
 const formSchema: z.ZodType = z.object({
-  email: z.string().trim().email({ message: 'The email field is required or invalid.' }),
+  email: z.string().trim().email({ message: 'The email field must be a valid email address.' }),
   password: z
     .string()
     .min(8, { message: 'Password must be at least 8 characters long.' })
@@ -68,9 +68,11 @@ export default function SignIn({ status, canResetPassword }: Props) {
         if (response.status === 200) router.visit(route('dashboard.create'), { method: 'get' })
       })
       .catch((error) => {
-        for (const [key, value] of Object.entries(error.response.data.errors)) {
-          setError(key as keyof typeof data, (value as string[])[0])
-        }
+        if (error.response.data.errors) {
+          for (const [key, value] of Object.entries(error.response.data.errors)) {
+            setError(key as keyof typeof data, (value as string[])[0])
+          }
+        } else setError('email', error.response.data.message)
         reset('password')
         setProcessing(false)
       })

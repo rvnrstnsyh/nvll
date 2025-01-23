@@ -55,9 +55,11 @@ export default function ChooseUsername({ username }: { username?: string }) {
         if (response.status === 201) router.visit(route('verification.notice'), { method: 'get' })
       })
       .catch((error) => {
-        for (const [key, value] of Object.entries(error.response.data.errors)) {
-          setError(key as keyof typeof data, (value as string[])[0])
-        }
+        if (error.response.data.errors) {
+          for (const [key, value] of Object.entries(error.response.data.errors)) {
+            setError(key as keyof typeof data, (value as string[])[0])
+          }
+        } else setError('username', error.response.data.message)
         setProcessing(false)
       })
   }
