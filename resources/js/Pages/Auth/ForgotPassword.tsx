@@ -4,35 +4,60 @@ import InputLabel from '@/Components/InputLabel'
 import PrimaryButton from '@/Components/PrimaryButton'
 import TextInput from '@/Components/TextInput'
 import GuestLayout from '@/Layouts/GuestLayout'
+import axios from 'axios'
 
+import { useZeroTrust } from '@/Context/ZeroTrust'
 import { Head, Link, useForm } from '@inertiajs/react'
-import { FormEventHandler } from 'react'
+import { utf8ToBytes } from '@noble/ciphers/utils'
+import { FormEventHandler, useState } from 'react'
 import { z } from 'zod'
 
-const formSchema: z.ZodType = z.object({ email: z.string().trim().email({ message: 'The email field is required or invalid.' }) })
+const formSchema: z.ZodType = z.object({ email: z.string().trim().email({ message: 'The email field must be a valid email address.' }) })
 
 type ForgotPasswordValidationSchema = z.infer<typeof formSchema>
 
-export default function ForgotPassword({ status }: { status?: string }) {
-  const { data, setData, post, processing, errors, setError } = useForm({
+export default function ForgotPassword() {
+  const [processing, setProcessing] = useState<boolean>(false)
+  const [status, setStatus] = useState<string>('')
+  const { Aes } = useZeroTrust()
+  const { data, setData, errors, setError } = useForm({
     email: ''
   })
-  const submit: FormEventHandler = (event) => {
+  const submit: FormEventHandler = async (event: React.FormEvent<Element>) => {
     event.preventDefault()
+    setProcessing(true)
+
     const validation: z.SafeParseReturnType<typeof data, ForgotPasswordValidationSchema> = formSchema.safeParse(data)
     if (!validation.success) {
-      // Clear previous errors that are no longer present in current validation
-      Object.keys(errors).forEach((key: string) => {
+      // Clear previous errors that are no longer present in current validation.
+      Object.keys(errors).forEach((key: string): void => {
         if (!validation.error.errors.some((error) => error.path[0] === key)) setError(key as keyof typeof errors, '')
       })
-      // Set new validation errors
-      validation.error.errors.forEach((error) => {
+      // Set new validation errors.
+      validation.error.errors.forEach((error): void => {
         const key = error.path[0] as keyof typeof data
         setError(key, error.message)
       })
-      return
+      return setProcessing(false)
     }
-    post(route('forgot-password.store'))
+
+    const headers: { [key: string]: string } = { Accept: 'application/json', 'Content-Type': 'application/json' }
+    const seal: string = await Aes.encrypt(utf8ToBytes(JSON.stringify(data)))
+    await axios
+      .post(route('forgot-password.store'), { seal }, { headers })
+      .then((response) => {
+        if (response.status === 200) setStatus(response.data.status)
+        setProcessing(false)
+      })
+      .catch((error) => {
+        setStatus('')
+        if (error.response.data.errors) {
+          for (const [key, value] of Object.entries(error.response.data.errors)) {
+            setError(key as keyof typeof data, (value as string[])[0])
+          }
+        } else setError('email', error.response.data.message)
+        setProcessing(false)
+      })
   }
 
   return (
