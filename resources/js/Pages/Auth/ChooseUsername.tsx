@@ -5,9 +5,12 @@ import PrimaryButton from '@/Components/PrimaryButton'
 import Stepper from '@/Components/Stepper'
 import TextInput from '@/Components/TextInput'
 import GuestLayout from '@/Layouts/GuestLayout'
+import axios from 'axios'
 
-import { Head, Link, useForm } from '@inertiajs/react'
-import { FormEventHandler } from 'react'
+import { useZeroTrust } from '@/Context/ZeroTrust'
+import { Head, Link, router, useForm } from '@inertiajs/react'
+import { utf8ToBytes } from '@noble/ciphers/utils'
+import { FormEventHandler, useState } from 'react'
 import { z } from 'zod'
 
 const formSchema: z.ZodType = z.object({
@@ -23,23 +26,39 @@ type ChooseUsernameValidationSchema = z.infer<typeof formSchema>
 
 export default function ChooseUsername({ username }: { username?: string }) {
   const steps = [{ name: 'Account', description: 'Info' }, { name: 'Choose', description: 'Username' }, { name: 'Email Verification' }]
-  const { data, setData, post, processing, errors, setError } = useForm({ username: username || '' })
-  const submit: FormEventHandler = (event) => {
+  const [processing, setProcessing] = useState<boolean>(false)
+  const { Aes } = useZeroTrust()
+  const { data, setData, errors, setError } = useForm({ username: username || '' })
+  const submit: FormEventHandler = async (event: React.FormEvent<Element>) => {
     event.preventDefault()
+    setProcessing(true)
+
     const validation: z.SafeParseReturnType<typeof data, ChooseUsernameValidationSchema> = formSchema.safeParse(data)
     if (!validation.success) {
-      // Clear previous errors that are no longer present in current validation
+      // Clear previous errors that are no longer present in current validation.
       Object.keys(errors).forEach((key: string) => {
         if (!validation.error.errors.some((error) => error.path[0] === key)) setError(key as keyof typeof errors, '')
       })
-      // Set new validation errors
+      // Set new validation errors.
       validation.error.errors.forEach((error) => {
         const key = error.path[0] as keyof typeof data
         setError(key, error.message)
       })
       return
     }
-    post(route('choose-username.store'))
+    const headers: { [key: string]: string } = { 'Content-Type': 'application/json' }
+    const seal: string = await Aes.encrypt(utf8ToBytes(JSON.stringify(data)))
+    await axios
+      .post(route('choose-username.store'), { seal }, { headers })
+      .then((response) => {
+        if (response.status === 201) router.visit(route('verification.notice'), { method: 'get' })
+      })
+      .catch((error) => {
+        for (const [key, value] of Object.entries(error.response.data.errors)) {
+          setError(key as keyof typeof data, (value as string[])[0])
+        }
+        setProcessing(false)
+      })
   }
 
   return (

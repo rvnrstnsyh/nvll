@@ -51,7 +51,7 @@ class ChooseUsernameController extends Controller
 
         if ($preferences->exists()) {
             if ($preferences->value('username') === $request->username) {
-                return redirect(route('verification.notice', absolute: false));
+                return response(null, 201);
             }
             $request->validate(['username' => 'unique:preferences,username']);
             $preferences->update(['username' => $request->username]);
@@ -60,7 +60,7 @@ class ChooseUsernameController extends Controller
             $preferences->create(['username' => $request->username]);
             event(new Registered($user));
         }
-        return redirect(route('verification.notice', absolute: false));
+        return response(null, 201);
     }
 
     /**

@@ -35,6 +35,7 @@ Route::middleware('auth:web')->group(function () {
         ->name('choose-username.create');
 
     Route::post('choose-username', [App\Http\Controllers\Auth\ChooseUsernameController::class, 'store'])
+        ->middleware('zerotrust')
         ->name('choose-username.store');
 
     Route::get('verify-email', [App\Http\Controllers\Auth\EmailVerificationPromptController::class, 'create'])
