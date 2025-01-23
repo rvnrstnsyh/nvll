@@ -42,9 +42,10 @@ type SignUpValidationSchema = z.infer<typeof formSchema>
 
 export default function SignUp() {
   const steps = [{ name: 'Account', description: 'Info' }, { name: 'Choose', description: 'Username' }, { name: 'Email Verification' }]
+  const [processing, setProcessing] = useState<boolean>(false)
   const { Aes } = useZeroTrust()
   const [TaCandPP, setTaCandPP] = useState<boolean>(false) // Terms and Conditions and Privacy Policy.
-  const { data, setData, processing, errors, reset, setError } = useForm({
+  const { data, setData, errors, reset, setError } = useForm({
     name: '',
     email: '',
     password: '',
@@ -67,19 +68,20 @@ export default function SignUp() {
   }
   const submit: FormEventHandler = async (event: React.FormEvent<Element>) => {
     event.preventDefault()
+    setProcessing(true)
 
     const validation: z.SafeParseReturnType<typeof data, SignUpValidationSchema> = formSchema.safeParse(data)
     if (!validation.success) {
       // Clear previous errors that are no longer present in current validation.
-      Object.keys(errors).forEach((key: string) => {
+      Object.keys(errors).forEach((key: string): void => {
         if (!validation.error.errors.some((error) => error.path[0] === key)) setError(key as keyof typeof errors, '')
       })
       // Set new validation errors.
-      validation.error.errors.forEach((error: z.ZodIssue) => {
+      validation.error.errors.forEach((error: z.ZodIssue): void => {
         const key = error.path[0] as keyof typeof data
         setError(key, error.message)
       })
-      return
+      return setProcessing(false)
     }
 
     const headers: { [key: string]: string } = { 'Content-Type': 'application/json' }
@@ -89,7 +91,13 @@ export default function SignUp() {
       .then((response) => {
         if (response.status === 201) router.visit(route('choose-username.create'), { method: 'get' })
       })
-      .catch((_error) => reset('password', 'password_confirmation'))
+      .catch((error) => {
+        for (const [key, value] of Object.entries(error.response.data.errors)) {
+          setError(key as keyof typeof data, (value as string[])[0])
+        }
+        reset('password', 'password_confirmation')
+        setProcessing(false)
+      })
   }
 
   return (

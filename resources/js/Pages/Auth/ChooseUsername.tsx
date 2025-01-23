@@ -36,16 +36,17 @@ export default function ChooseUsername({ username }: { username?: string }) {
     const validation: z.SafeParseReturnType<typeof data, ChooseUsernameValidationSchema> = formSchema.safeParse(data)
     if (!validation.success) {
       // Clear previous errors that are no longer present in current validation.
-      Object.keys(errors).forEach((key: string) => {
+      Object.keys(errors).forEach((key: string): void => {
         if (!validation.error.errors.some((error) => error.path[0] === key)) setError(key as keyof typeof errors, '')
       })
       // Set new validation errors.
-      validation.error.errors.forEach((error) => {
+      validation.error.errors.forEach((error): void => {
         const key = error.path[0] as keyof typeof data
         setError(key, error.message)
       })
-      return
+      return setProcessing(false)
     }
+
     const headers: { [key: string]: string } = { 'Content-Type': 'application/json' }
     const seal: string = await Aes.encrypt(utf8ToBytes(JSON.stringify(data)))
     await axios
