@@ -37,7 +37,6 @@ export default class Aes256Gcm {
     try {
       const rawKey: string = import.meta.env.VITE_APP_PUBLIC_KEY as string
       if (!rawKey || !rawKey.startsWith('base64:')) throw new Error('Invalid server public key format')
-
       // Enhanced key decoding with validation.
       const decodedKey: Uint8Array<ArrayBuffer> = new Uint8Array(
         atob(rawKey.substring(7))
@@ -155,8 +154,9 @@ export default class Aes256Gcm {
 
     // Validate base64 encoded fields
     const base64Fields: (keyof Aes256GcmPayload)[] = ['iv', 'tag', 'value', 'public_key', 'mac']
-    base64Fields.forEach((field: keyof Aes256GcmPayload) => {
+    base64Fields.forEach(async (field: keyof Aes256GcmPayload) => {
       try {
+        await sodium.ready
         const decoded: Uint8Array = sodium.from_base64(String(payload[field]), Aes256Gcm.CONFIG.BASE64_VARIANT)
         if (!decoded || !(decoded instanceof Uint8Array)) {
           throw new Error(`Invalid base64 encoding for ${field}`)
@@ -205,8 +205,9 @@ export default class Aes256Gcm {
    * Use this method to periodically rotate the client private key.
    * This method will throw an error if the private key generation fails.
    */
-  public rotateKeys(): void {
+  public async rotateKeys(): Promise<void> {
     try {
+      await sodium.ready
       this.clientPrivateKey = sodium.randombytes_buf(Aes256Gcm.CONFIG.KEY_LENGTH)
     } catch (error) {
       throw new Error(`Key rotation failed: ${error instanceof Error ? error.message : 'Unknown error'}`)

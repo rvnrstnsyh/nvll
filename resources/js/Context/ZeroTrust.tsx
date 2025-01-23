@@ -25,11 +25,11 @@ export const ZeroTrustProvider: React.FC<{ children: React.ReactNode }> = ({ chi
      * Initializes the Aes256Gcm instance by rotating its keys.
      * Logs a warning if key rotation fails.
      *
-     * @returns {void} A promise that resolves when the keys are rotated.
+     * @returns {Promise<void>} A promise that resolves when the keys are rotated.
      */
-    const initialize = (): void => {
+    const initialize = async (): Promise<void> => {
       try {
-        Aes.rotateKeys()
+        await Aes.rotateKeys()
       } catch (error) {
         // eslint-disable-next-line no-console
         console.warn('ZeroTrust failed to rotate Aes256Gcm keys:', (error as Error).message)
@@ -51,7 +51,7 @@ export const ZeroTrustProvider: React.FC<{ children: React.ReactNode }> = ({ chi
 export const useZeroTrust = (): contextType => {
   const context: contextType | undefined = useContext(ZeroTrustContext)
   if (context === undefined) {
-    throw new Error('useZeroTrust() hook must be used within a ZeroTrustProvider')
+    throw new Error('useZeroTrust() hook must be used within a ZeroTrustProvider.')
   }
   return context
 }
