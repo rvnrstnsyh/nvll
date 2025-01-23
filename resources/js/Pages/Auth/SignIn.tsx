@@ -6,8 +6,11 @@ import PrimaryButton from '@/Components/PrimaryButton'
 import TextInput from '@/Components/TextInput'
 import TogglePassword from '@/Components/TogglePassword'
 import GuestLayout from '@/Layouts/GuestLayout'
+import axios from 'axios'
 
-import { Head, Link, useForm } from '@inertiajs/react'
+import { useZeroTrust } from '@/Context/ZeroTrust'
+import { Head, Link, router, useForm } from '@inertiajs/react'
+import { utf8ToBytes } from '@noble/ciphers/utils'
 import { FormEventHandler, useState } from 'react'
 import { z } from 'zod'
 
@@ -31,31 +34,46 @@ const formSchema: z.ZodType = z.object({
 type SignInValidationSchema = z.infer<typeof formSchema>
 
 export default function SignIn({ status, canResetPassword }: Props) {
-  const [rememberNotice, setRememberNotice] = useState(false)
-  const { data, setData, post, processing, errors, reset, setError } = useForm({
+  const [processing, setProcessing] = useState<boolean>(false)
+  const { Aes } = useZeroTrust()
+  const [rememberNotice, setRememberNotice] = useState<boolean>(false)
+  const { data, setData, errors, reset, setError } = useForm({
     email: '',
     password: '',
     remember: false
   })
-  const submit: FormEventHandler = (event) => {
+  const submit: FormEventHandler = async (event: React.FormEvent<Element>) => {
     event.preventDefault()
+    setProcessing(true)
+
     const validation: z.SafeParseReturnType<typeof data, SignInValidationSchema> = formSchema.safeParse(data)
     if (!validation.success) {
-      // Clear previous errors that are no longer present in current validation
-      Object.keys(errors).forEach((key: string) => {
+      // Clear previous errors that are no longer present in current validation.
+      Object.keys(errors).forEach((key: string): void => {
         if (!validation.error.errors.some((error) => error.path[0] === key)) setError(key as keyof typeof errors, '')
       })
-      // Set new validation errors
-      validation.error.errors.forEach((error) => {
+      // Set new validation errors.
+      validation.error.errors.forEach((error): void => {
         const key = error.path[0] as keyof typeof data
         setError(key, error.message)
       })
-      return
+      return setProcessing(false)
     }
-    post(route('sign-in.store'), {
-      onFinish: () => reset('password'),
-      onError: () => reset('password')
-    })
+
+    const headers: { [key: string]: string } = { 'Content-Type': 'application/json' }
+    const seal: string = await Aes.encrypt(utf8ToBytes(JSON.stringify(data)))
+    await axios
+      .post(route('sign-in.store'), { seal }, { headers })
+      .then((response) => {
+        if (response.status === 200) router.visit(route('dashboard.create'), { method: 'get' })
+      })
+      .catch((error) => {
+        for (const [key, value] of Object.entries(error.response.data.errors)) {
+          setError(key as keyof typeof data, (value as string[])[0])
+        }
+        reset('password')
+        setProcessing(false)
+      })
   }
 
   return (

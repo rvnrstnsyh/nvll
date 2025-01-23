@@ -27,12 +27,12 @@ class AuthenticatedSessionController extends Controller
     /**
      * Handle an incoming authentication request.
      */
-    public function store(SignInRequest $request): RedirectResponse
+    public function store(SignInRequest $request)
     {
         $request->authenticate();
         $request->session()->regenerate();
 
-        return redirect()->intended(route('dashboard.create', absolute: false));
+        return response(null, 200);
     }
 
     /**

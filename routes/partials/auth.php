@@ -14,6 +14,7 @@ Route::middleware('guest')->group(function () {
         ->name('sign-in.create');
 
     Route::post('sign-in', [App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'store'])
+        ->middleware('zerotrust')
         ->name('sign-in.store');
 
     Route::get('forgot-password', [App\Http\Controllers\Auth\PasswordResetLinkController::class, 'create'])

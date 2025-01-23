@@ -27,8 +27,23 @@ class SignInRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'string', 'email'],
-            'password' => ['required', 'string']
+            'client_public_key' => [
+                'string',
+                'size:44',
+                function ($attribute, $value, $fail) {
+                    if (!preg_match('/^[A-Za-z0-9+\/=]{44}$/', $value)) {
+                        $fail("The {$attribute} must be a valid Base64-encoded string.");
+                        return;
+                    }
+
+                    $decodedKey = base64_decode($value, true);
+                    if ($decodedKey === false || strlen($decodedKey) !== 32) {
+                        $fail("The {$attribute} must be a valid X25519 public key (32 bytes).");
+                    }
+                },
+            ],
+            'email' => 'required|string|lowercase|email',
+            'password' => 'required|string'
         ];
     }
 
