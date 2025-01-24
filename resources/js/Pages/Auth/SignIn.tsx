@@ -7,15 +7,15 @@ import TextInput from '@/Components/TextInput'
 import TogglePassword from '@/Components/TogglePassword'
 import GuestLayout from '@/Layouts/GuestLayout'
 import axios from 'axios'
+import sodium from 'libsodium-wrappers'
 
 import { useZeroTrust } from '@/Context/ZeroTrust'
 import { Head, Link, router, useForm } from '@inertiajs/react'
-import { utf8ToBytes } from '@noble/ciphers/utils'
-import { FormEventHandler, useState } from 'react'
+import { bytesToUtf8, utf8ToBytes } from '@noble/ciphers/utils'
+import { FormEventHandler, useEffect, useState } from 'react'
 import { z } from 'zod'
 
 interface Props {
-  status?: string
   canResetPassword: boolean
 }
 
@@ -33,7 +33,8 @@ const formSchema: z.ZodType = z.object({
 
 type SignInValidationSchema = z.infer<typeof formSchema>
 
-export default function SignIn({ status, canResetPassword }: Props) {
+export default function SignIn({ canResetPassword }: Props) {
+  const [status, setStatus] = useState<string>('')
   const [processing, setProcessing] = useState<boolean>(false)
   const { Aes } = useZeroTrust()
   const [rememberNotice, setRememberNotice] = useState<boolean>(false)
@@ -42,6 +43,23 @@ export default function SignIn({ status, canResetPassword }: Props) {
     password: '',
     remember: false
   })
+
+  useEffect(() => {
+    const checkStatus = async (): Promise<void> => {
+      const status: string | null = sessionStorage.getItem('status')
+      if (status) {
+        try {
+          await sodium.ready
+          setStatus(bytesToUtf8(sodium.from_base64(String(status), sodium.base64_variants.ORIGINAL)))
+          sessionStorage.removeItem('status')
+        } catch (_error) {
+          //
+        }
+      }
+    }
+    checkStatus()
+  }, [])
+
   const submit: FormEventHandler = async (event: React.FormEvent<Element>) => {
     event.preventDefault()
     setProcessing(true)

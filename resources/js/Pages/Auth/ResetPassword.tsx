@@ -6,9 +6,13 @@ import PrimaryButton from '@/Components/PrimaryButton'
 import TextInput from '@/Components/TextInput'
 import TogglePassword from '@/Components/TogglePassword'
 import GuestLayout from '@/Layouts/GuestLayout'
+import axios from 'axios'
+import sodium from 'libsodium-wrappers'
 
-import { Head, useForm } from '@inertiajs/react'
-import { FormEventHandler } from 'react'
+import { useZeroTrust } from '@/Context/ZeroTrust'
+import { Head, router, useForm } from '@inertiajs/react'
+import { utf8ToBytes } from '@noble/ciphers/utils'
+import { FormEventHandler, useState } from 'react'
 import { z } from 'zod'
 
 const passwordRules = z
@@ -22,7 +26,7 @@ const passwordRules = z
 
 const formSchema: z.ZodType = z
   .object({
-    email: z.string().trim().email({ message: 'The email field is required or invalid.' }),
+    email: z.string().trim().email({ message: 'The email field must be a valid email address.' }),
     password: passwordRules,
     password_confirmation: passwordRules
   })
@@ -31,7 +35,9 @@ const formSchema: z.ZodType = z
 type ResetPasswordValidationSchema = z.infer<typeof formSchema>
 
 export default function ResetPassword({ token, email }: { token: string; email: string }) {
-  const { data, setData, post, processing, errors, reset, setError } = useForm({
+  const [processing, setProcessing] = useState<boolean>(false)
+  const { Aes } = useZeroTrust()
+  const { data, setData, errors, reset, setError } = useForm({
     token: token,
     email: email,
     password: '',
@@ -52,24 +58,42 @@ export default function ResetPassword({ token, email }: { token: string; email: 
       'mx-1'
     ].join(' ')
   }
-  const submit: FormEventHandler = (event) => {
+  const submit: FormEventHandler = async (event: React.FormEvent<Element>) => {
     event.preventDefault()
+    setProcessing(true)
+
     const validation: z.SafeParseReturnType<typeof data, ResetPasswordValidationSchema> = formSchema.safeParse(data)
     if (!validation.success) {
-      // Clear previous errors that are no longer present in current validation
-      Object.keys(errors).forEach((key: string) => {
+      // Clear previous errors that are no longer present in current validation.
+      Object.keys(errors).forEach((key: string): void => {
         if (!validation.error.errors.some((error) => error.path[0] === key)) setError(key as keyof typeof errors, '')
       })
-      // Set new validation errors
-      validation.error.errors.forEach((error) => {
+      // Set new validation errors.
+      validation.error.errors.forEach((error): void => {
         const key = error.path[0] as keyof typeof data
         setError(key, error.message)
       })
-      return
+      return setProcessing(false)
     }
-    post(route('reset-password.store'), {
-      onFinish: () => reset('password', 'password_confirmation')
-    })
+
+    const headers: { [key: string]: string } = { 'Content-Type': 'application/json' }
+    const seal: string = await Aes.encrypt(utf8ToBytes(JSON.stringify(data)))
+    await axios
+      .post(route('reset-password.store'), { seal }, { headers })
+      .then(async (response) => {
+        await sodium.ready
+        sessionStorage.setItem('status', sodium.to_base64(response.data.status, sodium.base64_variants.ORIGINAL))
+        if (response.status === 200) router.visit(route('sign-in.create'), { method: 'get' })
+      })
+      .catch((error) => {
+        if (error.response.data.errors) {
+          for (const [key, value] of Object.entries(error.response.data.errors)) {
+            setError(key as keyof typeof data, (value as string[])[0])
+          }
+        } else setError('email', error.response.data.message)
+        reset('password', 'password_confirmation')
+        setProcessing(false)
+      })
   }
 
   return (

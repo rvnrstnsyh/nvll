@@ -28,6 +28,7 @@ Route::middleware('guest')->group(function () {
         ->name('password.reset');
 
     Route::post('reset-password', [App\Http\Controllers\Auth\NewPasswordController::class, 'store'])
+        ->middleware('zerotrust')
         ->name('reset-password.store');
 });
 
