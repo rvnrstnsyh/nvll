@@ -3,7 +3,7 @@ interface Props {
   subtitle: string
 }
 
-export default function EntranceHead({ title, subtitle }: Props) {
+export default function EntranceHead({ title, subtitle }: Props): JSX.Element {
   return (
     <div>
       <h1 className="my-2 text-3xl">{title}</h1>

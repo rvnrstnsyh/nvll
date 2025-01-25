@@ -4,7 +4,7 @@ interface Props {
   className3: string
 }
 
-export default function MenuBurger({ className1, className2, className3 }: Props) {
+export default function MenuBurger({ className1, className2, className3 }: Props): JSX.Element {
   return (
     <svg className={className1} stroke="currentColor" fill="none" viewBox="0 0 24 24">
       <path className={className2} strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />

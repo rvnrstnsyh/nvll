@@ -7,7 +7,7 @@ import UpdateProfileInformationForm from './Partials/UpdateProfileInformationFor
 import { PageProps } from '@/types'
 import { Head } from '@inertiajs/react'
 
-export default function Edit({ mustVerifyEmail, status }: PageProps<{ mustVerifyEmail: boolean; status?: string }>) {
+export default function Edit({ mustVerifyEmail, status }: PageProps<{ mustVerifyEmail: boolean; status?: string }>): JSX.Element {
   return (
     <AuthenticatedLayout
       header={

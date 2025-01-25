@@ -1,6 +1,6 @@
 import { SVGAttributes } from 'react'
 
-export default function Check(props: SVGAttributes<SVGElement>) {
+export default function Check(props: SVGAttributes<SVGElement>): JSX.Element {
   return (
     <svg
       {...props}

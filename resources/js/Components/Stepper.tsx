@@ -10,7 +10,7 @@ interface Props {
   currentStep: number
 }
 
-export default function SignUpStep({ steps, currentStep }: Props) {
+export default function SignUpStep({ steps, currentStep }: Props): JSX.Element {
   return (
     <ol className="my-2 flex w-full items-center text-center text-xs font-medium text-gray-400">
       {steps.map((step, index) => {

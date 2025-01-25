@@ -1,6 +1,6 @@
 import { Link, usePage } from '@inertiajs/react'
 
-export default function GuestFooter() {
+export default function GuestFooter(): JSX.Element {
   const pathUrl: string = usePage().url
 
   return (

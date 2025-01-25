@@ -1,6 +1,6 @@
 import { SVGAttributes } from 'react'
 
-export default function Quote(props: SVGAttributes<SVGElement>) {
+export default function Quote(props: SVGAttributes<SVGElement>): JSX.Element {
   return (
     <svg {...props} width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <path

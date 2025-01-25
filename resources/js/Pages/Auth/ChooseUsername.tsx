@@ -24,12 +24,12 @@ const formSchema: z.ZodType = z.object({
 
 type ChooseUsernameValidationSchema = z.infer<typeof formSchema>
 
-export default function ChooseUsername({ username }: { username?: string }) {
+export default function ChooseUsername({ username }: { username?: string }): JSX.Element {
   const steps = [{ name: 'Account', description: 'Info' }, { name: 'Choose', description: 'Username' }, { name: 'Email Verification' }]
   const [processing, setProcessing] = useState<boolean>(false)
   const { Aes } = useZeroTrust()
-  const { data, setData, errors, setError } = useForm({ username: username || '' })
-  const submit: FormEventHandler = async (event: React.FormEvent<Element>) => {
+  const { data, setData, errors, setError } = useForm<ChooseUsernameValidationSchema>({ username: username || '' })
+  const submit: FormEventHandler = async (event: React.FormEvent<Element>): Promise<void> => {
     event.preventDefault()
     setProcessing(true)
 
@@ -37,10 +37,10 @@ export default function ChooseUsername({ username }: { username?: string }) {
     if (!validation.success) {
       // Clear previous errors that are no longer present in current validation.
       Object.keys(errors).forEach((key: string): void => {
-        if (!validation.error.errors.some((error) => error.path[0] === key)) setError(key as keyof typeof errors, '')
+        if (!validation.error.errors.some((error: z.ZodIssue): boolean => error.path[0] === key)) setError(key as keyof typeof errors, '')
       })
       // Set new validation errors.
-      validation.error.errors.forEach((error): void => {
+      validation.error.errors.forEach((error: z.ZodIssue): void => {
         const key = error.path[0] as keyof typeof data
         setError(key, error.message)
       })
@@ -51,10 +51,10 @@ export default function ChooseUsername({ username }: { username?: string }) {
     const seal: string = await Aes.encrypt(utf8ToBytes(JSON.stringify(data)))
     await axios
       .post(route('choose-username.store'), { seal }, { headers })
-      .then((response) => {
+      .then((response): void => {
         if (response.status === 201) router.visit(route('verification.notice'), { method: 'get' })
       })
-      .catch((error) => {
+      .catch((error): void => {
         if (error.response.data.errors) {
           for (const [key, value] of Object.entries(error.response.data.errors)) {
             setError(key as keyof typeof data, (value as string[])[0])

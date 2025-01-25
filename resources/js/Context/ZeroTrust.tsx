@@ -20,7 +20,7 @@ const ZeroTrustContext: React.Context<contextType | undefined> = createContext<c
  */
 export const ZeroTrustProvider: React.FC<{ children: React.ReactNode }> = ({ children }: { children: React.ReactNode }): JSX.Element => {
   const Aes: Aes256Gcm = useMemo(() => new Aes256Gcm(), [])
-  useEffect(() => {
+  useEffect((): void => {
     /**
      * Initializes the Aes256Gcm instance by rotating its keys.
      * Logs a warning if key rotation fails.

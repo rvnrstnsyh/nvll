@@ -28,16 +28,15 @@ const formSchema: z.ZodType = z.object({
 
 type ProfileInformationValidationSchema = z.infer<typeof formSchema>
 
-export default function UpdateProfileInformation({ mustVerifyEmail, status, className = '' }: Props) {
+export default function UpdateProfileInformation({ mustVerifyEmail, status, className = '' }: Props): JSX.Element {
   const [recentlySuccessful, setRecentlySuccessful] = useState<boolean>(false)
   const [processing, setProcessing] = useState<boolean>(false)
   const { Aes } = useZeroTrust()
   const user = usePage().props.auth.user
-  const { data, setData, errors, setError } = useForm({
+  const { data, setData, errors, setError } = useForm<ProfileInformationValidationSchema>({
     name: user.name,
     email: user.email
   })
-
   const submit: FormEventHandler = async (event: React.FormEvent<Element>): Promise<void> => {
     event.preventDefault()
     setProcessing(true)
@@ -47,13 +46,14 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
     if (!validation.success) {
       // Clear previous errors that are no longer present in current validation.
       Object.keys(errors).forEach((key: string): void => {
-        if (!validation.error.errors.some((error) => error.path[0] === key)) setError(key as keyof typeof errors, '')
+        if (!validation.error.errors.some((error: z.ZodIssue): boolean => error.path[0] === key)) setError(key as keyof typeof errors, '')
       })
       // Set new validation errors.
-      validation.error.errors.forEach((error): void => {
+      validation.error.errors.forEach((error: z.ZodIssue): void => {
         const key = error.path[0] as keyof typeof data
         setError(key, error.message)
       })
+      setRecentlySuccessful(false)
       return setProcessing(false)
     }
 
@@ -61,13 +61,13 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
     const seal: string = await Aes.encrypt(utf8ToBytes(JSON.stringify(data)))
     await axios
       .patch(route('account-settings.update'), { seal }, { headers })
-      .then((response) => {
+      .then((response): void => {
         if (response.status === 202) {
           setProcessing(false)
           setRecentlySuccessful(true)
         }
       })
-      .catch((error) => {
+      .catch((error): void => {
         if (error.response.data.errors) {
           for (const [key, value] of Object.entries(error.response.data.errors)) {
             setError(key as keyof typeof data, (value as string[])[0])
@@ -76,10 +76,10 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
         setProcessing(false)
       })
       .finally(() =>
-        setTimeout(async () => {
+        setTimeout(async (): Promise<void> => {
           setRecentlySuccessful(false)
           if (data.email !== user.email) {
-            await axios.post(route('verification.send')).finally(() => {
+            await axios.post(route('verification.send')).finally((): void => {
               router.visit(route('verification.notice'), { method: 'get' })
             })
           }

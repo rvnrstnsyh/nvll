@@ -4,6 +4,7 @@ import SecondaryButton from '@/Components/SecondaryButton'
 import Stepper from '@/Components/Stepper'
 import GuestLayout from '@/Layouts/GuestLayout'
 
+import { User } from '@/types'
 import { Head, Link, router, useForm, usePage } from '@inertiajs/react'
 import { FormEventHandler } from 'react'
 
@@ -12,8 +13,8 @@ interface Props {
   canChangeUsername?: boolean
 }
 
-export default function VerifyEmail({ status, canChangeUsername }: Props) {
-  const user = usePage().props.auth.user
+export default function VerifyEmail({ status, canChangeUsername }: Props): JSX.Element {
+  const user: User = usePage().props.auth.user
   const steps = [{ name: 'Account', description: 'Info' }, { name: 'Choose', description: 'Username' }, { name: 'Email Verification' }]
   const { post, processing } = useForm({})
   const submit: FormEventHandler = (event: React.FormEvent<Element>): void => {

@@ -6,12 +6,13 @@ import Identicon from '@/Components/Identicon'
 import NavLink from '@/Components/NavLink'
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink'
 
+import { User } from '@/types'
 import { Link, usePage } from '@inertiajs/react'
 import { PropsWithChildren, ReactNode, useState } from 'react'
 
-export default function Authenticated({ header, children }: PropsWithChildren<{ header?: ReactNode }>) {
-  const user = usePage().props.auth.user
-  const [showNavDropdown, setShowNavDropdown] = useState(false)
+export default function Authenticated({ header, children }: PropsWithChildren<{ header?: ReactNode }>): JSX.Element {
+  const user: User = usePage().props.auth.user
+  const [showNavDropdown, setShowNavDropdown] = useState<boolean>(false)
 
   return (
     <div className="min-h-screen bg-gray-100">

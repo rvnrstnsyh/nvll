@@ -1,11 +1,11 @@
-import Quote from '@/assets/svg/quote'
+import Quote from '@/assets/svg/Quote'
 import PrimaryButton from '@/Components/PrimaryButton'
 import GuestLayout from '@/Layouts/GuestLayout'
 
 import { PageProps, User } from '@/types'
 import { Head, Link } from '@inertiajs/react'
 
-export default function About({ auth }: PageProps<{ auth: { user: User } }>) {
+export default function About({ auth }: PageProps<{ auth: { user: User } }>): JSX.Element {
   return (
     <GuestLayout>
       <Head title="About" />

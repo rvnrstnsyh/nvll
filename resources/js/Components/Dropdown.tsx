@@ -8,7 +8,7 @@ const DropDownContext = createContext<{ open: boolean; setOpen: Dispatch<SetStat
   toggleOpen: () => {}
 })
 
-const Dropdown = ({ children }: PropsWithChildren) => {
+const Dropdown = ({ children }: PropsWithChildren): JSX.Element => {
   const [open, setOpen] = useState(false)
   const toggleOpen = () => setOpen((previousState) => !previousState)
   return (
@@ -18,7 +18,7 @@ const Dropdown = ({ children }: PropsWithChildren) => {
   )
 }
 
-const Trigger = ({ children }: PropsWithChildren) => {
+const Trigger = ({ children }: PropsWithChildren): JSX.Element => {
   const { open, setOpen, toggleOpen } = useContext(DropDownContext)
   return (
     <>
@@ -37,7 +37,7 @@ const Content = ({
   align?: 'left' | 'right'
   width?: '48'
   contentClasses?: string
-}>) => {
+}>): JSX.Element => {
   const { open, setOpen } = useContext(DropDownContext)
   let alignmentClasses = 'origin-top'
 

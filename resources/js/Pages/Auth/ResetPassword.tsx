@@ -15,7 +15,7 @@ import { utf8ToBytes } from '@noble/ciphers/utils'
 import { FormEventHandler, useState } from 'react'
 import { z } from 'zod'
 
-const passwordRules = z
+const passwordRules: z.ZodString = z
   .string()
   .trim()
   .min(8, { message: 'Password must be at least 8 characters long.' })
@@ -34,16 +34,16 @@ const formSchema: z.ZodType = z
 
 type ResetPasswordValidationSchema = z.infer<typeof formSchema>
 
-export default function ResetPassword({ token, email }: { token: string; email: string }) {
+export default function ResetPassword({ token, email }: { token: string; email: string }): JSX.Element {
   const [processing, setProcessing] = useState<boolean>(false)
   const { Aes } = useZeroTrust()
-  const { data, setData, errors, reset, setError } = useForm({
+  const { data, setData, errors, reset, setError } = useForm<ResetPasswordValidationSchema>({
     token: token,
     email: email,
     password: '',
     password_confirmation: ''
   })
-  const strongPasswordOptions = {
+  const strongPasswordOptions: { [key: string]: string | number } = {
     target: '#hs-reset-password',
     hints: '#hs-reset-password-hints',
     minLength: 8,
@@ -58,7 +58,7 @@ export default function ResetPassword({ token, email }: { token: string; email: 
       'mx-1'
     ].join(' ')
   }
-  const submit: FormEventHandler = async (event: React.FormEvent<Element>) => {
+  const submit: FormEventHandler = async (event: React.FormEvent<Element>): Promise<void> => {
     event.preventDefault()
     setProcessing(true)
 
@@ -66,10 +66,10 @@ export default function ResetPassword({ token, email }: { token: string; email: 
     if (!validation.success) {
       // Clear previous errors that are no longer present in current validation.
       Object.keys(errors).forEach((key: string): void => {
-        if (!validation.error.errors.some((error) => error.path[0] === key)) setError(key as keyof typeof errors, '')
+        if (!validation.error.errors.some((error: z.ZodIssue): boolean => error.path[0] === key)) setError(key as keyof typeof errors, '')
       })
       // Set new validation errors.
-      validation.error.errors.forEach((error): void => {
+      validation.error.errors.forEach((error: z.ZodIssue): void => {
         const key = error.path[0] as keyof typeof data
         setError(key, error.message)
       })
@@ -80,12 +80,12 @@ export default function ResetPassword({ token, email }: { token: string; email: 
     const seal: string = await Aes.encrypt(utf8ToBytes(JSON.stringify(data)))
     await axios
       .post(route('reset-password.store'), { seal }, { headers })
-      .then(async (response) => {
+      .then(async (response): Promise<void> => {
         await sodium.ready
         sessionStorage.setItem('status', sodium.to_base64(response.data.status, sodium.base64_variants.ORIGINAL))
         if (response.status === 200) router.visit(route('sign-in.create'), { method: 'get' })
       })
-      .catch((error) => {
+      .catch((error): void => {
         if (error.response.data.errors) {
           for (const [key, value] of Object.entries(error.response.data.errors)) {
             setError(key as keyof typeof data, (value as string[])[0])

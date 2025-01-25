@@ -2,7 +2,7 @@ import PasswordEye from '@/assets/svg/PasswordEye'
 
 import { useEffect } from 'react'
 
-export default function TogglePassword({ target }: { target: string[] }) {
+export default function TogglePassword({ target }: { target: string[] }): JSX.Element {
   useEffect(() => window.HSStaticMethods.autoInit(), [])
 
   return (

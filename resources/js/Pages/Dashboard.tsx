@@ -3,7 +3,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout'
 import { User } from '@/types'
 import { Head, usePage } from '@inertiajs/react'
 
-export default function Dashboard() {
+export default function Dashboard(): JSX.Element {
   const user: User = usePage().props.auth.user
 
   return (

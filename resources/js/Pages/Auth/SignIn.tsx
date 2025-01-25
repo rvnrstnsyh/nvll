@@ -33,48 +33,50 @@ const formSchema: z.ZodType = z.object({
 
 type SignInValidationSchema = z.infer<typeof formSchema>
 
-export default function SignIn({ canResetPassword }: Props) {
+export default function SignIn({ canResetPassword }: Props): JSX.Element {
   const [status, setStatus] = useState<string>('')
   const [processing, setProcessing] = useState<boolean>(false)
   const { Aes } = useZeroTrust()
   const [rememberNotice, setRememberNotice] = useState<boolean>(false)
-  const { data, setData, errors, reset, setError } = useForm({
+  const { data, setData, errors, reset, setError } = useForm<SignInValidationSchema>({
     email: '',
     password: '',
     remember: false
   })
 
-  useEffect(() => {
+  useEffect((): void => {
     const checkStatus = async (): Promise<void> => {
       const status: string | null = sessionStorage.getItem('status')
       if (status) {
         try {
           await sodium.ready
           setStatus(bytesToUtf8(sodium.from_base64(String(status), sodium.base64_variants.ORIGINAL)))
-          sessionStorage.removeItem('status')
         } catch (_error) {
           //
         }
+        sessionStorage.removeItem('status')
       }
     }
     checkStatus()
   }, [])
 
-  const submit: FormEventHandler = async (event: React.FormEvent<Element>) => {
+  const submit: FormEventHandler = async (event: React.FormEvent<Element>): Promise<void> => {
     event.preventDefault()
+    setStatus('')
     setProcessing(true)
 
     const validation: z.SafeParseReturnType<typeof data, SignInValidationSchema> = formSchema.safeParse(data)
     if (!validation.success) {
       // Clear previous errors that are no longer present in current validation.
       Object.keys(errors).forEach((key: string): void => {
-        if (!validation.error.errors.some((error) => error.path[0] === key)) setError(key as keyof typeof errors, '')
+        if (!validation.error.errors.some((error: z.ZodIssue): boolean => error.path[0] === key)) setError(key as keyof typeof errors, '')
       })
       // Set new validation errors.
-      validation.error.errors.forEach((error): void => {
+      validation.error.errors.forEach((error: z.ZodIssue): void => {
         const key = error.path[0] as keyof typeof data
         setError(key, error.message)
       })
+      setStatus('')
       return setProcessing(false)
     }
 
@@ -82,15 +84,16 @@ export default function SignIn({ canResetPassword }: Props) {
     const seal: string = await Aes.encrypt(utf8ToBytes(JSON.stringify(data)))
     await axios
       .post(route('sign-in.store'), { seal }, { headers })
-      .then((response) => {
+      .then((response): void => {
         if (response.status === 200) router.visit(route('dashboard.create'), { method: 'get' })
       })
-      .catch((error) => {
+      .catch((error): void => {
         if (error.response.data.errors) {
           for (const [key, value] of Object.entries(error.response.data.errors)) {
             setError(key as keyof typeof data, (value as string[])[0])
           }
         } else setError('email', error.response.data.message)
+        setStatus('')
         reset('password')
         setProcessing(false)
       })

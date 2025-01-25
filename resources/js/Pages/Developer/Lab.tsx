@@ -14,37 +14,37 @@ interface Props {
   status?: string
 }
 
-type LabValidationSchema = z.infer<typeof formSchema>
-
 const formSchema: z.ZodType = z.object({ input_alpha: z.string().min(1).trim() })
 
-export default function Lab({ status }: Props) {
+type LabValidationSchema = z.infer<typeof formSchema>
+
+export default function Lab({ status }: Props): JSX.Element {
   const [processing, setProcessing] = useState<boolean>(false)
   const { data, setData, errors, setError } = useForm<LabValidationSchema>({ input_alpha: '' })
 
-  const submit: FormEventHandler = async (event: React.FormEvent<Element>) => {
+  const submit: FormEventHandler = async (event: React.FormEvent<Element>): Promise<void> => {
     event.preventDefault()
+    setProcessing(true)
 
     const validation: z.SafeParseReturnType<typeof data, LabValidationSchema> = formSchema.safeParse(data)
 
     if (!validation.success) {
-      // Clear previous errors that are no longer present in current validation
-      Object.keys(errors).forEach((key: string) => {
-        if (!validation.error.errors.some((error) => error.path[0] === key)) setError(key as keyof typeof errors, '')
+      // Clear previous errors that are no longer present in current validation.
+      Object.keys(errors).forEach((key: string): void => {
+        if (!validation.error.errors.some((error: z.ZodIssue): boolean => error.path[0] === key)) setError(key as keyof typeof errors, '')
       })
-      // Set new validation errors
-      validation.error.errors.forEach((error) => {
+      // Set new validation errors.
+      validation.error.errors.forEach((error: z.ZodIssue): void => {
         const key = error.path[0] as keyof typeof data
         setError(key, error.message)
       })
-      return
+      return setProcessing(false)
     }
 
-    setProcessing(true)
     await axios
       .post(route('lab.store'), data, { headers: { 'Content-Type': 'application/json' } })
-      .then((_response) => setProcessing(false))
-      .catch((_error) => setProcessing(false))
+      .then((_response): void => setProcessing(false))
+      .catch((_error): void => setProcessing(false))
   }
 
   return (

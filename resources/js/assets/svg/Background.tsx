@@ -1,6 +1,6 @@
 import { SVGAttributes } from 'react'
 
-export default function Background(props: SVGAttributes<SVGElement>) {
+export default function Background(props: SVGAttributes<SVGElement>): JSX.Element {
   return (
     <svg {...props} width="877" height="968" viewBox="0 0 877 968" fill="none" xmlns="http://www.w3.org/2000/svg">
       <g clipPath="url(#clip0_91_1704)">

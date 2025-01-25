@@ -32,18 +32,18 @@ const formSchema: z.ZodType = z
 
 type UpdatePasswordValidationSchema = z.infer<typeof formSchema>
 
-export default function UpdatePasswordForm({ className = '' }: Props) {
+export default function UpdatePasswordForm({ className = '' }: Props): JSX.Element {
   const [recentlySuccessful, setRecentlySuccessful] = useState<boolean>(false)
   const [processing, setProcessing] = useState<boolean>(false)
   const { Aes } = useZeroTrust()
   const passwordInput = useRef<HTMLInputElement>(null)
   const currentPasswordInput = useRef<HTMLInputElement>(null)
-  const { data, setData, errors, reset, setError } = useForm({
+  const { data, setData, errors, reset, setError } = useForm<UpdatePasswordValidationSchema>({
     current_password: '',
     password: '',
     password_confirmation: ''
   })
-  const strongPasswordOptions = {
+  const strongPasswordOptions: { [key: string]: string | number } = {
     target: '#hs-update-password-new-password',
     hints: '#hs-update-password-hints',
     minLength: 8,
@@ -67,13 +67,14 @@ export default function UpdatePasswordForm({ className = '' }: Props) {
     if (!validation.success) {
       // Clear previous errors that are no longer present in current validation.
       Object.keys(errors).forEach((key: string): void => {
-        if (!validation.error.errors.some((error) => error.path[0] === key)) setError(key as keyof typeof errors, '')
+        if (!validation.error.errors.some((error: z.ZodIssue): boolean => error.path[0] === key)) setError(key as keyof typeof errors, '')
       })
       // Set new validation errors.
-      validation.error.errors.forEach((error): void => {
+      validation.error.errors.forEach((error: z.ZodIssue): void => {
         const key = error.path[0] as keyof typeof data
         setError(key, error.message)
       })
+      setRecentlySuccessful(false)
       return setProcessing(false)
     }
 
@@ -81,14 +82,14 @@ export default function UpdatePasswordForm({ className = '' }: Props) {
     const seal: string = await Aes.encrypt(utf8ToBytes(JSON.stringify(data)))
     await axios
       .put(route('password.update'), { seal }, { headers })
-      .then((response) => {
+      .then((response): void => {
         if (response.status === 202) {
           reset()
           setProcessing(false)
           setRecentlySuccessful(true)
         }
       })
-      .catch((error) => {
+      .catch((error): void => {
         if (error.response.data.errors) {
           for (const [key, value] of Object.entries(error.response.data.errors)) {
             setError(key as keyof typeof data, (value as string[])[0])
@@ -104,7 +105,7 @@ export default function UpdatePasswordForm({ className = '' }: Props) {
         } else setError('password', error.response.data.message)
         setProcessing(false)
       })
-      .finally(() => setTimeout(async () => setRecentlySuccessful(false), 750))
+      .finally(() => setTimeout(async (): Promise<void> => setRecentlySuccessful(false), 750))
   }
 
   return (

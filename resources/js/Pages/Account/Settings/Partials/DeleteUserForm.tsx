@@ -29,16 +29,16 @@ const formSchema: z.ZodType = z.object({
 
 type DeleteAccountValidationSchema = z.infer<typeof formSchema>
 
-export default function DeleteUserForm({ className = '' }: Props) {
+export default function DeleteUserForm({ className = '' }: Props): JSX.Element {
   const [processing, setProcessing] = useState<boolean>(false)
   const { Aes } = useZeroTrust()
   const [confirmUserDelete, setConfirmUserDelete] = useState<boolean>(false)
   const passwordInput = useRef<HTMLInputElement>(null)
-  const { data, setData, reset, errors, clearErrors, setError } = useForm({
+  const { data, setData, reset, errors, clearErrors, setError } = useForm<DeleteAccountValidationSchema>({
     password: ''
   })
   const confirmUserDeletion = (): void => setConfirmUserDelete(true)
-  const deleteUser: FormEventHandler = async (event: React.FormEvent<Element>): Promise<void> => {
+  const submit: FormEventHandler = async (event: React.FormEvent<Element>): Promise<void> => {
     event.preventDefault()
     setProcessing(true)
 
@@ -46,7 +46,7 @@ export default function DeleteUserForm({ className = '' }: Props) {
     if (!validation.success) {
       // Clear previous errors that are no longer present in current validation.
       Object.keys(errors).forEach((key: string): void => {
-        if (!validation.error.errors.some((error) => error.path[0] === key)) setError(key as keyof typeof errors, '')
+        if (!validation.error.errors.some((error: z.ZodIssue): boolean => error.path[0] === key)) setError(key as keyof typeof errors, '')
       })
       // Set new validation errors.
       validation.error.errors.forEach((error: z.ZodIssue): void => {
@@ -60,7 +60,7 @@ export default function DeleteUserForm({ className = '' }: Props) {
     const seal: string = await Aes.encrypt(utf8ToBytes(JSON.stringify(data)))
     await axios
       .delete(route('account-settings.destroy'), { data: { seal }, headers })
-      .then((response) => {
+      .then((response): void => {
         if (response.status === 202) {
           reset()
           closeModal()
@@ -68,7 +68,7 @@ export default function DeleteUserForm({ className = '' }: Props) {
           router.visit(route('sign-in.create'), { method: 'get' })
         }
       })
-      .catch((error) => {
+      .catch((error): void => {
         if (error.response.data.errors) {
           for (const [key, value] of Object.entries(error.response.data.errors)) {
             setError(key as keyof typeof data, (value as string[])[0])
@@ -100,7 +100,7 @@ export default function DeleteUserForm({ className = '' }: Props) {
       <DangerButton onClick={confirmUserDeletion}>Delete Account</DangerButton>
 
       <Modal show={confirmUserDelete} onClose={closeModal} maxWidth="xl">
-        <form onSubmit={deleteUser} className="p-6">
+        <form onSubmit={submit} className="p-6">
           <h2 className="text-lg font-medium text-gray-900">Are you sure you want to delete your account?</h2>
           <p className="mt-1 text-justify text-sm text-gray-600">
             Once your account is deleted, all of its resources and data will be permanently deleted and your username will no longer be available for

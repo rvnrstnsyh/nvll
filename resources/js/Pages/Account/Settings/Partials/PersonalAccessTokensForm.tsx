@@ -6,7 +6,7 @@ import PrimaryButton from '@/Components/PrimaryButton'
 
 import { Transition } from '@headlessui/react'
 
-export default function PersonalAccessTokensForm({ className = '' }: { className?: string }) {
+export default function PersonalAccessTokensForm({ className = '' }: { className?: string }): JSX.Element {
   return (
     <section className={className}>
       <header>

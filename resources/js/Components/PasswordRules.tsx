@@ -3,7 +3,11 @@ import Uncheck from '@/assets/svg/Uncheck'
 
 import { useEffect } from 'react'
 
-export default function PasswordRules({ id }: { id: string }) {
+interface Props {
+  id: string
+}
+
+export default function PasswordRules({ id }: Props): JSX.Element {
   useEffect(() => window.HSStaticMethods.autoInit(), [])
 
   return (

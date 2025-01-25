@@ -12,7 +12,7 @@ export default function Modal({
   maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | '2xl'
   closeable?: boolean
   onClose: CallableFunction
-}>) {
+}>): JSX.Element {
   const close = () => {
     if (closeable) onClose()
   }

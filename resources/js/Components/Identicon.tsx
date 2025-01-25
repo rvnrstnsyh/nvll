@@ -1,6 +1,5 @@
 import { identicon } from '@dicebear/collection'
 import { createAvatar, Result } from '@dicebear/core'
-import { ReactElement } from 'react'
 
 interface Props {
   className: string
@@ -20,9 +19,9 @@ interface Props {
  * @param {number} [props.size=30] - Size of the generated avatar, defaults to 30
  * @param {number} [props.radius=10] - Radius of the generated avatar, defaults to 10
  *
- * @returns {ReactElement} An `<img>` element with the generated avatar
+ * @returns {JSX.Element} An `<img>` element with the generated avatar
  */
-export default function Identicon({ className, seed, scale = 100, size = 30, radius = 10 }: Props): ReactElement {
+export default function Identicon({ className, seed, scale = 100, size = 30, radius = 10 }: Props): JSX.Element {
   const avatar: Result = createAvatar(identicon, { seed, scale, size, radius, backgroundColor: ['transparent'] })
   return <img className={className} src={avatar.toDataUri()} alt="User Avatar" />
 }

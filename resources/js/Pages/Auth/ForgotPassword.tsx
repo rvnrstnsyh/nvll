@@ -16,28 +16,30 @@ const formSchema: z.ZodType = z.object({ email: z.string().trim().email({ messag
 
 type ForgotPasswordValidationSchema = z.infer<typeof formSchema>
 
-export default function ForgotPassword() {
+export default function ForgotPassword(): JSX.Element {
   const [processing, setProcessing] = useState<boolean>(false)
   const [status, setStatus] = useState<string>('')
   const { Aes } = useZeroTrust()
-  const { data, setData, errors, setError } = useForm({
+  const { data, setData, errors, setError } = useForm<ForgotPasswordValidationSchema>({
     email: ''
   })
-  const submit: FormEventHandler = async (event: React.FormEvent<Element>) => {
+  const submit: FormEventHandler = async (event: React.FormEvent<Element>): Promise<void> => {
     event.preventDefault()
+    setStatus('')
     setProcessing(true)
 
     const validation: z.SafeParseReturnType<typeof data, ForgotPasswordValidationSchema> = formSchema.safeParse(data)
     if (!validation.success) {
       // Clear previous errors that are no longer present in current validation.
       Object.keys(errors).forEach((key: string): void => {
-        if (!validation.error.errors.some((error) => error.path[0] === key)) setError(key as keyof typeof errors, '')
+        if (!validation.error.errors.some((error: z.ZodIssue): boolean => error.path[0] === key)) setError(key as keyof typeof errors, '')
       })
       // Set new validation errors.
-      validation.error.errors.forEach((error): void => {
+      validation.error.errors.forEach((error: z.ZodIssue): void => {
         const key = error.path[0] as keyof typeof data
         setError(key, error.message)
       })
+      setStatus('')
       return setProcessing(false)
     }
 
@@ -45,11 +47,11 @@ export default function ForgotPassword() {
     const seal: string = await Aes.encrypt(utf8ToBytes(JSON.stringify(data)))
     await axios
       .post(route('forgot-password.store'), { seal }, { headers })
-      .then((response) => {
+      .then((response): void => {
         if (response.status === 200) setStatus(response.data.status)
         setProcessing(false)
       })
-      .catch((error) => {
+      .catch((error): void => {
         setStatus('')
         if (error.response.data.errors) {
           for (const [key, value] of Object.entries(error.response.data.errors)) {

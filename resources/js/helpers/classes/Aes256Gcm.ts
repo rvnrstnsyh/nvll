@@ -41,7 +41,7 @@ export default class Aes256Gcm {
       const decodedKey: Uint8Array<ArrayBuffer> = new Uint8Array(
         atob(rawKey.substring(7))
           .split('')
-          .map((char) => char.charCodeAt(0))
+          .map((char: string): number => char.charCodeAt(0))
       )
 
       if (decodedKey.length !== Aes256Gcm.CONFIG.KEY_LENGTH) throw new Error('Invalid server public key length')
