@@ -21,7 +21,7 @@ Route::middleware('guest')->group(function () {
         ->name('forgot-password.create');
 
     Route::post('forgot-password', [App\Http\Controllers\Auth\PasswordResetLinkController::class, 'store'])
-        ->middleware(['throttle:3,3', 'zerotrust'])
+        ->middleware(['throttle:4,3', 'zerotrust'])
         ->name('forgot-password.store');
 
     Route::get('reset-password/{token}', [App\Http\Controllers\Auth\NewPasswordController::class, 'create'])
@@ -44,11 +44,11 @@ Route::middleware('auth:web')->group(function () {
         ->name('verification.notice');
 
     Route::get('verify-email/{id}/{hash}', [App\Http\Controllers\Auth\VerifyEmailController::class, 'store'])
-        ->middleware(['signed', 'throttle:3,3'])
+        ->middleware(['signed', 'throttle:4,3'])
         ->name('verification.verify');
 
     Route::post('email/verification-notification', [App\Http\Controllers\Auth\EmailVerificationNotificationController::class, 'store'])
-        ->middleware('throttle:3,3')
+        ->middleware('throttle:4,3')
         ->name('verification.send');
 
     Route::get('confirm-password', [App\Http\Controllers\Auth\ConfirmablePasswordController::class, 'show'])

@@ -27,7 +27,7 @@ class AccountSettingsController extends Controller
     /**
      * Update the user's settings information.
      */
-    public function update(AccountSettingsUpdateRequest $request): RedirectResponse
+    public function update(AccountSettingsUpdateRequest $request)
     {
         $request->user()->fill($request->validated());
 
@@ -35,7 +35,7 @@ class AccountSettingsController extends Controller
 
         $request->user()->save();
 
-        return Redirect::route('account-settings.create');
+        return response(null, 202);
     }
 
     /**

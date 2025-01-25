@@ -2,11 +2,20 @@ import InputError from '@/Components/InputError'
 import InputLabel from '@/Components/InputLabel'
 import PrimaryButton from '@/Components/PrimaryButton'
 import TextInput from '@/Components/TextInput'
+import axios from 'axios'
 
+import { useZeroTrust } from '@/Context/ZeroTrust'
 import { Transition } from '@headlessui/react'
-import { Link, useForm, usePage } from '@inertiajs/react'
-import { FormEventHandler } from 'react'
+import { Link, router, useForm, usePage } from '@inertiajs/react'
+import { utf8ToBytes } from '@noble/ciphers/utils'
+import { FormEventHandler, useState } from 'react'
 import { z } from 'zod'
+
+interface Props {
+  mustVerifyEmail: boolean
+  status?: string
+  className?: string
+}
 
 const formSchema: z.ZodType = z.object({
   name: z
@@ -14,42 +23,68 @@ const formSchema: z.ZodType = z.object({
     .trim()
     .min(3, { message: 'Name must be at least 3 characters long.' })
     .max(255, { message: 'Name must be at most 255 characters long.' }),
-  email: z.string().trim().email({ message: 'The email field is required or invalid.' })
+  email: z.string().trim().email({ message: 'The email field must be a valid email address.' })
 })
 
 type ProfileInformationValidationSchema = z.infer<typeof formSchema>
 
-export default function UpdateProfileInformation({
-  mustVerifyEmail,
-  status,
-  className = ''
-}: {
-  mustVerifyEmail: boolean
-  status?: string
-  className?: string
-}) {
+export default function UpdateProfileInformation({ mustVerifyEmail, status, className = '' }: Props) {
+  const [recentlySuccessful, setRecentlySuccessful] = useState<boolean>(false)
+  const [processing, setProcessing] = useState<boolean>(false)
+  const { Aes } = useZeroTrust()
   const user = usePage().props.auth.user
-  const { data, setData, patch, errors, processing, recentlySuccessful, setError } = useForm({
+  const { data, setData, errors, setError } = useForm({
     name: user.name,
     email: user.email
   })
 
-  const submit: FormEventHandler = (event) => {
+  const submit: FormEventHandler = async (event: React.FormEvent<Element>): Promise<void> => {
     event.preventDefault()
+    setProcessing(true)
+    setRecentlySuccessful(false)
+
     const validation: z.SafeParseReturnType<typeof data, ProfileInformationValidationSchema> = formSchema.safeParse(data)
     if (!validation.success) {
-      // Clear previous errors that are no longer present in current validation
-      Object.keys(errors).forEach((key: string) => {
+      // Clear previous errors that are no longer present in current validation.
+      Object.keys(errors).forEach((key: string): void => {
         if (!validation.error.errors.some((error) => error.path[0] === key)) setError(key as keyof typeof errors, '')
       })
-      // Set new validation errors
-      validation.error.errors.forEach((error) => {
+      // Set new validation errors.
+      validation.error.errors.forEach((error): void => {
         const key = error.path[0] as keyof typeof data
         setError(key, error.message)
       })
-      return
+      return setProcessing(false)
     }
-    patch(route('account-settings.update'))
+
+    const headers: { [key: string]: string } = { 'Content-Type': 'application/json' }
+    const seal: string = await Aes.encrypt(utf8ToBytes(JSON.stringify(data)))
+    await axios
+      .patch(route('account-settings.update'), { seal }, { headers })
+      .then((response) => {
+        if (response.status === 202) {
+          setProcessing(false)
+          setRecentlySuccessful(true)
+        }
+      })
+      .catch((error) => {
+        if (error.response.data.errors) {
+          for (const [key, value] of Object.entries(error.response.data.errors)) {
+            setError(key as keyof typeof data, (value as string[])[0])
+          }
+        } else setError('name', error.response.data.message)
+        setProcessing(false)
+      })
+      .finally(() =>
+        setTimeout(async () => {
+          setRecentlySuccessful(false)
+          if (data.email !== user.email) {
+            await axios.post(route('verification.send')).finally(() => {
+              router.visit(route('verification.notice'), { method: 'get' })
+            })
+          }
+        }, 750)
+      )
   }
 
   return (
@@ -114,7 +149,7 @@ export default function UpdateProfileInformation({
             leave="transition ease-in-out"
             leaveTo="opacity-0"
           >
-            <p className="text-sm text-gray-600">Saved.</p>
+            <p className="text-sm text-green-600">Saved.</p>
           </Transition>
         </div>
       </form>

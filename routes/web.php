@@ -22,6 +22,7 @@ Route::middleware(['auth:web', 'verified'])->group(function () {
         ->name('account-settings.create');
 
     Route::patch('account-settings', [App\Http\Controllers\AccountSettingsController::class, 'update'])
+        ->middleware('zerotrust')
         ->name('account-settings.update');
 
     Route::delete('account-settings', [App\Http\Controllers\AccountSettingsController::class, 'destroy'])
