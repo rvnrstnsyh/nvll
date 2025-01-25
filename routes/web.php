@@ -26,6 +26,7 @@ Route::middleware(['auth:web', 'verified'])->group(function () {
         ->name('account-settings.update');
 
     Route::delete('account-settings', [App\Http\Controllers\AccountSettingsController::class, 'destroy'])
+        ->middleware('zerotrust')
         ->name('account-settings.destroy');
 
     Route::middleware(['developer', App\Http\Middleware\ZeroTrustMiddleware::class])->group(function () {

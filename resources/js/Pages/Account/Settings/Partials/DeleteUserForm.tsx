@@ -5,10 +5,17 @@ import Modal from '@/Components/Modal'
 import SecondaryButton from '@/Components/SecondaryButton'
 import TextInput from '@/Components/TextInput'
 import TogglePassword from '@/Components/TogglePassword'
+import axios from 'axios'
 
-import { useForm } from '@inertiajs/react'
+import { useZeroTrust } from '@/Context/ZeroTrust'
+import { router, useForm } from '@inertiajs/react'
+import { utf8ToBytes } from '@noble/ciphers/utils'
 import { FormEventHandler, useRef, useState } from 'react'
 import { z } from 'zod'
+
+interface Props {
+  className?: string
+}
 
 const formSchema: z.ZodType = z.object({
   password: z
@@ -22,45 +29,57 @@ const formSchema: z.ZodType = z.object({
 
 type DeleteAccountValidationSchema = z.infer<typeof formSchema>
 
-export default function DeleteUserForm({ className = '' }: { className?: string }) {
-  const [confirmUserDelete, setConfirmUserDelete] = useState(false)
+export default function DeleteUserForm({ className = '' }: Props) {
+  const [processing, setProcessing] = useState<boolean>(false)
+  const { Aes } = useZeroTrust()
+  const [confirmUserDelete, setConfirmUserDelete] = useState<boolean>(false)
   const passwordInput = useRef<HTMLInputElement>(null)
-  const {
-    data,
-    setData,
-    delete: destroy,
-    processing,
-    reset,
-    errors,
-    clearErrors,
-    setError
-  } = useForm({
+  const { data, setData, reset, errors, clearErrors, setError } = useForm({
     password: ''
   })
-
-  const confirmUserDeletion = () => setConfirmUserDelete(true)
-
-  const deleteUser: FormEventHandler = (event) => {
+  const confirmUserDeletion = (): void => setConfirmUserDelete(true)
+  const deleteUser: FormEventHandler = async (event: React.FormEvent<Element>): Promise<void> => {
     event.preventDefault()
+    setProcessing(true)
+
     const validation: z.SafeParseReturnType<typeof data, DeleteAccountValidationSchema> = formSchema.safeParse(data)
     if (!validation.success) {
-      // Clear previous errors that are no longer present in current validation
-      Object.keys(errors).forEach((key: string) => {
+      // Clear previous errors that are no longer present in current validation.
+      Object.keys(errors).forEach((key: string): void => {
         if (!validation.error.errors.some((error) => error.path[0] === key)) setError(key as keyof typeof errors, '')
       })
-      // Set new validation errors
-      validation.error.errors.forEach((error) => {
+      // Set new validation errors.
+      validation.error.errors.forEach((error: z.ZodIssue): void => {
         const key = error.path[0] as keyof typeof data
         setError(key, error.message)
       })
-      return
+      return setProcessing(false)
     }
-    destroy(route('account-settings.destroy'), {
-      preserveScroll: true,
-      onSuccess: () => closeModal(),
-      onError: () => passwordInput.current?.focus(),
-      onFinish: () => reset()
-    })
+
+    const headers: { [key: string]: string } = { 'Content-Type': 'application/json' }
+    const seal: string = await Aes.encrypt(utf8ToBytes(JSON.stringify(data)))
+    await axios
+      .delete(route('account-settings.destroy'), { data: { seal }, headers })
+      .then((response) => {
+        if (response.status === 202) {
+          reset()
+          closeModal()
+          setProcessing(false)
+          router.visit(route('sign-in.create'), { method: 'get' })
+        }
+      })
+      .catch((error) => {
+        if (error.response.data.errors) {
+          for (const [key, value] of Object.entries(error.response.data.errors)) {
+            setError(key as keyof typeof data, (value as string[])[0])
+          }
+          if (errors.password) {
+            reset('password')
+            passwordInput.current?.focus()
+          }
+        } else setError('password', error.response.data.message)
+        setProcessing(false)
+      })
   }
   const closeModal = () => {
     setConfirmUserDelete(false)

@@ -6,8 +6,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Redirect;
+use App\Http\Requests\DeleteAccountRequest;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Http\Requests\AccountSettingsUpdateRequest;
 
@@ -41,9 +40,8 @@ class AccountSettingsController extends Controller
     /**
      * Delete the user's account.
      */
-    public function destroy(Request $request): RedirectResponse
+    public function destroy(DeleteAccountRequest $request)
     {
-        $request->validate(['password' => ['required', 'current_password']]);
         $user = $request->user();
 
         Auth::logout();
@@ -52,6 +50,6 @@ class AccountSettingsController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return Redirect::to('/');
+        return response(null, 202);
     }
 }
