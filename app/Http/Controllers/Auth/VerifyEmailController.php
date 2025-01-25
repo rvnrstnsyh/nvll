@@ -14,8 +14,15 @@ class VerifyEmailController extends Controller
      */
     public function store(EmailVerificationRequest $request): RedirectResponse
     {
-        if ($request->user()->hasVerifiedEmail()) return redirect()->intended(route('dashboard.create', absolute: false) . '?verified=1');
-        if ($request->user()->markEmailAsVerified()) event(new Verified($request->user()));
+        $user = $request->user();
+        if ($user->hasVerifiedEmail()) return redirect()->intended(route('dashboard.create', absolute: false) . '?verified=1');
+        if ($user->markEmailAsVerified()) {
+            $preferences = $user->preferences();
+            if ($preferences->exists() && !$preferences->first()->freeze) {
+                $preferences->update(['freeze' => true]);
+            }
+            event(new Verified($user));
+        }
         return redirect()->intended(route('dashboard.create', absolute: false) . '?verified=1');
     }
 }

@@ -26,6 +26,7 @@ return new class extends Migration
         Schema::create('preferences', function (Blueprint $table) {
             $table->string('username')->primary()->unique();
             $table->foreignUlid('user_id')->index(); // ->constrained('users')->onDelete('cascade');
+            $table->boolean('freeze')->default(false);
             $table->string('avatar_url')->nullable()->default(null);
             $table->string('public_key')->nullable()->default(null);
             $table->timestamps();

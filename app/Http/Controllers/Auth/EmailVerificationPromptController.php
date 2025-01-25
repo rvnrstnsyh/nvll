@@ -27,6 +27,9 @@ class EmailVerificationPromptController extends Controller
         if (!$preferences->exists()) {
             return redirect(route('choose-username.create', absolute: false));
         }
-        return Inertia::render('Auth/VerifyEmail', ['status' => session('status')]);
+        return Inertia::render('Auth/VerifyEmail', [
+            'status' => session('status'),
+            'canChangeUsername' => !$preferences->first()->freeze
+        ]);
     }
 }

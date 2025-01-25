@@ -24,16 +24,15 @@ class ChooseUsernameController extends Controller
     public function create(Request $request)
     {
         $user = $request->user();
-        $preferences = $user->preferences();
+        $preferences = $user->preferences()->first();
 
-        if ($user->hasVerifiedEmail()) {
-            if ($preferences->exists()) {
-                return redirect(route('dashboard.create', absolute: false));
-            };
-            return abort(403);
+        if ($user->hasVerifiedEmail() || ($preferences && $preferences->freeze)) {
+            return $preferences
+                ? redirect(route('dashboard.create', absolute: false))
+                : abort(403);
         }
         return Inertia::render('Auth/ChooseUsername', [
-            'username' => $preferences->exists() ? $user->preferences->username : null
+            'username' => $preferences->username ?? null
         ]);
     }
 
