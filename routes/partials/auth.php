@@ -58,6 +58,7 @@ Route::middleware('auth:web')->group(function () {
         ->name('confirm-password.store');
 
     Route::put('password', [App\Http\Controllers\Auth\PasswordController::class, 'update'])
+        ->middleware('zerotrust')
         ->name('password.update');
 
     Route::post('sign-out', [App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'destroy'])

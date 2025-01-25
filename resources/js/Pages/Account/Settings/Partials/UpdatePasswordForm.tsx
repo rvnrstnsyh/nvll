@@ -4,13 +4,20 @@ import PasswordRules from '@/Components/PasswordRules'
 import PrimaryButton from '@/Components/PrimaryButton'
 import TextInput from '@/Components/TextInput'
 import TogglePassword from '@/Components/TogglePassword'
+import axios from 'axios'
 
+import { useZeroTrust } from '@/Context/ZeroTrust'
 import { Transition } from '@headlessui/react'
 import { useForm } from '@inertiajs/react'
-import { FormEventHandler, useRef } from 'react'
+import { utf8ToBytes } from '@noble/ciphers/utils'
+import { FormEventHandler, useRef, useState } from 'react'
 import { z } from 'zod'
 
-const passwordRules = z
+interface Props {
+  className?: string
+}
+
+const passwordRules: z.ZodString = z
   .string()
   .trim()
   .min(8, { message: 'Password must be at least 8 characters long.' })
@@ -25,10 +32,13 @@ const formSchema: z.ZodType = z
 
 type UpdatePasswordValidationSchema = z.infer<typeof formSchema>
 
-export default function UpdatePasswordForm({ className = '' }: { className?: string }) {
+export default function UpdatePasswordForm({ className = '' }: Props) {
+  const [recentlySuccessful, setRecentlySuccessful] = useState<boolean>(false)
+  const [processing, setProcessing] = useState<boolean>(false)
+  const { Aes } = useZeroTrust()
   const passwordInput = useRef<HTMLInputElement>(null)
   const currentPasswordInput = useRef<HTMLInputElement>(null)
-  const { data, setData, errors, put, reset, processing, recentlySuccessful, setError } = useForm({
+  const { data, setData, errors, reset, setError } = useForm({
     current_password: '',
     password: '',
     password_confirmation: ''
@@ -48,35 +58,53 @@ export default function UpdatePasswordForm({ className = '' }: { className?: str
       'mx-1'
     ].join(' ')
   }
-  const updatePassword: FormEventHandler = (event) => {
+  const updatePassword: FormEventHandler = async (event: React.FormEvent<Element>): Promise<void> => {
     event.preventDefault()
+    setProcessing(true)
+    setRecentlySuccessful(false)
+
     const validation: z.SafeParseReturnType<typeof data, UpdatePasswordValidationSchema> = formSchema.safeParse(data)
     if (!validation.success) {
-      // Clear previous errors that are no longer present in current validation
-      Object.keys(errors).forEach((key: string) => {
+      // Clear previous errors that are no longer present in current validation.
+      Object.keys(errors).forEach((key: string): void => {
         if (!validation.error.errors.some((error) => error.path[0] === key)) setError(key as keyof typeof errors, '')
       })
-      // Set new validation errors
-      validation.error.errors.forEach((error) => {
+      // Set new validation errors.
+      validation.error.errors.forEach((error): void => {
         const key = error.path[0] as keyof typeof data
         setError(key, error.message)
       })
-      return
+      return setProcessing(false)
     }
-    put(route('password.update'), {
-      preserveScroll: true,
-      onSuccess: () => reset(),
-      onError: (errors) => {
-        if (errors.password) {
-          reset('password', 'password_confirmation')
-          passwordInput.current?.focus()
+
+    const headers: { [key: string]: string } = { 'Content-Type': 'application/json' }
+    const seal: string = await Aes.encrypt(utf8ToBytes(JSON.stringify(data)))
+    await axios
+      .put(route('password.update'), { seal }, { headers })
+      .then((response) => {
+        if (response.status === 202) {
+          reset()
+          setProcessing(false)
+          setRecentlySuccessful(true)
         }
-        if (errors.current_password) {
-          reset('current_password')
-          currentPasswordInput.current?.focus()
-        }
-      }
-    })
+      })
+      .catch((error) => {
+        if (error.response.data.errors) {
+          for (const [key, value] of Object.entries(error.response.data.errors)) {
+            setError(key as keyof typeof data, (value as string[])[0])
+          }
+          if (errors.password) {
+            reset('password', 'password_confirmation')
+            passwordInput.current?.focus()
+          }
+          if (errors.current_password) {
+            reset('current_password')
+            currentPasswordInput.current?.focus()
+          }
+        } else setError('password', error.response.data.message)
+        setProcessing(false)
+      })
+      .finally(() => setTimeout(async () => setRecentlySuccessful(false), 750))
   }
 
   return (
@@ -125,7 +153,7 @@ export default function UpdatePasswordForm({ className = '' }: { className?: str
             <InputError message={errors.password} className="mt-2" />
           </div>
 
-          <div className="mt-6">
+          <div className="-mb-4 mt-6">
             <InputLabel htmlFor="hs-update-password-password-confirmation" value="Confirm Password" />
             <div className="relative">
               <TextInput
@@ -156,7 +184,7 @@ export default function UpdatePasswordForm({ className = '' }: { className?: str
             leave="transition ease-in-out"
             leaveTo="opacity-0"
           >
-            <p className="text-sm text-gray-600">Saved.</p>
+            <p className="text-sm text-green-600">Saved.</p>
           </Transition>
         </div>
       </form>
