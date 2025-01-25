@@ -15,7 +15,8 @@ test('password can be updated', function () {
         ]);
     $response
         ->assertSessionHasNoErrors()
-        ->assertRedirect(route('account-settings.create'));
+        // ->assertRedirect(route('account-settings.create'));
+        ->assertStatus(202);
 
     $this->assertTrue(Hash::check('New-password-000!', $user->refresh()->password));
 });

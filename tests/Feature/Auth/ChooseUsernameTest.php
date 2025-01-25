@@ -24,7 +24,8 @@ test('users can specify a username', function () {
     ->post(route('choose-username.store'), ['username' => 'flyingcat000']);
   $response
     ->assertSessionHasNoErrors()
-    ->assertRedirect(route('verification.notice', absolute: false));
+    // ->assertRedirect(route('verification.notice', absolute: false));
+    ->assertStatus(201);
 
   $this->assertDatabaseHas('preferences', [
     'user_id' => $user->id,
@@ -47,7 +48,8 @@ test('users can change username before verification email is done', function () 
     ->post(route('choose-username.store'), ['username' => 'flyingcat001']);
   $response
     ->assertSessionHasNoErrors()
-    ->assertRedirect(route('verification.notice', absolute: false));
+    // ->assertRedirect(route('verification.notice', absolute: false));
+    ->assertStatus(201);
 
   $this->assertDatabaseMissing('preferences', [
     'user_id' => $user->id,

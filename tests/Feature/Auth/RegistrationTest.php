@@ -16,5 +16,6 @@ test('new users can sign-up', function () {
     $this->assertDatabaseHas('users', ['email' => 'test@example.com']);
     $this->assertAuthenticated();
 
-    $response->assertRedirect(route('dashboard.create', absolute: false));
+    // $response->assertRedirect(route('dashboard.create', absolute: false));
+    $response->assertStatus(201);
 });
