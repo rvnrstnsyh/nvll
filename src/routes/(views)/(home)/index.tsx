@@ -1,10 +1,14 @@
 import { JSX } from 'preact/jsx-runtime'
-import { asset } from '$fresh/runtime.ts'
+import { asset, Head } from '$fresh/runtime.ts'
 import { defineRoute, RouteContext } from '$fresh/server.ts'
 
 export default defineRoute((_request: Request, _ctx: RouteContext<void, State>): JSX.Element => {
 	return (
 		<section className='home'>
+			<Head>
+				<meta name='description' content='Rivane Rasetiansyah – Software Developer and advocate of Free and Open Source Software (FOSS).' />
+				<meta name='keywords' content='Rivane Rasetiansyah, Software Developer, Full-Stack Developer, JavaScript, Open Source, FOSS' />
+			</Head>
 			<header>
 				<div className='link'>
 					[<a href='eml/developer-insights_nvll_2025-02-07T19_24_15+07_00.eml'>Source Message</a>]
@@ -74,7 +78,7 @@ export default defineRoute((_request: Request, _ctx: RouteContext<void, State>):
 							<p className='description'>
 								JavaScript Developer
 								<br />
-								[<a href='https://etherscan.io/address/0x0000047189d70937321EEc75E5F222A0F4000094'>Tips</a>]
+								[<a href='https://etherscan.io/address/0x0000047189d70937321EEc75E5F222A0F4000094'>ETH</a>]
 							</p>
 						</div>
 					</div>
