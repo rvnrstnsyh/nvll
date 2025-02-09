@@ -22,7 +22,7 @@ interface CspReport {
 }
 
 const LOG_DIR: string = './src/logs'
-const LOG_FILE: string = `${LOG_DIR}/csp-reports.txt`
+const LOG_FILE: string = `${LOG_DIR}/csp-reports.log`
 
 export const handler = {
 	/**
