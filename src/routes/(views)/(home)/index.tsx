@@ -22,10 +22,10 @@ export default defineLayout((_request: Request, _ctx: RouteContext<void, unknown
 					<section className='letter'>
 						<header>
 							<div className='link'>
-								[<a className='anchor-text' href='eml/developer-insights_nvll_2025-02-07T19_24_15+07_00.eml'>Source Message</a>]
+								[<a className='anchor-text' href='eml/developer_insights_nvll-2025-02-10T23_54_17+07_00.eml'>Source Message</a>]
 							</div>
 							<p>
-								Bandung, Indonesia<br />07 February 2025
+								Bandung, Indonesia<br />10 February 2025
 							</p>
 						</header>
 						<blockquote>
