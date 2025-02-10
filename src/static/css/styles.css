@@ -49,7 +49,6 @@
     display: none !important;
   }
 }
-
 /* CSS variables for reusablity across all files (including above imported) */
 :root {
   --primary-color: #1f2937;
@@ -155,44 +154,21 @@ body {
 /**!
   *! LAYOUT SECTION -----
   */
-section.main-layout {
-  @apply relative
-    flex
-    min-h-screen
-    items-center
-    bg-gray-100
-    pt-0
-    sm:justify-center
-    flex-col
-    md:flex-row
-    md:gap-4;
-}
-section.main-layout img.background {
+section.main-layout .overlay {
   @apply fixed
-  -top-0
-  left-0
+  bg-[url('../png/background.png')]
+  bg-no-repeat
+  bg-cover
   z-0
-  max-w-lg
-  translate-x-[-20%]
-  translate-y-[-30%]
-  transform
-  md:max-w-[877px]
-  md:translate-y-0;
-}
-section.main-layout .children-wrapper {
-  @apply relative
-  z-10
   w-full
-  flex
-  items-center
-  justify-center
-  overflow-hidden
-  bg-white
-  px-6
-  py-4
-  shadow-md
-  sm:max-w-md
-  sm:rounded-lg;
+  max-w-lg
+  -translate-x-[20%]
+  -translate-y-[30%]
+  md:max-w-[877px]
+  md:translate-y-0
+  transition-transform
+  duration-300
+  inset-0;
 }
 /**!
   *! END LAYOUT SECTION -----
@@ -201,15 +177,12 @@ section.main-layout .children-wrapper {
   *! NAVIGATION SECTION -----
   */
 nav.navigation {
-  @apply z-10
-  mx-auto
+  @apply mx-auto
   w-full
+  px-2
   py-5
   max-w-[500px]
-  mt-[1px]
-  px-4
-  sm:px-6
-  lg:px-8;
+  mt-[1px];
 }
 nav.navigation .wrapper {
   @apply flex
@@ -243,79 +216,170 @@ nav.navigation .wrapper ul li a {
 /**!
   *! HOME SECTION -----
   */
-section.home header {
-  @apply flex;
-}
-section.home header .link {
-  @apply flex-1;
-}
-section.home header .link a {
-  @apply anchor-text
-  text-sm;
-}
-section.home header p {
-  @apply text-end
-  text-sm;
-}
-section.home blockquote {
-  @apply relative;
-}
-section.home blockquote img.quote {
-  @apply absolute
-  -start-2
-  -top-7
-  size-16;
-}
-section.home blockquote .content {
+section.home {
   @apply relative
-  z-10;
+    flex
+    min-h-screen
+    items-center
+    justify-center
+    bg-gray-100
+    flex-col
+    md:flex-row
+    md:gap-4
+    gap-y-4;
 }
-section.home blockquote .content p.paragraph {
-  @apply text-justify
-  text-sm;
+section.home .container {
+  @apply relative
+    w-full
+    flex
+    items-center
+    justify-center
+    overflow-hidden
+    bg-white
+    p-4
+    md:p-5
+    mx-auto
+    shadow-md
+    sm:max-w-md
+    sm:rounded-lg
+    transition-all
+    duration-300;
 }
-section.home blockquote .content p.signature {
-  @apply text-gray-400
-  text-justify
-  text-sm;
+section.home section.letter {
+  @apply w-full;
 }
-section.home blockquote footer {
-  @apply mt-4
-  flex
-  items-center
-  justify-between;
-}
-section.home blockquote footer .left,
-section.home blockquote footer .right {
+section.home section.letter header {
   @apply flex
-  items-center;
+    items-center
+    justify-between
+    w-full
+    mb-4;
 }
-section.home blockquote footer .left img.avatar {
-  @apply shrink-0
-  size-10
-  rounded-full;
+section.home section.letter header .link {
+  @apply flex-1
+  text-sm;
 }
-section.home blockquote footer .left .bio {
-  @apply ms-2;
+section.home section.letter header p {
+  @apply text-end
+    text-sm;
 }
-section.home blockquote footer .left .bio p.name {
-  @apply text-base
-  font-semibold
-  text-gray-800;
+section.home section.letter blockquote {
+  @apply relative
+    pt-8
+    px-2;
 }
-section.home blockquote footer .left .bio p.description {
-  @apply text-xs
-  text-gray-500;
-}
-section.home blockquote footer .left .bio p.description a {
-  @apply anchor-text;
-}
-section.home blockquote footer .right img.logo {
+section.home section.letter blockquote img.quote {
   @apply absolute
-  bottom-2.5
-  right-2.5
-  w-[68px]
-  h-[80px];
+    start-0
+    -top-[27px]
+    size-16
+    opacity-80;
+}
+section.home section.letter blockquote .content {
+  @apply relative
+    
+    space-y-4;
+}
+section.home section.letter blockquote .content p.paragraph {
+  @apply text-justify
+    text-sm
+    leading-relaxed;
+}
+section.home section.letter blockquote .content span.signature {
+  @apply text-gray-400
+    text-justify
+    text-sm;
+}
+section.home section.letter blockquote footer {
+  @apply mt-4
+    flex
+    items-center
+    justify-between
+    relative
+    px-2;
+}
+section.home section.letter blockquote footer .left,
+section.home section.letter blockquote footer .right {
+  @apply flex
+    items-center
+    gap-2;
+}
+section.home section.letter blockquote footer .left img.avatar {
+  @apply shrink-0
+    size-10
+    rounded-full
+    object-cover;
+}
+section.home section.letter blockquote footer .left .bio {
+  @apply space-y-0.5;
+}
+section.home section.letter blockquote footer .left .bio p.name {
+  @apply text-base
+    font-semibold
+    text-gray-800;
+}
+section.home section.letter blockquote footer .left .bio p.description {
+  @apply text-xs
+    text-gray-500;
+}
+section.home section.letter blockquote footer .right img.logo {
+  @apply absolute
+    bottom-2.5
+    right-2.5
+    w-[68px]
+    h-[80px]
+    object-contain;
+}
+section.home section.contact {
+  @apply w-full
+    max-w-md
+    mx-auto;
+}
+section.home section.contact header {
+  @apply space-y-2
+    mb-4;
+}
+section.home section.contact header h1.title {
+  @apply text-2xl
+    font-semibold
+    leading-relaxed
+    text-gray-800;
+}
+section.home section.contact header p.paragraph {
+  @apply text-justify
+    text-sm
+    leading-relaxed;
+}
+section.home section.contact .content ul {
+  @apply space-y-0;
+}
+section.home section.contact .content ul li {
+  @apply flex
+    items-center
+    gap-3
+    py-1.5
+    text-sm
+    transition-colors
+    duration-200
+    rounded-md
+    px-2;
+}
+section.home section.contact .content ul li .img-wrapper {
+  @apply w-6
+    h-6
+    flex
+    items-center
+    justify-center
+    shrink-0;
+}
+section.home section.contact .content ul li .img-wrapper img {
+  @apply w-5
+    h-5
+    object-contain;
+}
+section.home section.contact .content ul li .img-wrapper img.linkedin {
+  @apply w-3.5
+    h-3.5;
 }
 /**!
   *! END HOME SECTION -----
