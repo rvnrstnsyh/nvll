@@ -1,20 +1,20 @@
 import { JSX } from 'preact/jsx-runtime'
 
 interface NavigationProps {
-	copyright: boolean
+	bottom?: boolean
 	currentYear?: number
 }
 
-export default function Navigation({ copyright, currentYear }: NavigationProps): JSX.Element {
+export default function Navigation({ bottom, currentYear }: NavigationProps): JSX.Element {
 	return (
-		<nav className='navigation'>
+		<nav className={`navigation ${bottom ? 'my-[16px]' : 'my-[17px]'}`}>
 			<div className='wrapper'>
 				<div>
-					{copyright && <p className='copyright'>© {currentYear || '2025'} Non-Violable Liberty Layers.</p>}
+					{currentYear && <p className='copyright'>© {currentYear || '2025'} Non-Violable Liberty Layers.</p>}
 				</div>
 				<ul>
 					<li>
-						[<a href='mailto:re@nvll.me'>Contact</a>]
+						[<a href='https://etherscan.io/address/0x0000047189d70937321EEc75E5F222A0F4000094'>Support</a>]
 					</li>
 					<li>
 						[<a href='https://github.com/rvnrstnsyh'>GitHub</a>]

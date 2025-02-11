@@ -131,7 +131,15 @@ export default class Sentinel {
 		const CSP_HEADER: Readonly<Record<string, string>> = isDarkNet ? SENTINEL_CSP_HEADER : HELMET_CSP_HEADER
 		const PERMISSIONS_POLICY: Readonly<string> = isDarkNet ? SENTINEL_PERMISSIONS_POLICY_HEADER : HELMET_PERMISSIONS_POLICY_HEADER
 
-		DEFAULT_HEADERS.forEach((value, key) => headers.set(key, value))
+		DEFAULT_HEADERS.forEach((value: string, key: string) => headers.set(key, value))
+
+		const LOCAL_ORIGINS: string[] = ['http://localhost', 'http://127.0.0.1', 'http://0.0.0.0']
+
+		if (Deno.env.get('APP_ENV') === 'production') {
+			LOCAL_ORIGINS.forEach((origin: string) => this.CONFIG.ALLOWED_ORIGINS.delete(origin))
+		} else {
+			LOCAL_ORIGINS.forEach((origin: string) => this.CONFIG.ALLOWED_ORIGINS.add(origin))
+		}
 
 		if (isDarkNet) {
 			const hostname: string | undefined = Deno.env.get('APP_HOSTNAME_V3')
