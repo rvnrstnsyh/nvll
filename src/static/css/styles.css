@@ -159,7 +159,7 @@ section.main-layout .overlay {
   bg-[url('../png/background.png')]
   bg-no-repeat
   bg-cover
-  z-0
+  z-10
   w-full
   max-w-lg
   -translate-x-[20%]
@@ -179,10 +179,8 @@ section.main-layout .overlay {
 nav.navigation {
   @apply mx-auto
   w-full
-  px-2
-  py-5
-  max-w-[500px]
-  mt-[1px];
+  px-1.5
+  max-w-[500px];
 }
 nav.navigation .wrapper {
   @apply flex
@@ -196,7 +194,8 @@ nav.navigation .wrapper .copyright {
   text-gray-600;
 }
 nav.navigation .wrapper ul {
-  @apply flex
+  @apply z-20
+  flex
   flex-wrap
   items-center;
 }
@@ -218,32 +217,32 @@ nav.navigation .wrapper ul li a {
   */
 section.home {
   @apply relative
-    flex
-    min-h-screen
-    items-center
-    justify-center
-    bg-gray-100
-    flex-col
-    md:flex-row
-    md:gap-4
-    gap-y-4;
+  flex
+  min-h-screen
+  items-center
+  justify-center
+  bg-gray-100
+  flex-col
+  md:flex-row
+  md:gap-4;
 }
 section.home .container {
-  @apply relative
-    w-full
-    flex
-    items-center
-    justify-center
-    overflow-hidden
-    bg-white
-    p-4
-    md:p-5
-    mx-auto
-    shadow-md
-    sm:max-w-md
-    sm:rounded-lg
-    transition-all
-    duration-300;
+  @apply z-20
+  relative
+  w-full
+  flex
+  items-center
+  justify-center
+  overflow-hidden
+  bg-white
+  p-4
+  mb-4
+  mx-auto
+  shadow-md
+  sm:max-w-md
+  sm:rounded-lg
+  transition-all
+  duration-300;
 }
 section.home section.letter {
   @apply w-full;
@@ -356,7 +355,7 @@ section.home section.contact .content ul {
 section.home section.contact .content ul li {
   @apply flex
     items-center
-    gap-3
+    gap-1
     py-1.5
     text-sm
     transition-colors
@@ -380,6 +379,26 @@ section.home section.contact .content ul li .img-wrapper img {
 section.home section.contact .content ul li .img-wrapper img.linkedin {
   @apply w-3.5
     h-3.5;
+}
+section.home section.privacy {
+  @apply w-full
+    max-w-md
+    mx-auto;
+}
+section.home section.privacy header {
+  @apply space-y-2
+    mb-4;
+}
+section.home section.privacy header h1.title {
+  @apply text-2xl
+    font-semibold
+    leading-relaxed
+    text-gray-800;
+}
+section.home section.privacy header p.paragraph {
+  @apply text-justify
+    text-sm
+    leading-relaxed;
 }
 /**!
   *! END HOME SECTION -----
