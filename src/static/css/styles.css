@@ -123,6 +123,13 @@ body {
   underline
   hover:no-underline;
 }
+.markdown-body a {
+  color: #4b5563 !important;
+  text-decoration: underline !important;
+}
+.markdown-body a:hover {
+  text-decoration: none !important;
+}
 .primary-button {
   @apply inline-flex
   items-center
@@ -178,9 +185,8 @@ section.main-layout .overlay {
   */
 nav.navigation {
   @apply mx-auto
-  w-full
   px-1.5
-  max-w-[500px];
+  max-w-full
 }
 nav.navigation .wrapper {
   @apply flex

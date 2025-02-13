@@ -10,6 +10,15 @@ declare global {
 		}
 		authenticated?: boolean
 	}
+	interface Post {
+		slug: string | undefined
+		title: string | undefined
+		published_at: Date
+		author: string | undefined
+		contact: string | undefined
+		content: string | undefined
+		snippet: string | undefined
+	}
 }
 
 export {}
