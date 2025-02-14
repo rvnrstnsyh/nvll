@@ -6,10 +6,10 @@ type Link = { name: string; src: string; link: string; text: string }
 export default function Contact(): JSX.Element {
 	const links: Link[] = [
 		{ name: 'Email', src: 'png/email-logo.png', link: 'mailto:re@nvll.me', text: 're@nvll.me' },
-		{ name: 'LinkedIn', src: 'png/linkedin-logo.png', link: 'https://www.linkedin.com/in/rvnrstnsyh', text: 'www.linkedin.com/in/rvnrstnsyh' },
-		{ name: 'Mastodon', src: 'png/mastodon-logo.png', link: 'https://fosstodon.org/@rvnrstnsyh', text: '@rvnrstnsyh@fosstodon.org' },
+		{ name: 'Alternative', src: '', link: 'mailto:rasetiansyah@pm.me', text: 'rasetiansyah@pm.me' },
 		{ name: 'Matrix', src: 'png/matrix-logo.png', link: 'https://matrix.to/#/@rvnrstnsyh:matrix.org', text: '@rvnrstnsyh:matrix.org' },
-		{ name: 'Pixelfed', src: 'png/pixelfed-logo.png', link: 'https://pixel.infosec.exchange/rvnrstnsyh', text: '@rvnrstnsyh@pixel.infosec.exchange' },
+		{ name: 'Fediverse', src: 'png/mastodon-logo.png', link: 'https://fosstodon.org/@rvnrstnsyh', text: '@rvnrstnsyh@fosstodon.org' },
+		{ name: 'LinkedIn', src: 'png/linkedin-logo.png', link: 'https://www.linkedin.com/in/rvnrstnsyh', text: 'www.linkedin.com/in/rvnrstnsyh' },
 	]
 	return (
 		<section className='contact'>
@@ -24,7 +24,7 @@ export default function Contact(): JSX.Element {
 					{links.map(({ name, src, link, text }: Link): JSX.Element => (
 						<li key={name}>
 							<div className='img-wrapper'>
-								<img className={name.toLowerCase()} src={asset(src)} alt={name} />
+								{src !== '' && <img className={name.toLowerCase()} src={asset(src)} alt={name} />}
 							</div>
 							<p>
 								<b>{name}</b> [<a className='anchor-text' href={link}>{text}</a>]
@@ -32,6 +32,9 @@ export default function Contact(): JSX.Element {
 						</li>
 					))}
 				</ul>
+				<p className='paragraph'>
+					Identity claims: <a className='anchor-text' href='https://keyoxide.org/hkp/e2fd809db061dca8'>keyoxide.org/hkp/e2fd809db061dca8</a>
+				</p>
 			</div>
 		</section>
 	)
