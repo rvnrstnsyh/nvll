@@ -7,8 +7,8 @@ export default function Contact(): JSX.Element {
 	const links: Link[] = [
 		{ name: 'Email', src: 'png/email-logo.png', link: 'mailto:re@nvll.me', text: 're@nvll.me' },
 		{ name: 'LinkedIn', src: 'png/linkedin-logo.png', link: 'https://www.linkedin.com/in/rvnrstnsyh', text: 'www.linkedin.com/in/rvnrstnsyh' },
-		{ name: 'Mastodon', src: 'png/mastodon-logo.png', link: 'https://infosec.exchange/@rvnrstnsyh', text: '@rvnrstnsyh@infosec.exchange' },
-		{ name: 'Matrix', src: 'png/matrix-logo.png', link: 'https://matrix.to/#/@rvnrstnsyh:infosec.exchange', text: '@rvnrstnsyh:infosec.exchange' },
+		{ name: 'Mastodon', src: 'png/mastodon-logo.png', link: 'https://fosstodon.org/@rvnrstnsyh', text: '@rvnrstnsyh@fosstodon.org' },
+		{ name: 'Matrix', src: 'png/matrix-logo.png', link: 'https://matrix.to/#/@rvnrstnsyh:matrix.org', text: '@rvnrstnsyh:matrix.org' },
 		{ name: 'Pixelfed', src: 'png/pixelfed-logo.png', link: 'https://pixel.infosec.exchange/rvnrstnsyh', text: '@rvnrstnsyh@pixel.infosec.exchange' },
 	]
 	return (
