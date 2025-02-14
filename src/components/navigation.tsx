@@ -23,7 +23,7 @@ export default function Navigation({ bottom, currentYear }: NavigationProps): JS
 						[<a href='pdf/curriculum-vitae.pdf'>CV</a>]
 					</li>
 					<li>
-						[<a href='asc/OpenPGP_0xE2FD809DB061DCA8.asc'>PGP</a>]
+						[<a href='asc/publickey.asc'>PGP</a>]
 					</li>
 				</ul>
 			</div>
