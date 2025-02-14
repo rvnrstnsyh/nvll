@@ -6,7 +6,7 @@ export default function Letter(): JSX.Element {
 		<section className='letter'>
 			<header>
 				<div className='link'>
-					[<a className='anchor-text' href='eml/developer_insights_nvll-2025-02-14T23_24_33+07_00.eml'>Source Message</a>]
+					[<a className='anchor-text' href='/eml/developer_insights_nvll-2025-02-14T23_24_33+07_00.eml'>Source Message</a>]
 				</div>
 				<p>
 					Bandung, Indonesia<br />14 February 2025

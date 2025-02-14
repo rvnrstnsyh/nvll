@@ -5,11 +5,11 @@ type Link = { name: string; src: string; link: string; text: string }
 
 export default function Contact(): JSX.Element {
 	const links: Link[] = [
-		{ name: 'Email', src: 'png/email-logo.png', link: 'mailto:re@nvll.me', text: 're@nvll.me' },
+		{ name: 'Email', src: '/png/email-logo.png', link: 'mailto:re@nvll.me', text: 're@nvll.me' },
 		{ name: 'Alternative', src: '', link: 'mailto:rasetiansyah@pm.me', text: 'rasetiansyah@pm.me' },
-		{ name: 'Matrix', src: 'png/matrix-logo.png', link: 'https://matrix.to/#/@rvnrstnsyh:matrix.org', text: '@rvnrstnsyh:matrix.org' },
-		{ name: 'Fediverse', src: 'png/mastodon-logo.png', link: 'https://fosstodon.org/@rvnrstnsyh', text: '@rvnrstnsyh@fosstodon.org' },
-		{ name: 'LinkedIn', src: 'png/linkedin-logo.png', link: 'https://www.linkedin.com/in/rvnrstnsyh', text: 'www.linkedin.com/in/rvnrstnsyh' },
+		{ name: 'Matrix', src: '/png/matrix-logo.png', link: 'https://matrix.to/#/@rvnrstnsyh:matrix.org', text: '@rvnrstnsyh:matrix.org' },
+		{ name: 'Fediverse', src: '/png/mastodon-logo.png', link: 'https://fosstodon.org/@rvnrstnsyh', text: '@rvnrstnsyh@fosstodon.org' },
+		{ name: 'LinkedIn', src: '/png/linkedin-logo.png', link: 'https://www.linkedin.com/in/rvnrstnsyh', text: 'www.linkedin.com/in/rvnrstnsyh' },
 	]
 	return (
 		<section className='contact'>

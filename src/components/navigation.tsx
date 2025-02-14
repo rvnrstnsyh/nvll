@@ -20,10 +20,10 @@ export default function Navigation({ bottom, currentYear }: NavigationProps): JS
 						[<a href='https://github.com/rvnrstnsyh'>GitHub</a>]
 					</li>
 					<li>
-						[<a href='pdf/curriculum-vitae.pdf'>CV</a>]
+						[<a href='/pdf/curriculum-vitae.pdf'>CV</a>]
 					</li>
 					<li>
-						[<a href='asc/publickey.asc'>PGP</a>]
+						[<a href='/asc/publickey.asc'>PGP</a>]
 					</li>
 				</ul>
 			</div>
