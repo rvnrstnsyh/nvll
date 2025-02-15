@@ -118,15 +118,78 @@ html {
 body {
   margin: 0 auto;
 }
+@layer base {
+  h1 {
+    @apply text-4xl
+    md:text-5xl
+    font-bold
+    tracking-tight;
+  }
+  h2 {
+    @apply text-3xl
+    md:text-4xl
+    font-semibold
+    tracking-tight;
+  }
+  h3 {
+    @apply text-2xl
+    md:text-3xl
+    font-semibold
+    tracking-tight;
+  }
+  h4 {
+    @apply text-xl
+    md:text-2xl
+    font-semibold;
+  }
+  h5 {
+    @apply text-lg
+    md:text-xl
+    font-medium;
+  }
+  h6 {
+    @apply text-base
+    md:text-lg
+    font-medium;
+  }
+}
 .anchor-text {
   @apply text-gray-600
   underline
   hover:no-underline;
 }
-.paragraph {
+.paragraph,
+.markdown-body p,
+.markdown-body pre,
+.markdown-body table,
+.markdown-body table tr,
+.markdown-body table td,
+.markdown-body table th,
+.markdown-body li,
+.markdown-body dd,
+.markdown-body dt,
+.markdown-body blockquote,
+.markdown-body figcaption,
+.markdown-body span,
+.markdown-body em,
+.markdown-body i,
+.markdown-body strong,
+.markdown-body b,
+.markdown-body u,
+.markdown-body s,
+.markdown-body del,
+.markdown-body mark,
+.markdown-body code,
+.markdown-body abbr,
+.markdown-body cite,
+.markdown-body q,
+.markdown-body sub,
+.markdown-body sup,
+.markdown-body kbd,
+.markdown-body var {
   @apply text-justify
-    text-sm
-    leading-relaxed;
+  text-sm
+  leading-relaxed;
 }
 .markdown-body a {
   color: #4b5563 !important;
@@ -191,7 +254,7 @@ section.main-layout .overlay {
 nav.navigation {
   @apply mx-auto
   px-1.5
-  max-w-full
+  max-w-full;
 }
 nav.navigation .wrapper {
   @apply flex

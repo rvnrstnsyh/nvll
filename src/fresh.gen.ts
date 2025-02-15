@@ -2,10 +2,11 @@
 // This file SHOULD be checked into source version control.
 // This file is automatically updated during development when running `dev.ts`.
 
+import * as $_views_home_layout from './routes/(views)/(home)/_layout.tsx'
 import * as $_views_home_index from './routes/(views)/(home)/index.tsx'
-import * as $_views_layout from './routes/(views)/_layout.tsx'
-import * as $_views_blogs_slug_index from './routes/(views)/blogs/[slug]/index.tsx'
-import * as $_views_blogs_index from './routes/(views)/blogs/index.tsx'
+import * as $_views_reposts_slug_index from './routes/(views)/reposts/[slug]/index.tsx'
+import * as $_views_reposts_layout from './routes/(views)/reposts/_layout.tsx'
+import * as $_views_reposts_index from './routes/(views)/reposts/index.tsx'
 import * as $_app from './routes/_app.tsx'
 import * as $_middleware from './routes/_middleware.ts'
 import * as $api_v0_csp_report from './routes/api/v0/csp/report.ts'
@@ -14,10 +15,11 @@ import type { Manifest } from '$fresh/server.ts'
 
 const manifest = {
 	routes: {
+		'./routes/(views)/(home)/_layout.tsx': $_views_home_layout,
 		'./routes/(views)/(home)/index.tsx': $_views_home_index,
-		'./routes/(views)/_layout.tsx': $_views_layout,
-		'./routes/(views)/blogs/[slug]/index.tsx': $_views_blogs_slug_index,
-		'./routes/(views)/blogs/index.tsx': $_views_blogs_index,
+		'./routes/(views)/reposts/[slug]/index.tsx': $_views_reposts_slug_index,
+		'./routes/(views)/reposts/_layout.tsx': $_views_reposts_layout,
+		'./routes/(views)/reposts/index.tsx': $_views_reposts_index,
 		'./routes/_app.tsx': $_app,
 		'./routes/_middleware.ts': $_middleware,
 		'./routes/api/v0/csp/report.ts': $api_v0_csp_report,

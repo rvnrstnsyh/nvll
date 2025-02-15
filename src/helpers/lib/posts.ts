@@ -12,18 +12,22 @@ const directory: string = join(dirname(fromFileUrl(import.meta.url)), '../../pos
  * @return {Promise<Post | null>} A promise resolving to the `Post` object if found, or `null` if not found.
  */
 export async function findPost(slug: string): Promise<Post | null> {
-	const filePath: string = join(directory, `${slug}.md`)
-	const text: string = await Deno.readTextFile(filePath)
-	const { attrs, body }: { attrs: Post; body: string } = extract(text)
+	try {
+		const filePath: string = join(directory, `${slug}.md`)
+		const text: string = await Deno.readTextFile(filePath)
+		const { attrs, body }: { attrs: Post; body: string } = extract(text)
 
-	return {
-		slug,
-		title: attrs.title || undefined,
-		published_at: new Date(attrs.published_at) || undefined,
-		author: attrs.author || undefined,
-		contact: attrs.contact || undefined,
-		content: body || undefined,
-		snippet: attrs.snippet || undefined,
+		return {
+			slug,
+			title: attrs.title || undefined,
+			published_at: new Date(attrs.published_at) || undefined,
+			author: attrs.author || undefined,
+			contact: attrs.contact || undefined,
+			content: body || undefined,
+			snippet: attrs.snippet || undefined,
+		}
+	} catch (_error) {
+		return null
 	}
 }
 
@@ -36,13 +40,18 @@ export async function findPost(slug: string): Promise<Post | null> {
  * @return {Promise<Post[]>} A promise resolving to an array of `Post` objects.
  */
 export async function findPosts(): Promise<Post[]> {
-	const files: AsyncIterable<Deno.DirEntry> = Deno.readDir(directory)
-	const promises: Promise<Post | null>[] = []
+	try {
+		const files: AsyncIterable<Deno.DirEntry> = Deno.readDir(directory)
+		const promises: Promise<Post | null>[] = []
 
-	for await (const file of files) promises.push(findPost(file.name.replace('.md', '')))
+		for await (const file of files) promises.push(findPost(file.name.replace('.md', '')))
 
-	const posts: Post[] = (await Promise.all(promises)) as Post[]
+		const posts: (Post | null)[] = await Promise.all(promises)
+		const validPosts: Post[] = posts.filter((post: Post | null): post is Post => post !== null)
 
-	posts.sort((a, b) => b.published_at.getTime() - a.published_at.getTime())
-	return posts
+		validPosts.sort((a: Post, b: Post) => b.published_at.getTime() - a.published_at.getTime())
+		return validPosts
+	} catch (_error) {
+		return []
+	}
 }
