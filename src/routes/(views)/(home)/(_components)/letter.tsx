@@ -6,14 +6,14 @@ export default function Letter(): JSX.Element {
 		<section className='letter'>
 			<header>
 				<div className='link'>
-					[<a className='anchor-text' href='eml/developer_insights_nvll-2025-02-10T23_54_17+07_00.eml'>Source Message</a>]
+					[<a className='anchor-text' href='/eml/developer_insights_nvll-2025-02-14T23_24_33+07_00.eml'>Source Message</a>]
 				</div>
 				<p>
-					Bandung, Indonesia<br />10 February 2025
+					Bandung, Indonesia<br />14 February 2025
 				</p>
 			</header>
 			<blockquote>
-				<img className='quote' src={asset('png/quote.png')} alt='Quote' />
+				<img className='quote' src={asset('/png/quote.png')} alt='Quote' />
 				<div className='content'>
 					<p className='paragraph'>
 						<em>
@@ -58,14 +58,14 @@ export default function Letter(): JSX.Element {
 				</div>
 				<footer>
 					<div className='left'>
-						<img className='avatar' src={asset('jpg/avatar_default_0-20230707-0001.jpg')} alt='Avatar' />
+						<img className='avatar' src={asset('/jpg/avatar_default_0-20230707-0001.jpg')} alt='Avatar' />
 						<div className='bio'>
 							<p className='name'>Rivane Rasetiansyah</p>
-							<p className='description'>JavaScript Developer</p>
+							<p className='description'>Software Developer</p>
 						</div>
 					</div>
 					<div className='right'>
-						<img className='logo' src={asset('png/logo.png')} alt='Logo' />
+						<img className='logo' src={asset('/png/logo.png')} alt='Logo' />
 					</div>
 				</footer>
 			</blockquote>

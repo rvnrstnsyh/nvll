@@ -1,0 +1,139 @@
+Delivered-To: rasetiansyah@gmail.com
+Received: by 2002:a05:6000:1786:b0:38d:c096:5a21 with SMTP id e6csp243299wrg; Fri, 14 Feb 2025 08:24:43 -0800 (PST)
+X-Google-Smtp-Source: AGHT+IGN7+hHBgBxiGq1F7oKQG3PnJm9tHW1Sp/hQHPoVyzKdycsuIEvxVsFF/fGgu8BfXcRgRFR
+X-Received: by 2002:a5d:6a52:0:b0:38f:3139:f57f with SMTP id ffacd0b85a97d-38f3139f764mr2725563f8f.16.1739550282855; Fri, 14 Feb 2025 08:24:42 -0800 (PST)
+ARC-Seal: i=1; a=rsa-sha256; t=1739550282; cv=none;
+        d=google.com; s=arc-20240605;
+        b=WITpU/h2ouSj/jKYGmIpY86szzhQ6t1k3kw0HtVAyoZjTnw4lwdAdVya9RHZPBc3g/oT3hMd2OkVx0syMa5ZaGwN7SfjaxV3N69atRHukB6XSiGDY9o1PYLg/rTiomiNXcrkwIkkAU2fXYbf
+         was9dqn0eZG/y9MMkoRzBlXmItzqDFhK2AYfWUrQ/zgEfk28+ADR7iCGJTaSsCCDNkbGFwqJh7s0u9N8vnD/x9JN35GIh7rb7ZwkKLjNxqqEtW8/jHK61CChlUu5p68ZXK4FXeTVlkgEuEK5x
+         DrN4ilXNFIm9byxmfftPgT7WwRZMptOfQjTdklvi+Hn6nR27kgFvg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=mime-version:feedback-id:disposition-notification-to:message-id :subject:cc:from:to:date:dkim-signature;
+        bh=FWSzCcHhaogkTulcyDQJTISLPudi5Yln9eKe6QEdDO4=;
+        fh=ZUFeHyhXB6o6tZ4IFuDntQfKwk3oVEg6cTu1DgJ0ysA=;
+        b=HvntqRx2ZCBH5su0zGqI6kZqyXOkwE0yzmcuYr6utLUquhgNpT3LhOIR46Bl7kPtH4c53BOYfzVi2jzl+vmDcca1TuPdob8RxKSSGnmsZGVWLQk958wx08eIxs6g6rijeb7SeG3YVng4wo/I
+         nzjpd0U+HvB3u4QCl0cXkePbynhku0mqqFAWoyPUtZC0bnzMsJ8GP63/f7LygWfgfHBGwr+qwReHj08UHRWAjfgzqqwungpjYe2NEtmAdmsURt3SQ0G1kZI82CYjtveyYFjVkrCFqLhJjYoln
+         mNPqhRurUEZfTsyqRAWdMkD8lYP3Xc+hnB55i0oXKnMdRT/G6sfYA==; dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+        dkim=pass header.i=@nvll.me header.s=protonmail header.b=J9rq7TBA;
+        spf=pass (google.com: domain of re@nvll.me designates 185.70.43.17 as permitted sender) smtp.mailfrom=re@nvll.me;
+        dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=nvll.me
+Return-Path: <re@nvll.me>
+Received: from mail-4317.protonmail.ch (mail-4317.protonmail.ch. [185.70.43.17])
+        by mx.google.com with ESMTPS id ffacd0b85a97d-38f259d5b91si4875377f8f.414.2025.02.14.08.24.42
+        for <rasetiansyah@gmail.com> (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256); Fri, 14 Feb 2025 08:24:42 -0800 (PST)
+Received-SPF: pass (google.com: domain of re@nvll.me designates 185.70.43.17 as permitted sender) client-ip=185.70.43.17;
+Authentication-Results: mx.google.com;
+        dkim=pass header.i=@nvll.me header.s=protonmail header.b=J9rq7TBA;
+        spf=pass (google.com: domain of re@nvll.me designates 185.70.43.17 as permitted sender) smtp.mailfrom=re@nvll.me;
+        dmarc=pass (p=QUARANTINE sp=QUARANTINE dis=NONE) header.from=nvll.me
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nvll.me;
+	s=protonmail; t=1739550281; x=1739809481;
+	bh=FWSzCcHhaogkTulcyDQJTISLPudi5Yln9eKe6QEdDO4=;
+	h=Date:To:From:Cc:Subject:Message-ID:Feedback-ID:From:To:Cc:Date: Subject:Reply-To:Feedback-ID:Message-ID:BIMI-Selector:
+	 List-Unsubscribe:List-Unsubscribe-Post;
+	b=J9rq7TBAwySyNCN0B1Q7eGq2eFHwadNQQYQMiOPBP0AQvqZJmkJDI2UffTjslDge56zMTrcxka866r2bc9H3zWGHs2SufGlGg/SoHWCz7YYkDudt5tnqbCeWN0w+pyfzdz627cc2kZc/yD+C
+         yG9B3RB4A5hiiHULLOEpM6ElxGTzlg4TSKa3Y+w2NRqIbF3zwlxh2gE6LQ9dFnoXdaE2LPXj6rC51+iWcFgpea7YJI/+U9n4VWeJNFbAGTqVBLb9RYuO66klNLzMJNZiX2eTKJTo6DCSNwYks
+         sY/8yrdO7JiK8HNJTeVtMAVYYf5K9HXcDCqrWX89GlwMW+YgVrehQ==
+Date: Fri, 14 Feb 2025 16:24:33 +0000
+To: Rivane Rasetiansyah <rasetiansyah@gmail.com>
+From: Rivane Rasetiansyah <re@nvll.me>
+Cc: Rivane Rasetiansyah <rasetiansyah@pm.me>
+Subject: Developer Insights | NVLL
+Message-ID: <5FWpaVqju9S9nxsy4vGHfVwAldMVSGBisRLsVgbaQljg_Xrzxj5bWkzJR83Nw1e4hXZRiIXJAkU39q80frWJ2HdyjMcrzQNezhTiD7ftuRU=@nvll.me>
+Disposition-Notification-To: Rivane Rasetiansyah <re+readreceipt@nvll.me>
+Feedback-ID: 133771615:user:proton
+X-Pm-Message-ID: f64ef55ae2796dc01d76da473e13af9fb5734080
+MIME-Version: 1.0
+Content-Type: multipart/signed; protocol="application/pgp-signature"; micalg=pgp-sha512;
+ boundary="------414edfa874e21ef28b655a6d2cb7a43ed641ddb1771f0d8c10853a9cd0717d81"; charset=utf-8
+
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------414edfa874e21ef28b655a6d2cb7a43ed641ddb1771f0d8c10853a9cd0717d81
+Content-Type: multipart/mixed;boundary=---------------------7822c950175fbaaec9664502c41564c3
+
+-----------------------7822c950175fbaaec9664502c41564c3
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;charset=utf-8
+
+Bandung, Indonesia
+14 February 2025
+
+
+Glad to see you here.
+Allow me to briefly introduce myself.
+
+As an advocate of Free and Open Source Software (FOSS) and an
+experienced Software Developer, I bring extensive expertise
+in web development and system architecture. Holding a
+Bachelor's degree in Informatics (Computer Science), I blend
+academic knowledge with hands-on experience in programming,
+cloud computing, and system administration.
+
+My core competencies include full-stack web application
+development, with specialized proficiency in JavaScript, PHP,
+Python, and SQL. I focus on designing robust, scalable
+solutions that adhere to modern development practices and
+security standards. Whether it's custom JavaScript
+applications or comprehensive web solutions, I am committed
+to delivering results that exceed expectations through
+meticulous attention to detail and industry best practices.
+
+Leveraging this expertise, I also provide a free and
+open-source public service. While this platform may not be
+directly accessible here due to network restrictions, it
+remains available to those who find it relevant. I refer to
+it as Non-Violable Liberty Layers.
+
+For business inquiries, collaborations, or consultations
+regarding software development, please feel free to reach out
+using the contact details provided. If preferred, you can
+encrypt your message using my attached PGP public key.
+
+Thank you for your time. Have a nice day.
+---
+Sincerely,
+Rivane Rasetiansyah
+Software Developer
+ETH Ethereum (ERC20): 0x0000047189d70937321EEc75E5F222A0F4000094
+
+-----------------------7822c950175fbaaec9664502c41564c3
+Content-Type: text/plain; filename="publickey.asc"; name="publickey.asc"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="publickey.asc"; name="publickey.asc"
+
+LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tClZlcnNpb246IE9wZW5QR1AtSlMg
+djUuMTEuMQpDb21tZW50OiBGMUI2IEU1MDYgRjUzNCBFM0MwIEI4RTggIDBFNkQgRTJGRCA4MDlE
+IEIwNjEgRENBOApDb21tZW50OiBSaXZhbmUgUmFzZXRpYW5zeWFoIDxyZUBudmxsLm1lPgoKeGpN
+RVptYk96QllKS3dZQkJBSGFSdzhCQVFkQXFyanJmMEdzMGZhRjR0c0NNaFpuRWJUaG1tQkNISjBY
+CmpkNzhDeHJrVzE3TklGSnBkbUZ1WlNCU1lYTmxkR2xoYm5ONVlXZ2dQSEpsUUc1MmJHd3ViV1Ur
+d293RQpFQllLQUQ0RmdtWm16c3dFQ3drSENBbVE0djJBbmJCaDNLZ0RGUWdLQkJZQUFnRUNHUUVD
+bXdNQ0hnRVcKSVFUeHR1VUc5VFRqd0xqb0RtM2kvWUNkc0dIY3FBQUFkZElCQU4vcVFMMm9SSlpa
+WDhJcDJrL2F6UnpMCkxZUWdQV1o1UGRJSzQzT3BsQjlTQVFDRzc3WlkyTlJGcGxxenA1cTVOckZQ
+Qm1WY2JmVnRneFN4RVh6aAp4bFpIQXM0NEJHWm16c3dTQ2lzR0FRUUJsMVVCQlFFQkIwRDhDSW5a
+cHpvZXp4a1dXL2VXWXVKOHBzcGIKT1FvQzgvUldjMEMxa2NQSkN3TUJDQWZDZUFRWUZnb0FLZ1dD
+Wm1iT3pBbVE0djJBbmJCaDNLZ0Ntd3dXCklRVHh0dVVHOVRUandMam9EbTNpL1lDZHNHSGNxQUFB
+N2kwQkFKWDNIRUd0VC9JM0ZGSUZkRFRqKzRwMApWODdaREpZTk5NQ0VNUlR5WmlCdkFRQ0x0K0cx
+cUJTbGc5TnIvU2R1R3V0VTVMN0tsd0lQUUJWemxPencKNHhGVERBPT0KPU8wMDcKLS0tLS1FTkQg
+UEdQIFBVQkxJQyBLRVkgQkxPQ0stLS0tLQo=
+-----------------------7822c950175fbaaec9664502c41564c3--
+
+--------414edfa874e21ef28b655a6d2cb7a43ed641ddb1771f0d8c10853a9cd0717d81
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+Version: ProtonMail
+
+wrsEARYKAG0FgmevbjkJkOL9gJ2wYdyoRRQAAAAAABwAIHNhbHRAbm90YXRp
+b25zLm9wZW5wZ3Bqcy5vcmfd6NGcXO9tGvLVrHvJMFk9Y3eev7cebbROcybP
+u+7M0hYhBPG25Qb1NOPAuOgObeL9gJ2wYdyoAADB3wD/RwcgeNfzpLrrtc5G
+n/0X1/+ER0ZnTrFFnWUUtxvGqSkA/jvk9uO15GblrutDffuJX2y6XFH7AUip
+bWIjDC7/jp4C
+=KLBy
+-----END PGP SIGNATURE-----
+
+
+--------414edfa874e21ef28b655a6d2cb7a43ed641ddb1771f0d8c10853a9cd0717d81--
+

@@ -123,6 +123,11 @@ body {
   underline
   hover:no-underline;
 }
+.paragraph {
+  @apply text-justify
+    text-sm
+    leading-relaxed;
+}
 .primary-button {
   @apply inline-flex
   items-center
@@ -279,11 +284,6 @@ section.home section.letter blockquote .content {
     
     space-y-4;
 }
-section.home section.letter blockquote .content p.paragraph {
-  @apply text-justify
-    text-sm
-    leading-relaxed;
-}
 section.home section.letter blockquote .content span.signature {
   @apply text-gray-400
     text-justify
@@ -335,8 +335,7 @@ section.home section.contact {
     mx-auto;
 }
 section.home section.contact header {
-  @apply space-y-2
-    mb-4;
+  @apply space-y-2;
 }
 section.home section.contact header h1.title {
   @apply text-2xl
@@ -344,13 +343,8 @@ section.home section.contact header h1.title {
     leading-relaxed
     text-gray-800;
 }
-section.home section.contact header p.paragraph {
-  @apply text-justify
-    text-sm
-    leading-relaxed;
-}
 section.home section.contact .content ul {
-  @apply space-y-0;
+  @apply py-4;
 }
 section.home section.contact .content ul li {
   @apply flex
@@ -394,11 +388,6 @@ section.home section.privacy header h1.title {
     font-semibold
     leading-relaxed
     text-gray-800;
-}
-section.home section.privacy header p.paragraph {
-  @apply text-justify
-    text-sm
-    leading-relaxed;
 }
 /**!
   *! END HOME SECTION -----
