@@ -1,14 +1,20 @@
 import { JSX } from 'preact/jsx-runtime'
 import { asset } from '$fresh/runtime.ts'
 
-type Link = { name: string; src: string; link: string; text: string }
+type Link = {
+	name: string
+	src: string
+	link: string
+	rel?: string
+	text: string
+}
 
 export default function Contact(): JSX.Element {
 	const links: Link[] = [
 		{ name: 'Email', src: '/png/email-logo.png', link: 'mailto:re@nvll.me', text: 're@nvll.me' },
 		{ name: 'Alternative', src: '', link: 'mailto:rasetiansyah@pm.me', text: 'rasetiansyah@pm.me' },
 		{ name: 'Matrix', src: '/png/matrix-logo.png', link: 'https://matrix.to/#/@rvnrstnsyh:matrix.org', text: '@rvnrstnsyh:matrix.org' },
-		{ name: 'Fediverse', src: '/png/mastodon-logo.png', link: 'https://fosstodon.org/@rvnrstnsyh', text: '@rvnrstnsyh@fosstodon.org' },
+		{ name: 'Fediverse', src: '/png/mastodon-logo.png', link: 'https://fosstodon.org/@rvnrstnsyh', rel: 'me', text: '@rvnrstnsyh@fosstodon.org' },
 		{ name: 'LinkedIn', src: '/png/linkedin-logo.png', link: 'https://www.linkedin.com/in/rvnrstnsyh', text: 'www.linkedin.com/in/rvnrstnsyh' },
 	]
 	return (
@@ -21,13 +27,13 @@ export default function Contact(): JSX.Element {
 			</header>
 			<div className='content'>
 				<ul>
-					{links.map(({ name, src, link, text }: Link): JSX.Element => (
+					{links.map(({ name, src, link, rel, text }: Link): JSX.Element => (
 						<li key={name}>
 							<div className='img-wrapper'>
 								{src !== '' && <img className={name.toLowerCase()} src={asset(src)} alt={name} />}
 							</div>
 							<p>
-								<b>{name}</b> [<a className='anchor-text' href={link}>{text}</a>]
+								<b>{name}</b> [<a className='anchor-text' href={link} rel={rel}>{text}</a>]
 							</p>
 						</li>
 					))}
