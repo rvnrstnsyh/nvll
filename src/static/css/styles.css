@@ -28,9 +28,9 @@
 /**?
   *? ----- LIST OF CONTENTS -----
   *! GLOBAL SECTION -----
-  *! LAYOUT SECTION -----
   *! NAVIGATION SECTION -----
   *! HOME SECTION -----
+  *! REPOSTS SECTION -----
   */
 
 /**!
@@ -117,6 +117,9 @@ html {
 }
 body {
   margin: 0 auto;
+}
+.red {
+  @apply text-red-500;
 }
 @layer base {
   h1 {
@@ -227,28 +230,6 @@ body {
   *! END GLOBAL SECTION -----
   */
 /**!
-  *! LAYOUT SECTION -----
-  */
-section.main-layout .overlay {
-  @apply fixed
-  bg-[url('../png/background.png')]
-  bg-no-repeat
-  bg-cover
-  z-10
-  w-full
-  max-w-lg
-  -translate-x-[20%]
-  -translate-y-[30%]
-  md:max-w-[877px]
-  md:translate-y-0
-  transition-transform
-  duration-300
-  inset-0;
-}
-/**!
-  *! END LAYOUT SECTION -----
-  */
-/**!
   *! NAVIGATION SECTION -----
   */
 nav.navigation {
@@ -289,7 +270,23 @@ nav.navigation .wrapper ul li a {
 /**!
   *! HOME SECTION -----
   */
-section.home {
+main.home-layout .overlay {
+  @apply fixed
+  bg-[url('../png/background.png')]
+  bg-no-repeat
+  bg-cover
+  z-10
+  w-full
+  max-w-lg
+  -translate-x-[20%]
+  -translate-y-[30%]
+  md:max-w-[877px]
+  md:translate-y-0
+  transition-transform
+  duration-300
+  inset-0;
+}
+main.home-layout section.home {
   @apply relative
   flex
   min-h-screen
@@ -300,7 +297,7 @@ section.home {
   md:flex-row
   md:gap-4;
 }
-section.home .container {
+main.home-layout section.home .container {
   @apply z-20
   relative
   w-full
@@ -318,47 +315,47 @@ section.home .container {
   transition-all
   duration-300;
 }
-section.home section.letter {
+main.home-layout section.home .letter {
   @apply w-full;
 }
-section.home section.letter header {
+main.home-layout section.home .letter header {
   @apply flex
     items-center
     justify-between
     w-full
     mb-4;
 }
-section.home section.letter header .link {
+main.home-layout section.home .letter header .link {
   @apply flex-1
   text-sm;
 }
-section.home section.letter header p {
+main.home-layout section.home .letter header p {
   @apply text-end
     text-sm;
 }
-section.home section.letter blockquote {
+main.home-layout section.home .letter blockquote {
   @apply relative
     pt-8
     px-2;
 }
-section.home section.letter blockquote img.quote {
+main.home-layout section.home .letter blockquote img.quote {
   @apply absolute
     start-0
     -top-[27px]
     size-16
     opacity-80;
 }
-section.home section.letter blockquote .content {
+main.home-layout section.home .letter blockquote .content {
   @apply relative
     
     space-y-4;
 }
-section.home section.letter blockquote .content span.signature {
+main.home-layout section.home .letter blockquote .content span.signature {
   @apply text-gray-400
     text-justify
     text-sm;
 }
-section.home section.letter blockquote footer {
+main.home-layout section.home .letter blockquote footer {
   @apply mt-4
     flex
     items-center
@@ -366,31 +363,31 @@ section.home section.letter blockquote footer {
     relative
     px-2;
 }
-section.home section.letter blockquote footer .left,
-section.home section.letter blockquote footer .right {
+main.home-layout section.home .letter blockquote footer .left,
+main.home-layout section.home .letter blockquote footer .right {
   @apply flex
     items-center
     gap-2;
 }
-section.home section.letter blockquote footer .left img.avatar {
+main.home-layout section.home .letter blockquote footer .left img.avatar {
   @apply shrink-0
     size-10
     rounded-full
     object-cover;
 }
-section.home section.letter blockquote footer .left .bio {
+main.home-layout section.home .letter blockquote footer .left .bio {
   @apply space-y-0.5;
 }
-section.home section.letter blockquote footer .left .bio p.name {
+main.home-layout section.home .letter blockquote footer .left .bio p.name {
   @apply text-base
     font-semibold
     text-gray-800;
 }
-section.home section.letter blockquote footer .left .bio p.description {
+main.home-layout section.home .letter blockquote footer .left .bio p.description {
   @apply text-xs
     text-gray-500;
 }
-section.home section.letter blockquote footer .right img.logo {
+main.home-layout section.home .letter blockquote footer .right img.logo {
   @apply absolute
     bottom-2.5
     right-2.5
@@ -398,24 +395,24 @@ section.home section.letter blockquote footer .right img.logo {
     h-[80px]
     object-contain;
 }
-section.home section.contact {
+main.home-layout section.home .contact {
   @apply w-full
     max-w-md
     mx-auto;
 }
-section.home section.contact header {
+main.home-layout section.home .contact header {
   @apply space-y-2;
 }
-section.home section.contact header h1.title {
+main.home-layout section.home .contact header h1.title {
   @apply text-2xl
     font-semibold
     leading-relaxed
     text-gray-800;
 }
-section.home section.contact .content ul {
+main.home-layout section.home .contact .content ul {
   @apply py-4;
 }
-section.home section.contact .content ul li {
+main.home-layout section.home .contact .content ul li {
   @apply flex
     items-center
     gap-1
@@ -426,7 +423,7 @@ section.home section.contact .content ul li {
     rounded-md
     px-2;
 }
-section.home section.contact .content ul li .img-wrapper {
+main.home-layout section.home .contact .content ul li .img-wrapper {
   @apply w-6
     h-6
     flex
@@ -434,25 +431,25 @@ section.home section.contact .content ul li .img-wrapper {
     justify-center
     shrink-0;
 }
-section.home section.contact .content ul li .img-wrapper img {
+main.home-layout section.home .contact .content ul li .img-wrapper img {
   @apply w-5
     h-5
     object-contain;
 }
-section.home section.contact .content ul li .img-wrapper img.linkedin {
+main.home-layout section.home .contact .content ul li .img-wrapper img.linkedin {
   @apply w-3.5
     h-3.5;
 }
-section.home section.privacy {
+main.home-layout section.home .privacy {
   @apply w-full
     max-w-md
     mx-auto;
 }
-section.home section.privacy header {
+main.home-layout section.home .privacy header {
   @apply space-y-2
     mb-4;
 }
-section.home section.privacy header h1.title {
+main.home-layout section.home .privacy header h1.title {
   @apply text-2xl
     font-semibold
     leading-relaxed
@@ -460,4 +457,97 @@ section.home section.privacy header h1.title {
 }
 /**!
   *! END HOME SECTION -----
+  */
+/**!
+  *! REPOSTS SECTION -----
+  */
+main.reposts-layout {
+  @apply flex
+  items-center
+  justify-center
+  min-h-screen
+  bg-gray-100;
+}
+main.reposts-layout .overlay {
+  @apply fixed
+  bg-[url('../png/background.png')]
+  bg-no-repeat
+  bg-cover
+  z-10
+  w-full
+  max-w-lg
+  -translate-x-[20%]
+  -translate-y-[30%]
+  md:max-w-[877px]
+  md:translate-y-0
+  transition-transform
+  duration-300
+  inset-0;
+}
+main.reposts-layout .container {
+  @apply max-w-screen-sm
+  mx-auto;
+}
+main.reposts-layout .container .reposts {
+  @apply z-20
+  relative
+  flex
+  items-center
+  justify-center
+  overflow-hidden
+  bg-white
+  p-6
+  my-4
+  mx-auto
+  shadow-md
+  sm:rounded-lg
+  transition-all
+  duration-300;
+}
+main.reposts-layout .container .reposts .back-button {
+  @apply flex
+  items-center
+  justify-between
+  pb-[44px];
+}
+main.reposts-layout .container .reposts .back-button a.anchor-1 {
+  @apply anchor-text
+  flex
+  items-center
+  justify-center
+  gap-1
+  text-sm mt-1;
+}
+main.reposts-layout .container .reposts .back-button a.anchor-1 img {
+  @apply inline-block
+  w-5
+  h-5
+  opacity-50;
+}
+main.reposts-layout .container .reposts .back-button a.anchor-2 h3 {
+  @apply font-bold;
+}
+main.reposts-layout .container .reposts .post-lists .post-card {
+  @apply mt-8
+  py-8;
+}
+main.reposts-layout .container .reposts .post-lists .post-card .title {
+  @apply anchor-text
+  sm:col-span-2;
+}
+main.reposts-layout .container .reposts .post-lists .post-card time {
+  @apply text-gray-400;
+}
+main.reposts-layout .container .reposts .post-lists .post-card .snippet {
+  @apply paragraph
+  mt-2;
+}
+main.reposts-layout .container .reposts .post-page .author-date {
+  @apply text-gray-400;
+}
+main.reposts-layout .container .reposts .post-page .markdown-body {
+  @apply mt-8;
+}
+/**!
+  *! END REPOSTS SECTION -----
   */

@@ -1,10 +1,11 @@
 import BackButton from '../(_components)/back-button.tsx'
+import PublishedAt from '../(_components)/published-at.tsx'
 
 import { Head } from '$fresh/runtime.ts'
 import { JSX } from 'preact/jsx-runtime'
-import { CSS, KATEX_CSS, render, RenderOptions } from '$gfm'
 import { findPost } from '../../../../helpers/lib/posts.ts'
 import { defineRoute, RouteContext } from '$fresh/server.ts'
+import { CSS, KATEX_CSS, render, RenderOptions } from '$gfm'
 
 export default defineRoute(async (_request: Request, ctx: RouteContext<void, unknown>): Promise<JSX.Element | Response> => {
 	const post: Post | null = await findPost(ctx.params.slug)
@@ -17,22 +18,20 @@ export default defineRoute(async (_request: Request, ctx: RouteContext<void, unk
 	return (
 		<>
 			<Head>
-				<style dangerouslySetInnerHTML={{ __html: `${CSS} ${KATEX_CSS}` }} />
+				<style dangerouslySetInnerHTML={{ __html: CSS + KATEX_CSS }} />
 			</Head>
-			<section>
+			<section className='post-page'>
 				<BackButton title='Back' href='/reposts' />
 				<article>
-					<h1 className='text-5xl font-bold'>{post.title}</h1>
-					<div className='text-gray-400'>
-						<time>
-							{new Date(post.published_at).toLocaleDateString('en-us', { year: 'numeric', month: 'long', day: 'numeric' })}
-						</time>
+					<h1>{post.title}</h1>
+					<div className='author-date'>
+						<PublishedAt date={post.published_at} />
 						&nbsp;—&nbsp;
 						<em>
-							by {post.contact !== undefined ? <a className='anchor-text' href={post.contact}>{post.author}</a> : post.author}
+							by {post.contact ? <a className='anchor-text' href={post.contact}>{post.author}</a> : post.author}
 						</em>
 					</div>
-					<div data-color-mode='light' data-light-theme='light' className='mt-8 markdown-body' dangerouslySetInnerHTML={markdown} />
+					<div data-color-mode='light' data-light-theme='light' className='markdown-body' dangerouslySetInnerHTML={markdown} />
 				</article>
 			</section>
 		</>
