@@ -21,7 +21,7 @@ export default defineRoute(async (_request: Request, ctx: RouteContext<void, unk
 				<style dangerouslySetInnerHTML={{ __html: CSS + KATEX_CSS }} />
 			</Head>
 			<section className='post-page'>
-				<BackButton title='Back' href='/reposts' />
+				<BackButton title='Back' href='/cupoftea' />
 				<article>
 					<h1>{post.title}</h1>
 					<div className='author-date'>

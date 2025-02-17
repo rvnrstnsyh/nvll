@@ -3,12 +3,12 @@ title: Server-side GitHub Flavored Markdown
 published_at: 2025-02-15T00:00:00.000Z
 author: rvnrstnsyh
 contact: mailto:re@nvll.me
-snippet: This 'Hello World!' post from re.Posts is a test post designed to showcase various Markdown elements in action.
+snippet: This 'Hello World!' post from cupoftea is a test post designed to showcase various Markdown elements in action.
   It serves as a detailed demonstration to evaluate how effectively and to what extent Deno's server-side GitHub
   Flavored Markdown rendering can process Markdown.
 ---
 
-This 'Hello World!' post from re.Posts is a test post designed to showcase various Markdown elements in action.
+This 'Hello World!' post from cupoftea is a test post designed to showcase various Markdown elements in action.
 It serves as a detailed demonstration to evaluate how effectively and to what extent
 [Deno's server-side GitHub Flavored Markdown rendering](https://github.com/denoland/deno-gfm) can process Markdown.
 

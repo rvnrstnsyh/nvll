@@ -1,3 +1,5 @@
+import CupOfTeaLogo from './cup-of-tea-logo.tsx'
+
 import { JSX } from 'preact/jsx-runtime'
 import { asset } from '$fresh/runtime.ts'
 
@@ -12,9 +14,7 @@ export default function BackButton({ title, href }: BackButtonProps): JSX.Elemen
 			</a>
 			{title !== 'Home' && (
 				<a href={href} className='anchor-2'>
-					<h3>
-						re<span className='red'>.</span>Posts
-					</h3>
+					<CupOfTeaLogo small />
 				</a>
 			)}
 		</div>

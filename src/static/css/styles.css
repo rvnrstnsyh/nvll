@@ -118,9 +118,6 @@ html {
 body {
   margin: 0 auto;
 }
-.red {
-  @apply text-red-500;
-}
 @layer base {
   h1 {
     @apply text-4xl
@@ -461,14 +458,14 @@ main.home-layout section.home .privacy header h1.title {
 /**!
   *! REPOSTS SECTION -----
   */
-main.reposts-layout {
+main.cupoftea-layout {
   @apply flex
   items-center
   justify-center
   min-h-screen
   bg-gray-100;
 }
-main.reposts-layout .overlay {
+main.cupoftea-layout .overlay {
   @apply fixed
   bg-[url('../png/background.png')]
   bg-no-repeat
@@ -484,11 +481,11 @@ main.reposts-layout .overlay {
   duration-300
   inset-0;
 }
-main.reposts-layout .container {
+main.cupoftea-layout .container {
   @apply max-w-screen-sm
   mx-auto;
 }
-main.reposts-layout .container .reposts {
+main.cupoftea-layout .container .cupoftea {
   @apply z-20
   relative
   flex
@@ -504,13 +501,27 @@ main.reposts-layout .container .reposts {
   transition-all
   duration-300;
 }
-main.reposts-layout .container .reposts .back-button {
+main.cupoftea-layout .container .cupoftea .cupoftea-logo .wrapper {
+  @apply inline-block
+  ml-0.5
+  bg-yellow-green
+  rounded-full
+  relative;
+}
+main.cupoftea-layout .container .cupoftea .cupoftea-logo .wrapper .dot {
+  @apply block
+  bg-yellow-green
+  opacity-70
+  rounded-full
+  animate-sonar;
+}
+main.cupoftea-layout .container .cupoftea .back-button {
   @apply flex
   items-center
   justify-between
   pb-[44px];
 }
-main.reposts-layout .container .reposts .back-button a.anchor-1 {
+main.cupoftea-layout .container .cupoftea .back-button a.anchor-1 {
   @apply anchor-text
   flex
   items-center
@@ -518,34 +529,46 @@ main.reposts-layout .container .reposts .back-button a.anchor-1 {
   gap-1
   text-sm mt-1;
 }
-main.reposts-layout .container .reposts .back-button a.anchor-1 img {
+main.cupoftea-layout .container .cupoftea .back-button a.anchor-1 img {
   @apply inline-block
   w-5
   h-5
   opacity-50;
 }
-main.reposts-layout .container .reposts .back-button a.anchor-2 h3 {
+main.cupoftea-layout .container .cupoftea .back-button a.anchor-2 h3 {
   @apply font-bold;
 }
-main.reposts-layout .container .reposts .post-lists .post-card {
+main.cupoftea-layout .container .cupoftea .post-lists .profile {
+  @apply px-0.5
+  mt-2
+  text-gray-400;
+}
+main.cupoftea-layout .container .cupoftea .post-lists .profile h5 {
+  @apply font-bold;
+}
+main.cupoftea-layout .container .cupoftea .post-lists .profile p.details {
+  @apply text-sm
+  leading-normal;
+}
+main.cupoftea-layout .container .cupoftea .post-lists .post-card {
   @apply mt-8
   py-8;
 }
-main.reposts-layout .container .reposts .post-lists .post-card .title {
+main.cupoftea-layout .container .cupoftea .post-lists .post-card .title {
   @apply anchor-text
   sm:col-span-2;
 }
-main.reposts-layout .container .reposts .post-lists .post-card time {
+main.cupoftea-layout .container .cupoftea .post-lists .post-card time {
   @apply text-gray-400;
 }
-main.reposts-layout .container .reposts .post-lists .post-card .snippet {
+main.cupoftea-layout .container .cupoftea .post-lists .post-card .snippet {
   @apply paragraph
   mt-2;
 }
-main.reposts-layout .container .reposts .post-page .author-date {
+main.cupoftea-layout .container .cupoftea .post-page .author-date {
   @apply text-gray-400;
 }
-main.reposts-layout .container .reposts .post-page .markdown-body {
+main.cupoftea-layout .container .cupoftea .post-page .markdown-body {
   @apply mt-8;
 }
 /**!

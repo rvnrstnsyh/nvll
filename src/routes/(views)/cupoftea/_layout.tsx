@@ -5,10 +5,10 @@ import { defineLayout, RouteContext } from '$fresh/server.ts'
 
 export default defineLayout((_request: Request, ctx: RouteContext<void, unknown>): JSX.Element => {
 	return (
-		<main className='reposts-layout'>
+		<main className='cupoftea-layout'>
 			<div className='overlay' />
 			<div className='container'>
-				<section className='reposts'>
+				<section className='cupoftea'>
 					<ctx.Component />
 				</section>
 				<Navigation bottom currentYear={new Date().getFullYear()} />
