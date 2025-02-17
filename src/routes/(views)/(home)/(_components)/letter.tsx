@@ -61,7 +61,11 @@ export default function Letter(): JSX.Element {
 						<img className='avatar' src={asset('/jpg/avatar_default_0-20230707-0001.jpg')} alt='Avatar' />
 						<div className='bio'>
 							<p className='name'>Rivane Rasetiansyah</p>
-							<p className='description'>Software Developer</p>
+							<p className='description'>
+								Software Developer
+								<br />
+								[<a className='anchor-text' href='/asc/publickey.asc'>PGP</a>] [<a className='anchor-text' href='/pdf/curriculum-vitae.pdf'>Resume</a>]
+							</p>
 						</div>
 					</div>
 					<div className='right'>

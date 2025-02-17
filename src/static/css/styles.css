@@ -157,28 +157,6 @@ body {
   *! END GLOBAL SECTION -----
   */
 /**!
-  *! LAYOUT SECTION -----
-  */
-section.main-layout .overlay {
-  @apply fixed
-  bg-[url('../png/background.png')]
-  bg-no-repeat
-  bg-cover
-  z-10
-  w-full
-  max-w-lg
-  -translate-x-[20%]
-  -translate-y-[30%]
-  md:max-w-[877px]
-  md:translate-y-0
-  transition-transform
-  duration-300
-  inset-0;
-}
-/**!
-  *! END LAYOUT SECTION -----
-  */
-/**!
   *! NAVIGATION SECTION -----
   */
 nav.navigation {
@@ -220,7 +198,23 @@ nav.navigation .wrapper ul li a {
 /**!
   *! HOME SECTION -----
   */
-section.home {
+section.home-layout .overlay {
+  @apply fixed
+  bg-[url('../png/background.png')]
+  bg-no-repeat
+  bg-cover
+  z-10
+  w-full
+  max-w-lg
+  -translate-x-[20%]
+  -translate-y-[30%]
+  md:max-w-[877px]
+  md:translate-y-0
+  transition-transform
+  duration-300
+  inset-0;
+}
+section.home-layout main.home {
   @apply relative
   flex
   min-h-screen
@@ -231,7 +225,7 @@ section.home {
   md:flex-row
   md:gap-4;
 }
-section.home .container {
+section.home-layout main.home .container {
   @apply z-20
   relative
   w-full
@@ -249,145 +243,149 @@ section.home .container {
   transition-all
   duration-300;
 }
-section.home section.letter {
+section.home-layout main.home section.letter {
   @apply w-full;
 }
-section.home section.letter header {
+section.home-layout main.home section.letter header {
   @apply flex
-    items-center
-    justify-between
-    w-full
-    mb-4;
+  items-center
+  justify-between
+  w-full
+  mb-4;
 }
-section.home section.letter header .link {
+section.home-layout main.home section.letter header .link {
   @apply flex-1
   text-sm;
 }
-section.home section.letter header p {
+section.home-layout main.home section.letter header p {
   @apply text-end
-    text-sm;
+  text-sm;
 }
-section.home section.letter blockquote {
+section.home-layout main.home section.letter blockquote {
   @apply relative
-    pt-8
-    px-2;
+  pt-8
+  px-2;
 }
-section.home section.letter blockquote img.quote {
+section.home-layout main.home section.letter blockquote img.quote {
   @apply absolute
-    start-0
-    -top-[27px]
-    size-16
-    opacity-80;
+  start-0
+  -top-[27px]
+  size-16
+  opacity-80;
 }
-section.home section.letter blockquote .content {
+section.home-layout main.home section.letter blockquote .content {
   @apply relative
-    
     space-y-4;
 }
-section.home section.letter blockquote .content span.signature {
+section.home-layout main.home section.letter blockquote .content span.signature {
   @apply text-gray-400
-    text-justify
-    text-sm;
+  text-justify
+  text-sm;
 }
-section.home section.letter blockquote footer {
+section.home-layout main.home section.letter blockquote footer {
   @apply mt-4
-    flex
-    items-center
-    justify-between
-    relative
-    px-2;
+  flex
+  items-center
+  justify-between
+  relative
+  px-2;
 }
-section.home section.letter blockquote footer .left,
-section.home section.letter blockquote footer .right {
+section.home-layout main.home section.letter blockquote footer .left,
+section.home-layout main.home section.letter blockquote footer .right {
   @apply flex
-    items-center
-    gap-2;
+  items-center
+  justify-center
+  gap-2;
 }
-section.home section.letter blockquote footer .left img.avatar {
+section.home-layout main.home section.letter blockquote footer .left img.avatar {
   @apply shrink-0
-    size-10
-    rounded-full
-    object-cover;
+  size-14
+  rounded-full
+  object-cover;
 }
-section.home section.letter blockquote footer .left .bio {
+section.home-layout main.home section.letter blockquote footer .left .bio {
   @apply space-y-0.5;
 }
-section.home section.letter blockquote footer .left .bio p.name {
+section.home-layout main.home section.letter blockquote footer .left .bio p.name {
   @apply text-base
-    font-semibold
-    text-gray-800;
+  font-semibold
+  text-gray-800;
 }
-section.home section.letter blockquote footer .left .bio p.description {
+section.home-layout main.home section.letter blockquote footer .left .bio p.description {
   @apply text-xs
-    text-gray-500;
+  text-gray-500;
 }
-section.home section.letter blockquote footer .right img.logo {
+section.home-layout main.home section.letter blockquote footer .right img.logo {
   @apply absolute
-    bottom-2.5
-    right-2.5
-    w-[68px]
-    h-[80px]
-    object-contain;
+  bottom-2.5
+  right-2.5
+  w-[68px]
+  h-[80px]
+  object-contain;
 }
-section.home section.contact {
+section.home-layout main.home section.contact {
   @apply w-full
-    max-w-md
-    mx-auto;
+  max-w-md
+  mx-auto;
 }
-section.home section.contact header {
+section.home-layout main.home section.contact header {
   @apply space-y-2;
 }
-section.home section.contact header h1.title {
+section.home-layout main.home section.contact header h1.title {
   @apply text-2xl
-    font-semibold
-    leading-relaxed
-    text-gray-800;
+  font-semibold
+  leading-relaxed
+  text-gray-800;
 }
-section.home section.contact .content ul {
+section.home-layout main.home section.contact .content ul {
   @apply py-4;
 }
-section.home section.contact .content ul li {
+section.home-layout main.home section.contact .content ul li {
   @apply flex
-    items-center
-    gap-1
-    py-1.5
-    text-sm
-    transition-colors
-    duration-200
-    rounded-md
-    px-2;
+  items-center
+  gap-1
+  py-1.5
+  text-sm
+  transition-colors
+  duration-200
+  rounded-md
+  px-2;
 }
-section.home section.contact .content ul li .img-wrapper {
+section.home-layout main.home section.contact .content ul li .img-wrapper {
   @apply w-6
-    h-6
-    flex
-    items-center
-    justify-center
-    shrink-0;
+  h-6
+  flex
+  items-center
+  justify-center
+  shrink-0;
 }
-section.home section.contact .content ul li .img-wrapper img {
+section.home-layout main.home section.contact .content ul li .img-wrapper img {
   @apply w-5
-    h-5
-    object-contain;
+  h-5
+  object-contain;
 }
-section.home section.contact .content ul li .img-wrapper img.linkedin {
+section.home-layout main.home section.contact .content ul li .img-wrapper img.linkedin {
   @apply w-3.5
-    h-3.5;
+  h-3.5;
 }
-section.home section.privacy {
+section.home-layout main.home section.contact .content ul li .img-wrapper img.github {
+  @apply w-4
+  h-4;
+}
+section.home-layout main.home section.privacy {
   @apply w-full
-    max-w-md
-    mx-auto;
+  max-w-md
+  mx-auto;
 }
-section.home section.privacy header {
+section.home-layout main.home section.privacy header {
   @apply space-y-2
-    mb-4;
+  mb-4;
 }
-section.home section.privacy header h1.title {
+section.home-layout main.home section.privacy header h1.title {
   @apply text-2xl
-    font-semibold
-    leading-relaxed
-    text-gray-800;
+  font-semibold
+  leading-relaxed
+  text-gray-800;
 }
 /**!
   *! END HOME SECTION -----
