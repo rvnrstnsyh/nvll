@@ -318,8 +318,7 @@ main.home-layout section.home .letter blockquote .content span.signature {
   text-sm;
 }
 main.home-layout section.home .letter blockquote footer {
-  @apply mt-4
-  flex
+  @apply flex
   items-center
   justify-between
   relative
@@ -330,13 +329,14 @@ main.home-layout section.home .letter blockquote footer .right {
   @apply flex
   items-center
   justify-center
-  gap-2;
+  gap-[1px];
 }
 main.home-layout section.home .letter blockquote footer .left img.avatar {
   @apply shrink-0
   size-16
   mt-1.5
-  rounded-full
+  -ml-1.5
+  rounded-md
   object-cover;
 }
 main.home-layout section.home .letter blockquote footer .left .bio {
