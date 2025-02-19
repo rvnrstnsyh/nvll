@@ -30,7 +30,6 @@
   *! GLOBAL SECTION -----
   *! NAVIGATION SECTION -----
   *! HOME SECTION -----
-  *! REPOSTS SECTION -----
   */
 
 /**!
@@ -158,45 +157,10 @@ body {
   underline
   hover:no-underline;
 }
-.paragraph,
-.markdown-body p,
-.markdown-body pre,
-.markdown-body table,
-.markdown-body table tr,
-.markdown-body table td,
-.markdown-body table th,
-.markdown-body li,
-.markdown-body dd,
-.markdown-body dt,
-.markdown-body blockquote,
-.markdown-body figcaption,
-.markdown-body span,
-.markdown-body em,
-.markdown-body i,
-.markdown-body strong,
-.markdown-body b,
-.markdown-body u,
-.markdown-body s,
-.markdown-body del,
-.markdown-body mark,
-.markdown-body code,
-.markdown-body abbr,
-.markdown-body cite,
-.markdown-body q,
-.markdown-body sub,
-.markdown-body sup,
-.markdown-body kbd,
-.markdown-body var {
+.paragraph {
   @apply text-justify
   text-sm
   leading-relaxed;
-}
-.markdown-body a {
-  color: #4b5563 !important;
-  text-decoration: underline !important;
-}
-.markdown-body a:hover {
-  text-decoration: none !important;
 }
 .primary-button {
   @apply inline-flex
@@ -317,10 +281,10 @@ main.home-layout section.home .letter {
 }
 main.home-layout section.home .letter header {
   @apply flex
-    items-center
-    justify-between
-    w-full
-    mb-4;
+  items-center
+  justify-between
+  w-full
+  mb-4;
 }
 main.home-layout section.home .letter header .link {
   @apply flex-1
@@ -328,249 +292,129 @@ main.home-layout section.home .letter header .link {
 }
 main.home-layout section.home .letter header p {
   @apply text-end
-    text-sm;
+  text-sm;
 }
 main.home-layout section.home .letter blockquote {
   @apply relative
-    pt-8
-    px-2;
+  pt-8
+  px-2;
 }
 main.home-layout section.home .letter blockquote img.quote {
   @apply absolute
-    start-0
-    -top-[27px]
-    size-16
-    opacity-80;
+  start-0
+  -top-[27px]
+  size-16
+  opacity-80;
 }
 main.home-layout section.home .letter blockquote .content {
   @apply relative
-    
-    space-y-4;
+  space-y-4;
 }
 main.home-layout section.home .letter blockquote .content span.signature {
   @apply text-gray-400
-    text-justify
-    text-sm;
+  text-justify
+  text-sm;
 }
 main.home-layout section.home .letter blockquote footer {
   @apply mt-4
-    flex
-    items-center
-    justify-between
-    relative
-    px-2;
+  flex
+  items-center
+  justify-between
+  relative
+  px-2;
 }
 main.home-layout section.home .letter blockquote footer .left,
 main.home-layout section.home .letter blockquote footer .right {
   @apply flex
-    items-center
-    gap-2;
+  items-center
+  gap-2;
 }
 main.home-layout section.home .letter blockquote footer .left img.avatar {
   @apply shrink-0
-    size-10
-    rounded-full
-    object-cover;
+  size-10
+  rounded-full
+  object-cover;
 }
 main.home-layout section.home .letter blockquote footer .left .bio {
   @apply space-y-0.5;
 }
 main.home-layout section.home .letter blockquote footer .left .bio p.name {
   @apply text-base
-    font-semibold
-    text-gray-800;
+  font-semibold
+  text-gray-800;
 }
 main.home-layout section.home .letter blockquote footer .left .bio p.description {
   @apply text-xs
-    text-gray-500;
+  text-gray-500;
 }
 main.home-layout section.home .letter blockquote footer .right img.logo {
   @apply absolute
-    bottom-2.5
-    right-2.5
-    w-[68px]
-    h-[80px]
-    object-contain;
+  bottom-2.5
+  right-2.5
+  w-[68px]
+  h-[80px]
+  object-contain;
 }
 main.home-layout section.home .contact {
   @apply w-full
-    max-w-md
-    mx-auto;
+  max-w-md
+  mx-auto;
 }
 main.home-layout section.home .contact header {
   @apply space-y-2;
 }
 main.home-layout section.home .contact header h1.title {
   @apply text-2xl
-    font-semibold
-    leading-relaxed
-    text-gray-800;
+  font-semibold
+  leading-relaxed
+  text-gray-800;
 }
 main.home-layout section.home .contact .content ul {
   @apply py-4;
 }
 main.home-layout section.home .contact .content ul li {
   @apply flex
-    items-center
-    gap-1
-    py-1.5
-    text-sm
-    transition-colors
-    duration-200
-    rounded-md
-    px-2;
+  items-center
+  gap-1
+  py-1.5
+  text-sm
+  transition-colors
+  duration-200
+  rounded-md
+  px-2;
 }
 main.home-layout section.home .contact .content ul li .img-wrapper {
   @apply w-6
-    h-6
-    flex
-    items-center
-    justify-center
-    shrink-0;
+  h-6
+  flex
+  items-center
+  justify-center
+  shrink-0;
 }
 main.home-layout section.home .contact .content ul li .img-wrapper img {
   @apply w-5
-    h-5
-    object-contain;
+  h-5
+  object-contain;
 }
 main.home-layout section.home .contact .content ul li .img-wrapper img.linkedin {
   @apply w-3.5
-    h-3.5;
+  h-3.5;
 }
 main.home-layout section.home .privacy {
   @apply w-full
-    max-w-md
-    mx-auto;
+  max-w-md
+  mx-auto;
 }
 main.home-layout section.home .privacy header {
   @apply space-y-2
-    mb-4;
+  mb-4;
 }
 main.home-layout section.home .privacy header h1.title {
   @apply text-2xl
-    font-semibold
-    leading-relaxed
-    text-gray-800;
+  font-semibold
+  leading-relaxed
+  text-gray-800;
 }
 /**!
   *! END HOME SECTION -----
-  */
-/**!
-  *! REPOSTS SECTION -----
-  */
-main.cupoftea-layout {
-  @apply flex
-  items-center
-  justify-center
-  min-h-screen
-  bg-gray-100;
-}
-main.cupoftea-layout .overlay {
-  @apply fixed
-  bg-[url('../png/background.png')]
-  bg-no-repeat
-  bg-cover
-  z-10
-  w-full
-  max-w-lg
-  -translate-x-[20%]
-  -translate-y-[30%]
-  md:max-w-[877px]
-  md:translate-y-0
-  transition-transform
-  duration-300
-  inset-0;
-}
-main.cupoftea-layout .container {
-  @apply max-w-screen-sm
-  mx-auto;
-}
-main.cupoftea-layout .container .cupoftea {
-  @apply z-20
-  relative
-  flex
-  items-center
-  justify-center
-  overflow-hidden
-  bg-white
-  p-6
-  my-4
-  mx-auto
-  shadow-md
-  sm:rounded-lg
-  transition-all
-  duration-300;
-}
-main.cupoftea-layout .container .cupoftea .cupoftea-logo .wrapper {
-  @apply inline-block
-  ml-0.5
-  bg-yellow-green
-  rounded-full
-  relative;
-}
-main.cupoftea-layout .container .cupoftea .cupoftea-logo .wrapper .dot {
-  @apply block
-  bg-yellow-green
-  opacity-70
-  rounded-full
-  animate-sonar;
-}
-main.cupoftea-layout .container .cupoftea .back-button {
-  @apply flex
-  items-center
-  justify-between
-  pb-[44px];
-}
-main.cupoftea-layout .container .cupoftea .back-button a.anchor-1 {
-  @apply anchor-text
-  flex
-  items-center
-  justify-center
-  gap-1
-  text-sm mt-1;
-}
-main.cupoftea-layout .container .cupoftea .back-button a.anchor-1 img {
-  @apply inline-block
-  w-5
-  h-5
-  opacity-50;
-}
-main.cupoftea-layout .container .cupoftea .back-button a.anchor-2 h3 {
-  @apply font-bold;
-}
-main.cupoftea-layout .container .cupoftea .post-lists .profile {
-  @apply px-0.5
-  mt-2
-  text-gray-400;
-}
-main.cupoftea-layout .container .cupoftea .post-lists .profile h5 {
-  @apply font-bold;
-}
-main.cupoftea-layout .container .cupoftea .post-lists .profile p.details {
-  @apply text-sm
-  leading-normal;
-}
-main.cupoftea-layout .container .cupoftea .post-lists .post-card {
-  @apply mt-8
-  py-8;
-}
-main.cupoftea-layout .container .cupoftea .post-lists .post-card .title {
-  @apply anchor-text
-  sm:col-span-2;
-}
-main.cupoftea-layout .container .cupoftea .post-lists .post-card time {
-  @apply text-gray-400;
-}
-main.cupoftea-layout .container .cupoftea .post-lists .post-card .snippet {
-  @apply paragraph
-  mt-2;
-}
-main.cupoftea-layout .container .cupoftea .post-page .author-date {
-  @apply text-gray-400;
-}
-main.cupoftea-layout .container .cupoftea .post-page .markdown-body {
-  @apply mt-8;
-}
-/**!
-  *! END REPOSTS SECTION -----
   */

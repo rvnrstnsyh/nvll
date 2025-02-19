@@ -4,9 +4,6 @@
 
 import * as $_views_home_layout from './routes/(views)/(home)/_layout.tsx'
 import * as $_views_home_index from './routes/(views)/(home)/index.tsx'
-import * as $_views_cupoftea_slug_index from './routes/(views)/cupoftea/[slug]/index.tsx'
-import * as $_views_cupoftea_layout from './routes/(views)/cupoftea/_layout.tsx'
-import * as $_views_cupoftea_index from './routes/(views)/cupoftea/index.tsx'
 import * as $_app from './routes/_app.tsx'
 import * as $_middleware from './routes/_middleware.ts'
 import * as $api_v0_csp_report from './routes/api/v0/csp/report.ts'
@@ -17,9 +14,6 @@ const manifest = {
 	routes: {
 		'./routes/(views)/(home)/_layout.tsx': $_views_home_layout,
 		'./routes/(views)/(home)/index.tsx': $_views_home_index,
-		'./routes/(views)/cupoftea/[slug]/index.tsx': $_views_cupoftea_slug_index,
-		'./routes/(views)/cupoftea/_layout.tsx': $_views_cupoftea_layout,
-		'./routes/(views)/cupoftea/index.tsx': $_views_cupoftea_index,
 		'./routes/_app.tsx': $_app,
 		'./routes/_middleware.ts': $_middleware,
 		'./routes/api/v0/csp/report.ts': $api_v0_csp_report,
