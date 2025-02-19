@@ -21,8 +21,8 @@ export default function Contact(): JSX.Element {
 	return (
 		<section className='contact'>
 			<header>
-				<h1 className='title'>Contact Information</h1>
-				<p className='paragraph'>
+				<h4>Contact Information</h4>
+				<p>
 					For those who want to connect, (preferably) contact me via email. Alternatively, you can contact me in several other places:
 				</p>
 			</header>
@@ -39,7 +39,7 @@ export default function Contact(): JSX.Element {
 						</li>
 					))}
 				</ul>
-				<p className='paragraph'>
+				<p>
 					Identity claims: <a className='anchor-text' href='https://keyoxide.org/hkp/e2fd809db061dca8'>keyoxide.org/hkp/e2fd809db061dca8</a>
 				</p>
 			</div>
