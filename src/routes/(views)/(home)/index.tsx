@@ -9,7 +9,7 @@ import { defineRoute, RouteContext } from '$fresh/server.ts'
 
 export default defineRoute((_request: Request, _ctx: RouteContext<void, unknown>): JSX.Element => {
 	return (
-		<main className='home'>
+		<section className='home'>
 			<Head>
 				<meta name='description' content='Rivane Rasetiansyah – Software Developer and advocate of Free and Open Source Software (FOSS).' />
 				<meta name='keywords' content='Rivane Rasetiansyah, Software Developer, Full-Stack Developer, JavaScript, Open Source, FOSS' />
@@ -31,6 +31,6 @@ export default defineRoute((_request: Request, _ctx: RouteContext<void, unknown>
 				</div>
 				<Navigation bottom currentYear={new Date().getFullYear()} />
 			</div>
-		</main>
+		</section>
 	)
 })
