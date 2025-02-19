@@ -15,19 +15,19 @@ export default function Letter(): JSX.Element {
 			<blockquote>
 				<img className='quote' src={asset('/png/quote.png')} alt='Quote' />
 				<div className='content'>
-					<p className='paragraph'>
+					<p>
 						<em>
 							Glad to see you here.<br />Allow me to briefly introduce myself.
 						</em>
 					</p>
-					<p className='paragraph'>
+					<p>
 						<em>
 							As an advocate of Free and Open Source Software (FOSS) and an experienced Software Developer, I bring extensive expertise in web development
 							and system architecture. Holding a Bachelor's degree in Informatics (Computer Science), I blend academic knowledge with hands-on experience in
 							programming, cloud computing, and system administration.
 						</em>
 					</p>
-					<p className='paragraph'>
+					<p>
 						<em>
 							My core competencies include full-stack web application development, with specialized proficiency in JavaScript, PHP, Python, and SQL. I focus
 							on designing robust, scalable solutions that adhere to modern development practices and security standards. Whether it's custom JavaScript
@@ -35,19 +35,19 @@ export default function Letter(): JSX.Element {
 							detail and industry best practices.
 						</em>
 					</p>
-					<p className='paragraph'>
+					<p>
 						<em>
 							Leveraging this expertise, I also provide a free and open-source public service. While this platform may not be directly accessible here due
 							to network restrictions, it remains available to those who find it relevant. I refer to it as Non-Violable Liberty Layers.
 						</em>
 					</p>
-					<p className='paragraph'>
+					<p>
 						<em>
 							For business inquiries, collaborations, or consultations regarding software development, please feel free to reach out using the contact
 							details provided. If preferred, you can encrypt your message using my attached PGP public key.
 						</em>
 					</p>
-					<p className='paragraph'>
+					<p>
 						<em>
 							Thank you for your time. Have a nice day.<br />
 							<span className='signature'>
@@ -60,7 +60,7 @@ export default function Letter(): JSX.Element {
 					<div className='left'>
 						<img className='avatar' src={asset('/jpg/avatar_default_0-20230707-0001.jpg')} alt='Avatar' />
 						<div className='bio'>
-							<p className='name'>Rivane Rasetiansyah</p>
+							<h5>Rivane Rasetiansyah</h5>
 							<p className='description'>
 								Software Developer
 								<br />

@@ -118,6 +118,11 @@ body {
   margin: 0 auto;
 }
 @layer base {
+  p {
+    @apply text-sm
+    text-justify
+    leading-relaxed;
+  }
   h1 {
     @apply text-4xl
     md:text-5xl
@@ -156,11 +161,6 @@ body {
   @apply text-gray-600
   underline
   hover:no-underline;
-}
-.paragraph {
-  @apply text-justify
-  text-sm
-  leading-relaxed;
 }
 .primary-button {
   @apply inline-flex
@@ -202,12 +202,13 @@ nav.navigation {
 nav.navigation .wrapper {
   @apply flex
   flex-wrap
-  items-center
+  items-start
   justify-between
   gap-2;
 }
 nav.navigation .wrapper .copyright {
-  @apply text-xs
+  @apply z-20
+  text-xs
   text-gray-600;
 }
 nav.navigation .wrapper ul {
@@ -333,28 +334,24 @@ main.home-layout section.home .letter blockquote footer .right {
 }
 main.home-layout section.home .letter blockquote footer .left img.avatar {
   @apply shrink-0
-  size-14
+  size-16
+  mt-1.5
   rounded-full
   object-cover;
 }
 main.home-layout section.home .letter blockquote footer .left .bio {
   @apply space-y-0.5;
 }
-main.home-layout section.home .letter blockquote footer .left .bio p.name {
-  @apply text-base
-  font-semibold
-  text-gray-800;
-}
 main.home-layout section.home .letter blockquote footer .left .bio p.description {
-  @apply text-xs
+  @apply text-sm
   text-gray-500;
 }
 main.home-layout section.home .letter blockquote footer .right img.logo {
   @apply absolute
-  bottom-2.5
-  right-2.5
-  w-[68px]
-  h-[80px]
+  bottom-0.5
+  right-0.5
+  w-[58px]
+  h-[70px]
   object-contain;
 }
 main.home-layout section.home .contact {
@@ -364,12 +361,6 @@ main.home-layout section.home .contact {
 }
 main.home-layout section.home .contact header {
   @apply space-y-2;
-}
-main.home-layout section.home .contact header h1.title {
-  @apply text-2xl
-  font-semibold
-  leading-relaxed
-  text-gray-800;
 }
 main.home-layout section.home .contact .content ul {
   @apply py-4;
@@ -414,12 +405,6 @@ main.home-layout section.home .privacy {
 main.home-layout section.home .privacy header {
   @apply space-y-2
   mb-4;
-}
-main.home-layout section.home .privacy header h1.title {
-  @apply text-2xl
-  font-semibold
-  leading-relaxed
-  text-gray-800;
 }
 /**!
   *! END HOME SECTION -----
