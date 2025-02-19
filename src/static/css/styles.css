@@ -195,8 +195,9 @@ body {
   */
 nav.navigation {
   @apply mx-auto
+  w-full
   px-1.5
-  max-w-full;
+  max-w-[500px];
 }
 nav.navigation .wrapper {
   @apply flex
@@ -327,11 +328,12 @@ main.home-layout section.home .letter blockquote footer .left,
 main.home-layout section.home .letter blockquote footer .right {
   @apply flex
   items-center
+  justify-center
   gap-2;
 }
 main.home-layout section.home .letter blockquote footer .left img.avatar {
   @apply shrink-0
-  size-10
+  size-14
   rounded-full
   object-cover;
 }
@@ -399,6 +401,10 @@ main.home-layout section.home .contact .content ul li .img-wrapper img {
 main.home-layout section.home .contact .content ul li .img-wrapper img.linkedin {
   @apply w-3.5
   h-3.5;
+}
+main.home-layout section.home .contact .content ul li .img-wrapper img.github {
+  @apply w-4
+  h-4;
 }
 main.home-layout section.home .privacy {
   @apply w-full
