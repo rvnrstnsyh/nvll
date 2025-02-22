@@ -389,6 +389,10 @@ main.home-layout section.home .contact .content ul li .img-wrapper img {
   h-5
   object-contain;
 }
+main.home-layout section.home .contact .content ul li .img-wrapper img.bluesky {
+  @apply w-4
+  h-4;
+}
 main.home-layout section.home .contact .content ul li .img-wrapper img.linkedin {
   @apply w-3.5
   h-3.5;
