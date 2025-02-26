@@ -15,6 +15,7 @@ export default function Contact(): JSX.Element {
 		{ name: 'Alternative', src: '', link: 'mailto:rasetiansyah@pm.me', text: 'rasetiansyah@pm.me' },
 		{ name: 'Matrix', src: '/png/matrix-logo.png', link: 'https://matrix.to/#/@rvnrstnsyh:matrix.org', text: '@rvnrstnsyh:matrix.org' },
 		{ name: 'Fediverse', src: '/png/mastodon-logo.png', link: 'https://fosstodon.org/@rvnrstnsyh', rel: 'me', text: '@rvnrstnsyh@fosstodon.org' },
+		{ name: 'Bluesky', src: '/png/bluesky-logo.png', link: 'https://bsky.app/profile/nvll.me', text: 'did:plc:4ppcdyvdand6dbvwymwywmf7' },
 		{ name: 'LinkedIn', src: '/png/linkedin-logo.png', link: 'https://www.linkedin.com/in/rvnrstnsyh', text: 'www.linkedin.com/in/rvnrstnsyh' },
 		{ name: 'GitHub', src: '/png/github-logo.png', link: 'https://github.com/rvnrstnsyh', text: 'github.com/rvnrstnsyh' },
 	]
