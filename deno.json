@@ -3,7 +3,7 @@
 	"nodeModulesDir": "none",
 	"deploy": { "project": "nvll", "exclude": ["**/node_modules"], "include": [], "entrypoint": "src\\main.ts" },
 	"tasks": {
-		"check": "deno fmt --check && deno lint && deno check **/*.ts && deno check **/*.tsx",
+		"check": "deno fmt --check && deno lint && deno check **/*.ts **/.*/**/*.ts **/*.tsx",
 		"cli": "echo \"import '\\$fresh/src/dev/cli.ts'\" | deno run --unstable -A -",
 		"manifest": "deno task cli manifest $(pwd)",
 		"dev": "deno run -A --unstable-kv --watch=src/static/,src/routes/ src/dev.ts",
@@ -18,7 +18,7 @@
 	},
 	"compilerOptions": { "types": ["./definition.d.ts"], "jsx": "react-jsx", "jsxImportSource": "preact" },
 	"lint": {
-		"include": ["**/*.ts", "**/*.tsx"],
+		"include": ["**/*.ts", "**/.*/**/*.ts", "**/*.tsx", "**/.*/**/*.tsx"],
 		"exclude": ["**/*build/*", "**/*dist/*", "**/*fresh/*", "**/*.hbs"],
 		"rules": {
 			"tags": ["recommended", "fresh"],
@@ -33,7 +33,7 @@
 		"semiColons": false,
 		"singleQuote": true,
 		"proseWrap": "preserve",
-		"include": ["**/*.ts", "**/*.tsx"],
+		"include": ["**/*.ts", "**/.*/**/*.ts", "**/*.tsx", "**/.*/**/*.tsx"],
 		"exclude": ["**/*build/*", "**/*dist/*", "**/*fresh/*", "**/*.hbs"]
 	},
 	"exclude": ["**/*build/*", "**/*dist/*", "**/*fresh/*", "**/_fresh/*"],
