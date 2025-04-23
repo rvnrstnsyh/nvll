@@ -18,7 +18,7 @@ export const SENTINEL_DEFAULT_HEADERS: Readonly<Map<string, string>> = new Map([
 	['X-Dark-Net', '?1'],
 ])
 
-export const SENTINEL_CSP_HEADER: Readonly<Record<string, string>> = Object.freeze({
+export const SENTINEL_CSP_DIRECTIVES: Readonly<Record<string, string>> = Object.freeze({
 	'default-src': "'none'",
 	'script-src': "'none'",
 	'script-src-attr': "'none'",
@@ -40,7 +40,7 @@ export const SENTINEL_CSP_HEADER: Readonly<Record<string, string>> = Object.free
 	'manifest-src': "'self'",
 })
 
-export const SENTINEL_PERMISSIONS_POLICY_HEADER: Readonly<string> = [
+export const SENTINEL_PERMISSIONS_POLICY: Readonly<string> = [
 	'accelerometer=()',
 	'autoplay=()',
 	'camera=()',
