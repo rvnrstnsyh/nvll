@@ -401,6 +401,25 @@ main.home-layout section.home .contact .content ul li .img-wrapper img.github {
   @apply w-4
   h-4;
 }
+main.home-layout section.home .system {
+  @apply w-full
+  max-w-md
+  mx-auto;
+}
+main.home-layout section.home .system header {
+  @apply space-y-2
+  mb-4;
+}
+main.home-layout section.home .system .content {
+  @apply text-end;
+}
+main.home-layout section.home .system .content .cta {
+  @apply flex
+  gap-4
+  justify-end
+  items-center
+  text-sm;
+}
 main.home-layout section.home .privacy {
   @apply w-full
   max-w-md

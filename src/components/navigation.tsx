@@ -7,7 +7,7 @@ type NavigationProps = {
 
 export default function Navigation({ bottom, currentYear }: NavigationProps): JSX.Element {
 	return (
-		<nav className={`navigation ${bottom ? 'my-[16px]' : 'my-[17px]'}`}>
+		<nav className={`navigation ${bottom ? 'md:mt-1 md:-mb-[7px] my-[16px]' : 'my-[17px]'}`}>
 			<div className='wrapper'>
 				{currentYear && (
 					<p className='copyright'>

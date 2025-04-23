@@ -1,4 +1,5 @@
 import Letter from './(_components)/letter.tsx'
+import System from './(_components)/system.tsx'
 import Contact from './(_components)/contact.tsx'
 import Privacy from './(_components)/privacy.tsx'
 import Navigation from '../../../components/navigation.tsx'
@@ -23,6 +24,9 @@ export default defineRoute((_request: Request, _ctx: RouteContext<void, unknown>
 			</div>
 
 			<div className='bravo'>
+				<div className='container'>
+					<System />
+				</div>
 				<div className='container'>
 					<Privacy />
 				</div>
