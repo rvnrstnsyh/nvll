@@ -32,7 +32,7 @@ export async function handler(request: Request, ctx: FreshContext<State>): Promi
 		// Default fallback.
 		return ctx.next()
 	} catch (error) {
-		console.log('Global Middleware error:', error instanceof Error ? error.message : error)
+		console.error('Global middleware error:', error instanceof Error ? error.message : error)
 		return new Response('Internal Server Error', { status: 500 })
 	}
 }

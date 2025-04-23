@@ -236,7 +236,7 @@ export default class Sentinel {
 
 			return nextResponse
 		} catch (error) {
-			console.log('Sentinel middleware error:', error instanceof Error ? error.message : error)
+			console.error('Sentinel middleware error:', error instanceof Error ? error.message : error)
 			const errorResponse: Response = new Response('500 Internal Server Error', { status: 500 })
 			this.setSecurityHeaders(errorResponse.headers, rateLimitCount, isDarkNet, startTime)
 			return errorResponse
