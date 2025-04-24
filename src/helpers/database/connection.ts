@@ -1,19 +1,19 @@
-import mysql, { Pool, PoolOptions } from 'mysql2/promise'
+import client, { Options, PostgresType, Sql } from 'postgres'
 
-import { drizzle, MySql2Database } from 'drizzle-orm/mysql2'
+import { drizzle, PostgresJsDatabase } from 'drizzle-orm/postgres-js'
 
-const credentials: PoolOptions = {
+const credentials: Options<Record<string, PostgresType>> = {
 	host: Deno.env.get('DB_HOSTNAME') || '127.0.0.1',
-	port: parseInt(Deno.env.get('DB_PORT') as string) || 3306,
+	port: parseInt(Deno.env.get('DB_PORT') as string) || 5432,
 	database: Deno.env.get('DB_NAME') || 'nvll',
-	user: Deno.env.get('DB_USERNAME') || 'root',
+	username: Deno.env.get('DB_USERNAME') || 'root',
 	password: Deno.env.get('DB_PASSWORD') || '',
-	connectionLimit: parseInt(Deno.env.get('DB_POOLSIZE') as string) || 10, // 10 connections.
-	connectTimeout: parseInt(Deno.env.get('DB_TIMEOUT') as string) || 1000 * 30, // 30 seconds.
+	max: parseInt(Deno.env.get('DB_POOLSIZE') as string) || 15, // 15 connections.
+	connect_timeout: parseInt(Deno.env.get('DB_TIMEOUT') as string) || 1000 * 30, // 30 seconds.
 }
 
-const mysql2: Pool = mysql.createPool(credentials as PoolOptions)
-const orm: MySql2Database = drizzle({ client: mysql2 })
+const postgres: Sql = client(credentials)
+const orm: PostgresJsDatabase = drizzle({ client: postgres })
 
-export const driver: Pool = mysql2
+export const driver: Sql = postgres
 export default orm

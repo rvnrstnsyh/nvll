@@ -3,7 +3,7 @@
 	"nodeModulesDir": "none",
 	"deploy": { "project": "nvll", "exclude": ["**/node_modules"], "include": [], "entrypoint": "src\\main.ts" },
 	"tasks": {
-		"check": "deno fmt --check && deno lint && deno check **/*.ts && deno check **/*.tsx",
+		"check": "deno fmt --check && deno lint && deno check **/*.ts **/*.tsx",
 		"cli": "echo \"import '\\$fresh/src/dev/cli.ts'\" | deno run --unstable -A -",
 		"manifest": "deno task cli manifest $(pwd)",
 		"dev": "deno run -A --unstable-kv --watch=src/static/,src/routes/ src/dev.ts",
@@ -51,7 +51,7 @@
 		"@preact/signals-core": "https://esm.sh/*@preact/signals-core@1.5.1",
 		"drizzle-kit": "npm:/drizzle-kit@^0.31.0",
 		"drizzle-orm": "npm:/drizzle-orm@^0.42.0",
-		"mysql2": "npm:/mysql2@^3.14.0",
+		"postgres": "npm:postgres@^3.4.5",
 		"preact": "https://esm.sh/preact@10.22.0",
 		"preact/": "https://esm.sh/preact@10.22.0/",
 		"tailwindcss": "https://esm.sh/tailwindcss@3.4.1",
