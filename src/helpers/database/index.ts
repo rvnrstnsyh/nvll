@@ -1,3 +1,5 @@
+import * as schema from './schemas/index.ts'
+
 import client, { Options, PostgresType, Sql } from 'postgres'
 
 import { drizzle, PostgresJsDatabase } from 'drizzle-orm/postgres-js'
@@ -13,7 +15,7 @@ const credentials: Options<Record<string, PostgresType>> = {
 }
 
 const postgres: Sql = client(credentials)
-const orm: PostgresJsDatabase = drizzle({ client: postgres })
+const orm: PostgresJsDatabase<Record<string, unknown>> = drizzle({ client: postgres, schema })
 
 export const driver: Sql = postgres
 export default orm
