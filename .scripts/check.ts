@@ -29,7 +29,7 @@ async function removeNodeModules(): Promise<void> {
 					console.warn(`Windows: Could not remove "${NODE_MODULES_DIR}" directory using standard method.`)
 					console.warn(`Continuing with checks anyway...`)
 				} else {
-					console.error('Error removing node_modules, continuing anyway:', error)
+					console.error('Error removing node_modules, continuing anyway:', error instanceof Error ? error.message : error)
 				}
 			}
 		}
@@ -37,7 +37,7 @@ async function removeNodeModules(): Promise<void> {
 		if (error instanceof Deno.errors.NotFound) {
 			console.warn(`"${NODE_MODULES_DIR}" does not exist. Skipping deletion.`)
 		} else {
-			console.error('Error checking node_modules directory, continuing anyway:', error)
+			console.error('Error checking node_modules directory, continuing anyway:', error instanceof Error ? error.message : error)
 		}
 	}
 }
