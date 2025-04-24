@@ -1,8 +1,8 @@
 // deno-lint-ignore-file no-console
 
 import { FreshContext } from '$fresh/server.ts'
-import { HELMET_CSP_HEADER, HELMET_DEFAULT_HEADERS, HELMET_PERMISSIONS_POLICY_HEADER } from '../var/helmet-csp.ts'
-import { SENTINEL_CSP_HEADER, SENTINEL_DEFAULT_HEADERS, SENTINEL_PERMISSIONS_POLICY_HEADER } from '../var/sentinel-csp.ts'
+import { HELMET_CSP_DIRECTIVES, HELMET_DEFAULT_HEADERS, HELMET_PERMISSIONS_POLICY } from '../var/helmet-csp.ts'
+import { SENTINEL_CSP_DIRECTIVES, SENTINEL_DEFAULT_HEADERS, SENTINEL_PERMISSIONS_POLICY } from '../var/sentinel-csp.ts'
 
 // Types with readonly properties.
 type RateLimitMap = {
@@ -33,7 +33,7 @@ export default class Sentinel {
 		RATE_LIMIT: 1000,
 		RATE_LIMIT_WINDOW: 60 * 60 * 1000, // 1 hour.
 		RATE_LIMIT_METHOD_EXCLUDE: new Set(['HEAD', 'OPTIONS']),
-		ALLOWED_ORIGINS: new Set(Deno.env.get('APP_ORIGINS')?.split(',').map((s: string) => s.trim()) || ['http://localhost', 'http://127.0.0.1']),
+		ALLOWED_ORIGINS: new Set(Deno.env.get('APP_ORIGINS')?.split(',').map((s: string): string => s.trim()) || ['http://localhost', 'http://127.0.0.1']),
 	}
 	private static readonly RATE_LIMIT_CLIENTS: Map<string, RateLimitMap> = new Map<string, RateLimitMap>()
 	private static readonly FILE_SETTINGS: Readonly<Record<string, FileSettings>> = {
@@ -56,7 +56,7 @@ export default class Sentinel {
 	 * every `RATE_LIMIT_WINDOW` milliseconds. The interval will be stopped when the server is stopped.
 	 */
 	private static resetInterval(): void {
-		if (!this.cleanupInterval) this.cleanupInterval = setInterval(() => this.resetRateLimits(), this.CONFIG.RATE_LIMIT_WINDOW)
+		if (!this.cleanupInterval) this.cleanupInterval = setInterval((): void => this.resetRateLimits(), this.CONFIG.RATE_LIMIT_WINDOW)
 	}
 	/**
 	 * Resets the rate limit entries that are older than `RATE_LIMIT_WINDOW` milliseconds.
@@ -128,17 +128,26 @@ export default class Sentinel {
 	 */
 	private static setSecurityHeaders(headers: Headers, rateLimitCount: number, isDarkNet: boolean, startTime: number): string {
 		const DEFAULT_HEADERS: Readonly<Map<string, string>> = isDarkNet ? SENTINEL_DEFAULT_HEADERS : HELMET_DEFAULT_HEADERS
-		const CSP_HEADER: Readonly<Record<string, string>> = isDarkNet ? SENTINEL_CSP_HEADER : HELMET_CSP_HEADER
-		const PERMISSIONS_POLICY: Readonly<string> = isDarkNet ? SENTINEL_PERMISSIONS_POLICY_HEADER : HELMET_PERMISSIONS_POLICY_HEADER
-
-		DEFAULT_HEADERS.forEach((value: string, key: string) => headers.set(key, value))
+		const CSP_DIRECTIVES: Readonly<Record<string, string>> = isDarkNet ? SENTINEL_CSP_DIRECTIVES : HELMET_CSP_DIRECTIVES
+		const PERMISSIONS_POLICY: Readonly<string> = isDarkNet ? SENTINEL_PERMISSIONS_POLICY : HELMET_PERMISSIONS_POLICY
+		/**
+		 * @description Sets a header on the provided Headers object, but only if the header does not already exist.
+		 * This is useful for setting default headers that can be overridden by the user.
+		 * @param key The key of the header to set.
+		 * @param value The value of the header to set.
+		 */
+		const safeSetHeader = (key: string, value: string): void => {
+			if (!headers.has(key)) headers.set(key, value)
+		}
+		// Set default headers without overwriting existing ones.
+		DEFAULT_HEADERS.forEach((value: string, key: string): void => safeSetHeader(key, value))
 
 		const LOCAL_ORIGINS: string[] = ['http://localhost', 'http://127.0.0.1', 'http://0.0.0.0']
 
 		if (Deno.env.get('APP_ENV') === 'production') {
-			LOCAL_ORIGINS.forEach((origin: string) => this.CONFIG.ALLOWED_ORIGINS.delete(origin))
+			LOCAL_ORIGINS.forEach((origin: string): boolean => this.CONFIG.ALLOWED_ORIGINS.delete(origin))
 		} else {
-			LOCAL_ORIGINS.forEach((origin: string) => this.CONFIG.ALLOWED_ORIGINS.add(origin))
+			LOCAL_ORIGINS.forEach((origin: string): Set<string> => this.CONFIG.ALLOWED_ORIGINS.add(origin))
 		}
 
 		if (isDarkNet) {
@@ -148,19 +157,26 @@ export default class Sentinel {
 			}
 		}
 
-		headers.set('Access-Control-Allow-Origin', Array.from(this.CONFIG.ALLOWED_ORIGINS).join(', '))
-		headers.set('Content-Security-Policy', Object.entries(CSP_HEADER).map(([directive, value]: [string, string]) => `${directive} ${value}`).join('; '))
-		headers.set('Permissions-Policy', PERMISSIONS_POLICY)
+		// Access-Control-Allow-Origin.
+		safeSetHeader('Access-Control-Allow-Origin', Array.from(this.CONFIG.ALLOWED_ORIGINS).join(', '))
+		// Content-Security-Policy.
+		safeSetHeader('Content-Security-Policy', Object.entries(CSP_DIRECTIVES).map(([directive, value]: [string, string]): string => `${directive} ${value}`).join('; '))
+		// Permissions-Policy.
+		safeSetHeader('Permissions-Policy', PERMISSIONS_POLICY)
 
+		// Rate Limit Headers.
 		if (rateLimitCount !== Infinity) {
-			headers.set('X-Rate-Limit', `${rateLimitCount}/${this.CONFIG.RATE_LIMIT}`)
-			headers.set('X-Rate-Limit-Remaining', `${Math.max(0, this.CONFIG.RATE_LIMIT - rateLimitCount)}`)
+			safeSetHeader('X-Rate-Limit', `${rateLimitCount}/${this.CONFIG.RATE_LIMIT}`)
+			safeSetHeader('X-Rate-Limit-Remaining', `${Math.max(0, this.CONFIG.RATE_LIMIT - rateLimitCount)}`)
 		}
 
+		// Response Time.
 		const responseTime: string = `${(performance.now() - startTime).toFixed(2)}ms`
-		headers.set('X-Response-Time', responseTime)
 
-		this.HEADERS_TO_REMOVE.forEach((header: string) => headers.delete(header))
+		safeSetHeader('X-Response-Time', responseTime)
+
+		// Remove unwanted headers.
+		this.HEADERS_TO_REMOVE.forEach((header: string): void => headers.delete(header))
 
 		return responseTime
 	}
@@ -236,7 +252,7 @@ export default class Sentinel {
 
 			return nextResponse
 		} catch (error) {
-			console.log('Sentinel middleware error:', error instanceof Error ? error.message : error)
+			console.error('Sentinel middleware error:', error instanceof Error ? error.message : error)
 			const errorResponse: Response = new Response('500 Internal Server Error', { status: 500 })
 			this.setSecurityHeaders(errorResponse.headers, rateLimitCount, isDarkNet, startTime)
 			return errorResponse
