@@ -8,6 +8,7 @@
     "npm:@types/node@*": "22.12.0",
     "npm:autoprefixer@10.4.17": "10.4.17_postcss@8.4.35",
     "npm:cssnano@6.0.3": "6.0.3_postcss@8.4.35",
+    "npm:drizzle-kit@*": "0.31.0_esbuild@0.25.3",
     "npm:drizzle-kit@0.31": "0.31.0_esbuild@0.25.3",
     "npm:drizzle-orm@0.42": "0.42.0_postgres@3.4.5",
     "npm:postcss@8.4.35": "8.4.35",

@@ -10,9 +10,11 @@ node_modules
 _build
 _dist
 _fresh
+_drizzle
 build
 dist
 fresh
+drizzle
 
 # testing
 coverage
