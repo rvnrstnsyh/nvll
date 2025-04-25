@@ -9,7 +9,7 @@ type Link = {
 	text: string
 }
 
-export default function Contact(): JSX.Element {
+export default function ContactInformation(): JSX.Element {
 	const links: Link[] = [
 		{ name: 'Email', src: '/png/email-logo.png', link: 'mailto:re@nvll.me', text: 're@nvll.me' },
 		{ name: 'Alternative', src: '', link: 'mailto:rasetiansyah@pm.me', text: 'rasetiansyah@pm.me' },
@@ -20,7 +20,7 @@ export default function Contact(): JSX.Element {
 		{ name: 'GitHub', src: '/png/github-logo.png', link: 'https://github.com/rvnrstnsyh', text: 'github.com/rvnrstnsyh' },
 	]
 	return (
-		<section className='contact'>
+		<section className='contact-information'>
 			<header>
 				<h4>Contact Information</h4>
 				<p>

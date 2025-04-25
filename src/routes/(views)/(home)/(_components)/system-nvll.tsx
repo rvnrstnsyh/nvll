@@ -2,9 +2,9 @@ import PrimaryButton from '../../../../components/primary-button.tsx'
 
 import { JSX } from 'preact/jsx-runtime'
 
-export default function System(): JSX.Element {
+export default function SystemNvll(): JSX.Element {
 	return (
-		<section className='system'>
+		<section className='system-nvll'>
 			<header>
 				<h4>System NVLL</h4>
 				<p>
@@ -14,8 +14,10 @@ export default function System(): JSX.Element {
 			</header>
 			<div className='content'>
 				<div className='cta'>
-					<a className='anchor-text' href=''>Learn more</a>
-					<PrimaryButton>Access</PrimaryButton>
+					<a className='anchor-text' href='https://access.nvll.me/about'>Learn more</a>
+					<a className='anchor-text' href='https://access.nvll.me'>
+						<PrimaryButton>Access</PrimaryButton>
+					</a>
 				</div>
 			</div>
 		</section>

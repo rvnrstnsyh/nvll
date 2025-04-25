@@ -374,66 +374,19 @@ main.home-layout section.home .letter blockquote footer .right img.logo {
   h-[70px]
   object-contain;
 }
-main.home-layout section.home .contact {
+main.home-layout section.home .system-nvll {
   @apply w-full
   max-w-md
   mx-auto;
 }
-main.home-layout section.home .contact header {
-  @apply space-y-2;
-}
-main.home-layout section.home .contact .content ul {
-  @apply py-4;
-}
-main.home-layout section.home .contact .content ul li {
-  @apply flex
-  items-center
-  gap-1
-  py-1.5
-  text-sm
-  transition-colors
-  duration-200
-  rounded-md
-  px-2;
-}
-main.home-layout section.home .contact .content ul li .img-wrapper {
-  @apply w-6
-  h-6
-  flex
-  items-center
-  justify-center
-  shrink-0;
-}
-main.home-layout section.home .contact .content ul li .img-wrapper img {
-  @apply w-5
-  h-5
-  object-contain;
-}
-main.home-layout section.home .contact .content ul li .img-wrapper img.bluesky {
-  @apply w-4
-  h-4;
-}
-main.home-layout section.home .contact .content ul li .img-wrapper img.linkedin {
-  @apply w-3.5
-  h-3.5;
-}
-main.home-layout section.home .contact .content ul li .img-wrapper img.github {
-  @apply w-4
-  h-4;
-}
-main.home-layout section.home .system {
-  @apply w-full
-  max-w-md
-  mx-auto;
-}
-main.home-layout section.home .system header {
+main.home-layout section.home .system-nvll header {
   @apply space-y-2
   mb-4;
 }
-main.home-layout section.home .system .content {
+main.home-layout section.home .system-nvll .content {
   @apply text-end;
 }
-main.home-layout section.home .system .content .cta {
+main.home-layout section.home .system-nvll .content .cta {
   @apply flex
   gap-4
   justify-end
@@ -448,6 +401,53 @@ main.home-layout section.home .privacy {
 main.home-layout section.home .privacy header {
   @apply space-y-2
   mb-4;
+}
+main.home-layout section.home .contact-information {
+  @apply w-full
+  max-w-md
+  mx-auto;
+}
+main.home-layout section.home .contact-information header {
+  @apply space-y-2;
+}
+main.home-layout section.home .contact-information .content ul {
+  @apply py-4;
+}
+main.home-layout section.home .contact-information .content ul li {
+  @apply flex
+  items-center
+  gap-1
+  py-1.5
+  text-sm
+  transition-colors
+  duration-200
+  rounded-md
+  px-2;
+}
+main.home-layout section.home .contact-information .content ul li .img-wrapper {
+  @apply w-6
+  h-6
+  flex
+  items-center
+  justify-center
+  shrink-0;
+}
+main.home-layout section.home .contact-information .content ul li .img-wrapper img {
+  @apply w-5
+  h-5
+  object-contain;
+}
+main.home-layout section.home .contact-information .content ul li .img-wrapper img.bluesky {
+  @apply w-4
+  h-4;
+}
+main.home-layout section.home .contact-information .content ul li .img-wrapper img.linkedin {
+  @apply w-3.5
+  h-3.5;
+}
+main.home-layout section.home .contact-information .content ul li .img-wrapper img.github {
+  @apply w-4
+  h-4;
 }
 /**!
   *! END HOME SECTION -----

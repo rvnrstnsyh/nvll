@@ -1,8 +1,8 @@
 import Letter from './(_components)/letter.tsx'
-import System from './(_components)/system.tsx'
-import Contact from './(_components)/contact.tsx'
 import Privacy from './(_components)/privacy.tsx'
+import SystemNvll from './(_components)/system-nvll.tsx'
 import Navigation from '../../../components/navigation.tsx'
+import ContactInformation from './(_components)/contact-information.tsx'
 
 import { JSX } from 'preact/jsx-runtime'
 import { Head } from '$fresh/runtime.ts'
@@ -25,13 +25,13 @@ export default defineRoute((_request: Request, _ctx: RouteContext<void, unknown>
 
 			<div className='bravo'>
 				<div className='container'>
-					<System />
+					<SystemNvll />
 				</div>
 				<div className='container'>
 					<Privacy />
 				</div>
 				<div className='container'>
-					<Contact />
+					<ContactInformation />
 				</div>
 				<Navigation bottom currentYear={new Date().getFullYear()} />
 			</div>
