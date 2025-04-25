@@ -18,7 +18,7 @@ export const HELMET_DEFAULT_HEADERS: Readonly<Map<string, string>> = new Map([
 	['X-XSS-Protection', '1; mode=block'],
 ])
 
-export const HELMET_CSP_HEADER: Readonly<Record<string, string>> = Object.freeze({
+export const HELMET_CSP_DIRECTIVES: Readonly<Record<string, string>> = Object.freeze({
 	'default-src': "'self'",
 	'script-src': "'self'",
 	'script-src-attr': "'none'",
@@ -41,4 +41,4 @@ export const HELMET_CSP_HEADER: Readonly<Record<string, string>> = Object.freeze
 	'upgrade-insecure-requests': '',
 })
 
-export const HELMET_PERMISSIONS_POLICY_HEADER: Readonly<string> = ''
+export const HELMET_PERMISSIONS_POLICY: Readonly<string> = ''

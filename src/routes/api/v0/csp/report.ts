@@ -82,7 +82,7 @@ export const handler = {
 			return new Response(null, { status: 204 })
 		} catch (error) {
 			// deno-lint-ignore no-console
-			console.error('CSP Report Error:', error instanceof Error ? error.message : error)
+			console.error('CSP report error:', error instanceof Error ? error.message : error)
 			return new Response('500 Internal Server Error', { status: 500 })
 		}
 	},
