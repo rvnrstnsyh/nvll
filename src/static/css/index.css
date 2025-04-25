@@ -187,6 +187,18 @@ body {
   focus:ring-offset-2
   active:bg-gray-900;
 }
+.availability-indicator {
+  @apply inline-block
+  ml-0.5
+  rounded-full
+  relative;
+}
+.availability-indicator .dot {
+  @apply block
+  opacity-70
+  rounded-full
+  animate-sonar;
+}
 /**!
   *! END GLOBAL SECTION -----
   */
@@ -341,6 +353,14 @@ main.home-layout section.home .letter blockquote footer .left img.avatar {
 }
 main.home-layout section.home .letter blockquote footer .left .bio {
   @apply space-y-0.5;
+}
+main.home-layout section.home .letter blockquote footer .left .bio .name {
+  @apply flex
+  items-center
+  justify-center;
+}
+main.home-layout section.home .letter blockquote footer .left .bio .name .availability-indicator {
+  @apply m-2;
 }
 main.home-layout section.home .letter blockquote footer .left .bio p.description {
   @apply text-sm

@@ -1,3 +1,5 @@
+import AvailabilityIndicator from '../../../../components/availability-indicator.tsx'
+
 import { JSX } from 'preact/jsx-runtime'
 import { asset } from '$fresh/runtime.ts'
 
@@ -60,7 +62,12 @@ export default function Letter(): JSX.Element {
 					<div className='left'>
 						<img className='avatar' src={asset('/jpg/avatar_default_0-20230707-0001.jpg')} alt='Avatar' />
 						<div className='bio'>
-							<h5>Rivane Rasetiansyah</h5>
+							<div className='name'>
+								<h5>
+									Rivane Rasetiansyah
+								</h5>
+								<AvailabilityIndicator small />
+							</div>
 							<p className='description'>
 								Software Developer
 								<br />
