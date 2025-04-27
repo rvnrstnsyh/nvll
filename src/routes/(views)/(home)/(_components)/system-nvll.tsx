@@ -8,8 +8,8 @@ export default function SystemNvll(): JSX.Element {
 			<header>
 				<h4>System NVLL</h4>
 				<p>
-					Web-based decentralized identifiers and Web Key Directory enable public key discovery, identity verification, and key management without third-party
-					registries or blockchain infrastructure.
+					Operated by an individual and intended for public use, it is designed with user security and privacy in mind. Please use it responsibly; misuse may
+					result in consequences if discovered.
 				</p>
 			</header>
 			<div className='content'>
