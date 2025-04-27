@@ -11,13 +11,13 @@ type Link = {
 
 export default function ContactInformation(): JSX.Element {
 	const links: Link[] = [
-		{ name: 'Email', src: '/png/email-logo.png', link: 'mailto:re@nvll.me', text: 're@nvll.me' },
+		{ name: 'Email', src: '/svg/email-logo-min.svg', link: 'mailto:re@nvll.me', text: 're@nvll.me' },
 		{ name: 'Alternative', src: '', link: 'mailto:rasetiansyah@pm.me', text: 'rasetiansyah@pm.me' },
-		{ name: 'Matrix', src: '/png/matrix-logo.png', link: 'https://matrix.to/#/@rvnrstnsyh:matrix.org', text: '@rvnrstnsyh:matrix.org' },
-		{ name: 'Fediverse', src: '/png/mastodon-logo.png', link: 'https://fosstodon.org/@rvnrstnsyh', rel: 'me', text: '@rvnrstnsyh@fosstodon.org' },
-		{ name: 'Bluesky', src: '/png/bluesky-logo.png', link: 'https://bsky.app/profile/nvll.me', text: 'did:plc:4ppcdyvdand6dbvwymwywmf7' },
-		{ name: 'LinkedIn', src: '/png/linkedin-logo.png', link: 'https://www.linkedin.com/in/rvnrstnsyh', text: 'www.linkedin.com/in/rvnrstnsyh' },
-		{ name: 'GitHub', src: '/png/github-logo.png', link: 'https://github.com/rvnrstnsyh', text: 'github.com/rvnrstnsyh' },
+		{ name: 'Matrix', src: '/svg/matrix-logo-min.svg', link: 'https://matrix.to/#/@rvnrstnsyh:matrix.org', text: '@rvnrstnsyh:matrix.org' },
+		{ name: 'Fediverse', src: '/svg/mastodon-logo-min.svg', link: 'https://fosstodon.org/@rvnrstnsyh', rel: 'me', text: '@rvnrstnsyh@fosstodon.org' },
+		{ name: 'Bluesky', src: '/svg/bluesky-logo-min.svg', link: 'https://bsky.app/profile/nvll.me', text: 'did:plc:4ppcdyvdand6dbvwymwywmf7' },
+		{ name: 'LinkedIn', src: '/svg/linkedin-logo-min.svg', link: 'https://www.linkedin.com/in/rvnrstnsyh', text: 'www.linkedin.com/in/rvnrstnsyh' },
+		{ name: 'GitHub', src: '/svg/github-logo-min.svg', link: 'https://github.com/rvnrstnsyh', text: 'github.com/rvnrstnsyh' },
 	]
 	return (
 		<section className='contact-information'>

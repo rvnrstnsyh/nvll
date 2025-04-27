@@ -247,7 +247,7 @@ nav.navigation .wrapper ul li a {
   */
 main.home-layout .overlay {
   @apply fixed
-  bg-[url('../png/background.png')]
+  bg-[url('../webp/background-min.webp')]
   bg-no-repeat
   bg-cover
   z-10

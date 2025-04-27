@@ -1,0 +1,28 @@
+<svg width="877" height="968" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <mask id="a" maskUnits="userSpaceOnUse" x="0" y="0" width="877" height="968">
+    <path d="M877 0H0v968h877V0z" fill="#f3f4f6" />
+  </mask>
+  <g mask="url(#a)">
+    <path d="M25 725.5c-215.667 0-390.5-174.833-390.5-390.5S-190.667-55.5 25-55.5 415.5 119.333 415.5 335 240.667 725.5 25 725.5z" stroke="#1F2937" />
+    <path opacity=".3" d="M25 802.5c-258.193 0-467.5-209.307-467.5-467.5S-233.193-132.5 25-132.5 492.5 76.807 492.5 335 283.193 802.5 25 802.5z" stroke="#1F2937" />
+    <path opacity=".1" d="M25 892.5c-307.899 0-557.5-249.601-557.5-557.5S-282.899-222.5 25-222.5 582.5 27.101 582.5 335 332.899 892.5 25 892.5z" stroke="#1F2937" />
+    <g filter="url(#b)">
+      <path d="M38 450c-321.982 0-583-102.751-583-229.5C-545 93.75-283.982-9 38-9S621 93.75 621 220.5C621 347.249 359.982 450 38 450z" fill="#f3f4f6" />
+    </g>
+    <g filter="url(#c)">
+      <path d="M-163 411c-144.699 0-262-82.603-262-184.5S-307.699 42-163 42 99 124.603 99 226.5-18.301 411-163 411z" fill="#f3f4f6" />
+    </g>
+  </g>
+  <defs>
+    <filter id="b" x="-769" y="-233" width="1614" height="907" filterUnits="userSpaceOnUse">
+      <feFlood result="BackgroundImageFix" />
+      <feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+      <feGaussianBlur stdDeviation="112" result="effect1_foregroundBlur_91_1704" />
+    </filter>
+    <filter id="c" x="-649" y="-182" width="972" height="817" filterUnits="userSpaceOnUse">
+      <feFlood result="BackgroundImageFix" />
+      <feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+      <feGaussianBlur stdDeviation="112" result="effect1_foregroundBlur_91_1704" />
+    </filter>
+  </defs>
+</svg>

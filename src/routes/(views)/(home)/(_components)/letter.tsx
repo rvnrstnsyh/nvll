@@ -15,7 +15,7 @@ export default function Letter(): JSX.Element {
 				</p>
 			</header>
 			<blockquote>
-				<img className='quote' src={asset('/png/quote.png')} alt='Quote' />
+				<img className='quote' src={asset('/svg/quote-min.svg')} alt='Quote' />
 				<div className='content'>
 					<p>
 						<em>
@@ -60,7 +60,7 @@ export default function Letter(): JSX.Element {
 				</div>
 				<footer>
 					<div className='left'>
-						<img className='avatar' src={asset('/jpg/avatar_default_0-20230707-0001.jpg')} alt='Avatar' />
+						<img className='avatar' src={asset('/webp/avatar_default_0-20230707-0001-min.webp')} alt='Avatar' />
 						<div className='bio'>
 							<div className='name'>
 								<h5>
@@ -76,7 +76,7 @@ export default function Letter(): JSX.Element {
 						</div>
 					</div>
 					<div className='right'>
-						<img className='logo' src={asset('/png/logo.png')} alt='Logo' />
+						<img className='logo' src={asset('/svg/logo-min.svg')} alt='Logo' />
 					</div>
 				</footer>
 			</blockquote>
