@@ -1,3 +1,5 @@
+import { getEnv } from '../lib/environment.ts'
+
 /**
  * Helmet configuration.
  *
@@ -7,7 +9,7 @@
  */
 
 // Determine if client-side scripts are allowed based on environment variable.
-const APP_CLIENT_SCRIPTS: Readonly<boolean> = JSON.parse(Deno.env.get('APP_CLIENT_SCRIPTS') || 'false')
+const APP_CLIENT_SCRIPTS: Readonly<boolean> = getEnv.boolean('/app/client_scripts')
 
 // Basic security headers.
 const commonHeaders: [string, string][] = [

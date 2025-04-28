@@ -1,5 +1,6 @@
 import { FreshContext } from '$fresh/server.ts'
 import { fromFileUrl, join } from '$std/path/mod.ts'
+import { cachedEnv, getEnv } from '../../../../helpers/lib/environment.ts'
 
 export const handler = {
 	/**
@@ -11,7 +12,7 @@ export const handler = {
 	 * with 'application/octet-stream' content type, or a 404 Not Found response if the key is not found.
 	 */
 	async GET(_request: Request, ctx: FreshContext): Promise<Response> {
-		const domain: Readonly<string> = Deno.env.get('APP_ENV') === 'production' ? Deno.env.get('APP_HOSTNAME') ?? '' : 'nvll.me'
+		const domain: Readonly<string> = cachedEnv.app.isProduction ? getEnv.string('/app/hostname') ?? '' : 'nvll.me'
 		const hash: Readonly<string> = ctx.params.hash.toUpperCase()
 
 		// Base32 RFC 4648.

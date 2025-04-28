@@ -1,4 +1,5 @@
 import { FreshContext } from '$fresh/server.ts'
+import { getEnv } from '../../../../helpers/lib/environment.ts'
 
 interface CspReportData {
 	'timestamp': string
@@ -53,7 +54,7 @@ export const handler = {
 	async POST(request: Request, ctx: FreshContext): Promise<Response> {
 		try {
 			// Check if logging is enabled early to avoid unnecessary processing.
-			if (!JSON.parse(Deno.env.get('APP_WRITE_CSP_REPORT') || 'false')) return new Response(null, { status: 204 })
+			if (!getEnv.boolean('/app/write_csp_report')) return new Response(null, { status: 204 })
 			// Extract required headers once.
 			const headers: Headers = request.headers
 			const remoteIp: Readonly<string> = headers.get('X-Forwarded-For') || ctx.remoteAddr.hostname

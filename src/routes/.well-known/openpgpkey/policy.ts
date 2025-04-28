@@ -1,4 +1,5 @@
 import { fromFileUrl, join } from '$std/path/mod.ts'
+import { cachedEnv, getEnv } from '../../../helpers/lib/environment.ts'
 
 export const handler = {
 	/**
@@ -10,7 +11,7 @@ export const handler = {
 		const __dirname: Readonly<string> = fromFileUrl(new URL('.', import.meta.url))
 
 		try {
-			const domain: Readonly<string> = Deno.env.get('APP_ENV') === 'production' ? Deno.env.get('APP_HOSTNAME') ?? '' : 'nvll.me'
+			const domain: Readonly<string> = cachedEnv.app.isProduction ? getEnv.string('/app/hostname') ?? '' : 'nvll.me'
 			const policyPath: Readonly<string> = join(__dirname, '../../../static/.well-known/openpgpkey', domain, 'policy')
 			const policy: Readonly<Uint8Array> = await Deno.readFile(policyPath)
 
