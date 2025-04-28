@@ -11,17 +11,17 @@ export const handler = {
 	 * with 'application/octet-stream' content type, or a 404 Not Found response if the key is not found.
 	 */
 	async GET(_request: Request, ctx: FreshContext): Promise<Response> {
-		const domain: string = Deno.env.get('APP_ENV') === 'production' ? Deno.env.get('APP_HOSTNAME') ?? '' : 'nvll.me'
-		const hash: string = ctx.params.hash.toUpperCase()
+		const domain: Readonly<string> = Deno.env.get('APP_ENV') === 'production' ? Deno.env.get('APP_HOSTNAME') ?? '' : 'nvll.me'
+		const hash: Readonly<string> = ctx.params.hash.toUpperCase()
 
 		// Base32 RFC 4648.
 		if (!/^[A-Z2-7]{27,56}$/.test(hash)) return new Response('403 Forbidden', { status: 403 })
 
-		const __dirname: string = fromFileUrl(new URL('.', import.meta.url))
+		const __dirname: Readonly<string> = fromFileUrl(new URL('.', import.meta.url))
 
 		try {
-			const keyPath: string = join(__dirname, '../../../../static/.well-known/openpgpkey', domain, 'hu', hash)
-			const key: Uint8Array = await Deno.readFile(keyPath)
+			const keyPath: Readonly<string> = join(__dirname, '../../../../static/.well-known/openpgpkey', domain, 'hu', hash)
+			const key: Readonly<Uint8Array> = await Deno.readFile(keyPath)
 
 			return new Response(key, {
 				headers: {

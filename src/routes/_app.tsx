@@ -3,7 +3,7 @@ import { asset } from '$fresh/runtime.ts'
 import { defineApp, RouteContext } from '$fresh/server.ts'
 
 export default defineApp((_request: Request, ctx: RouteContext<void, State>): JSX.Element => {
-	const onionLocation: string = `http://${Deno.env.get('APP_HOSTNAME_V3')?.toLowerCase()}${ctx.url.pathname}`
+	const onionLocation: Readonly<string> = `http://${Deno.env.get('APP_HOSTNAME_V3')?.toLowerCase()}${ctx.url.pathname}`
 
 	return (
 		// <!DOCTYPE html>

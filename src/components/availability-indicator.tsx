@@ -6,8 +6,8 @@ type AvailabilityIndicatorProps = {
 }
 
 export default function AvailabilityIndicator({ active, small }: AvailabilityIndicatorProps): JSX.Element {
-	const color: string = active ? 'bg-yellow-green' : 'bg-red-500'
-	const size: string = small ? 'w-1.5 h-1.5' : 'w-2.5 h-2.5'
+	const color: Readonly<string> = active ? 'bg-yellow-green' : 'bg-red-500'
+	const size: Readonly<string> = small ? 'w-1.5 h-1.5' : 'w-2.5 h-2.5'
 
 	return (
 		<div className={`availability-indicator ${color} ${size}`} title={active ? 'Online (last ping 5 minutes ago)' : 'Offline (last ping 17 minutes ago)'}>

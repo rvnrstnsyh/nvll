@@ -56,8 +56,8 @@ export const handler = {
 			if (!JSON.parse(Deno.env.get('APP_WRITE_CSP_REPORT') || 'false')) return new Response(null, { status: 204 })
 			// Extract required headers once.
 			const headers: Headers = request.headers
-			const remoteIp: string = headers.get('X-Forwarded-For') || ctx.remoteAddr.hostname
-			const userAgent: string = headers.get('user-agent') || 'Unknown'
+			const remoteIp: Readonly<string> = headers.get('X-Forwarded-For') || ctx.remoteAddr.hostname
+			const userAgent: Readonly<string> = headers.get('user-agent') || 'Unknown'
 			// Parse body and create log entry in one pass.
 			const { 'csp-report': report }: CspReport = await request.json() as CspReport
 			const logEntry: CspReportData = {

@@ -7,12 +7,12 @@ export const handler = {
 	 * with 'application/octet-stream' content type, or a 404 Not Found response if the file is not found.
 	 */
 	async GET(): Promise<Response> {
-		const __dirname: string = fromFileUrl(new URL('.', import.meta.url))
+		const __dirname: Readonly<string> = fromFileUrl(new URL('.', import.meta.url))
 
 		try {
-			const domain: string = Deno.env.get('APP_ENV') === 'production' ? Deno.env.get('APP_HOSTNAME') ?? '' : 'nvll.me'
-			const policyPath: string = join(__dirname, '../../../static/.well-known/openpgpkey', domain, 'policy')
-			const policy: Uint8Array = await Deno.readFile(policyPath)
+			const domain: Readonly<string> = Deno.env.get('APP_ENV') === 'production' ? Deno.env.get('APP_HOSTNAME') ?? '' : 'nvll.me'
+			const policyPath: Readonly<string> = join(__dirname, '../../../static/.well-known/openpgpkey', domain, 'policy')
+			const policy: Readonly<Uint8Array> = await Deno.readFile(policyPath)
 
 			return new Response(policy, {
 				headers: {
