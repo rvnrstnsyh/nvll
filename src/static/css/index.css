@@ -28,7 +28,7 @@
 /**?
   *? ----- LIST OF CONTENTS -----
   *! GLOBAL SECTION -----
-  *! NAVIGATION SECTION -----
+  *! COPYRIGHT SECTION -----
   *! HOME SECTION -----
   */
 
@@ -203,44 +203,44 @@ body {
   *! END GLOBAL SECTION -----
   */
 /**!
-  *! NAVIGATION SECTION -----
+  *! COPYRIGHT SECTION -----
   */
-nav.navigation {
+nav.copyright {
   @apply mx-auto
   w-full
   px-1.5
   max-w-[500px];
 }
-nav.navigation .wrapper {
+nav.copyright .wrapper {
   @apply flex
   flex-wrap
   items-start
   justify-between
   gap-2;
 }
-nav.navigation .wrapper .copyright {
+nav.copyright .wrapper p {
   @apply z-20
   text-xs
   text-gray-600;
 }
-nav.navigation .wrapper ul {
+nav.copyright .wrapper ul {
   @apply z-20
   flex
   flex-wrap
   items-center;
 }
-nav.navigation .wrapper ul li {
+nav.copyright .wrapper ul li {
   @apply relative
   inline-block
   pe-2
   text-xs;
 }
-nav.navigation .wrapper ul li a {
+nav.copyright .wrapper ul li a {
   @apply anchor-text
   text-xs;
 }
 /**!
-  *! END NAVIGATION SECTION -----
+  *! END COPYRIGHT SECTION -----
   */
 /**!
   *! HOME SECTION -----

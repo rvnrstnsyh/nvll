@@ -1,7 +1,7 @@
 import Letter from './(_components)/letter.tsx'
 import Privacy from './(_components)/privacy.tsx'
 import SystemNvll from './(_components)/system-nvll.tsx'
-import Navigation from '../../../components/navigation.tsx'
+import Copyright from '../../../components/copyright.tsx'
 import ContactInformation from './(_components)/contact-information.tsx'
 
 import { JSX } from 'preact/jsx-runtime'
@@ -17,7 +17,7 @@ export default defineRoute((_request: Request, _ctx: RouteContext<void, unknown>
 			</Head>
 
 			<div className='alpha'>
-				<Navigation />
+				<Copyright />
 				<div className='container'>
 					<Letter />
 				</div>
@@ -33,7 +33,7 @@ export default defineRoute((_request: Request, _ctx: RouteContext<void, unknown>
 				<div className='container'>
 					<ContactInformation />
 				</div>
-				<Navigation bottom currentYear={new Date().getFullYear()} />
+				<Copyright bottom currentYear={new Date().getFullYear()} />
 			</div>
 		</section>
 	)
