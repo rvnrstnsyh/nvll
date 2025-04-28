@@ -1,6 +1,7 @@
 import PrimaryButton from '../../../../components/primary-button.tsx'
 
 import { JSX } from 'preact/jsx-runtime'
+import { anchorRel, anchorTarget } from '../../../../helpers/var/attributes.ts'
 
 export default function SystemNvll(): JSX.Element {
 	return (
@@ -14,8 +15,8 @@ export default function SystemNvll(): JSX.Element {
 			</header>
 			<div className='content'>
 				<div className='cta'>
-					<a className='anchor-text' href='https://access.nvll.me/about'>Learn more</a>
-					<a className='anchor-text' href='https://access.nvll.me'>
+					<a className='anchor-text' href='https://access.nvll.me/about' rel={anchorRel} target={anchorTarget}>Learn more</a>
+					<a className='anchor-text' href='https://access.nvll.me' rel={anchorRel} target={anchorTarget}>
 						<PrimaryButton>Access</PrimaryButton>
 					</a>
 				</div>
