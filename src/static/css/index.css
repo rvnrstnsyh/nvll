@@ -187,18 +187,6 @@ body {
   focus:ring-offset-2
   active:bg-gray-900;
 }
-.availability-indicator {
-  @apply inline-block
-  ml-0.5
-  rounded-full
-  relative;
-}
-.availability-indicator .dot {
-  @apply block
-  opacity-70
-  rounded-full
-  animate-sonar;
-}
 /**!
   *! END GLOBAL SECTION -----
   */
@@ -373,25 +361,6 @@ main.home-layout section.home .letter blockquote footer .right img.logo {
   w-[58px]
   h-[70px]
   object-contain;
-}
-main.home-layout section.home .system-nvll {
-  @apply w-full
-  max-w-md
-  mx-auto;
-}
-main.home-layout section.home .system-nvll header {
-  @apply space-y-2
-  mb-4;
-}
-main.home-layout section.home .system-nvll .content {
-  @apply text-end;
-}
-main.home-layout section.home .system-nvll .content .cta {
-  @apply flex
-  gap-4
-  justify-end
-  items-center
-  text-sm;
 }
 main.home-layout section.home .privacy {
   @apply w-full

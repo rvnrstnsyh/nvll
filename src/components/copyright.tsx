@@ -10,7 +10,7 @@ export default function Copyright({ bottom, currentYear }: CopyrightProps): JSX.
 	const licenseUrl: Readonly<string> = 'https://raw.githubusercontent.com/rvnrstnsyh/nvll/refs/heads/main/LICENSE'
 
 	return (
-		<nav className={`copyright ${bottom ? 'md:mt-1 md:-mb-[7px] my-[16px]' : 'my-[17px]'}`}>
+		<nav className={`copyright ${bottom ? 'my-[16px]' : 'my-[17px]'}`}>
 			<div className='wrapper'>
 				{currentYear && (
 					<p>

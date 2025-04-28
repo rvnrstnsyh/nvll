@@ -1,5 +1,3 @@
-import AvailabilityIndicator from '../../../../components/availability-indicator.tsx'
-
 import { JSX } from 'preact/jsx-runtime'
 import { asset } from '$fresh/runtime.ts'
 import { anchorRel, anchorTarget } from '../../../../helpers/var/attributes.ts'
@@ -66,10 +64,7 @@ export default function Letter(): JSX.Element {
 						<img className='avatar' src={asset('/webp/avatar_default_0-20230707-0001-min.webp')} alt='Avatar' />
 						<div className='bio'>
 							<div className='name'>
-								<h5>
-									Rivane Rasetiansyah
-								</h5>
-								<AvailabilityIndicator small />
+								<h5>Rivane Rasetiansyah</h5>
 							</div>
 							<p className='description'>
 								Software Developer

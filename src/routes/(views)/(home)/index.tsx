@@ -1,6 +1,5 @@
 import Letter from './(_components)/letter.tsx'
 import Privacy from './(_components)/privacy.tsx'
-import SystemNvll from './(_components)/system-nvll.tsx'
 import Copyright from '../../../components/copyright.tsx'
 import ContactInformation from './(_components)/contact-information.tsx'
 
@@ -24,9 +23,6 @@ export default defineRoute((_request: Request, _ctx: RouteContext<void, unknown>
 			</div>
 
 			<div className='bravo'>
-				<div className='container'>
-					<SystemNvll />
-				</div>
 				<div className='container'>
 					<Privacy />
 				</div>

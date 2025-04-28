@@ -9,20 +9,7 @@ export default {
 	],
 	theme: {
 		extend: {
-			animation: {
-				'sonar': 'sonar 2s linear infinite',
-			},
-			keyframes: {
-				sonar: {
-					'100%': {
-						transform: 'scale(4, 4)',
-						opacity: '0',
-					},
-				},
-			},
-			backgroundColor: {
-				'yellow-green': '#9acd32',
-			},
+			//
 		},
 		screens: {
 			'2xs': '375px',

@@ -62,7 +62,7 @@ const baseCSP: Record<string, string> = {
 
 // CSP for mode with client scripts.
 const clientScriptsCSP: Record<string, string> = {
-	'script-src': "'self' 'unsafe-inline' 'unsafe-eval'",
+	'script-src': "'self' 'unsafe-inline' 'unsafe-eval' *.cloudflareinsights.com",
 	'script-src-attr': "'unsafe-inline'",
 	'style-src': "'self' https: 'unsafe-inline'",
 	'img-src': "'self' data: https: http: blob:",
