@@ -2,7 +2,7 @@ import * as schema from './schemas/index.ts'
 
 import client, { Options, PostgresType, Sql } from 'postgres'
 
-import { getEnv } from '../lib/environment.ts'
+import { getEnv } from '../helpers/lib/environment.ts'
 import { drizzle, PostgresJsDatabase } from 'drizzle-orm/postgres-js'
 
 const credentials: Options<Record<string, PostgresType>> = {
