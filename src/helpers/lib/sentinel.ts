@@ -1,6 +1,7 @@
 // deno-lint-ignore-file no-console
 
 import { FreshContext } from '$fresh/server.ts'
+import { cachedEnv, getEnv } from './environment.ts'
 import { HELMET_CSP_DIRECTIVES, HELMET_DEFAULT_HEADERS, HELMET_PERMISSIONS_POLICY } from '../var/helmet-csp.ts'
 import { SENTINEL_CSP_DIRECTIVES, SENTINEL_DEFAULT_HEADERS, SENTINEL_PERMISSIONS_POLICY } from '../var/sentinel-csp.ts'
 
@@ -33,7 +34,7 @@ export default class Sentinel {
 		RATE_LIMIT: 1000,
 		RATE_LIMIT_WINDOW: 60 * 60 * 1000, // 1 hour.
 		RATE_LIMIT_METHOD_EXCLUDE: new Set(['HEAD', 'OPTIONS']),
-		ALLOWED_ORIGINS: new Set(Deno.env.get('APP_ORIGINS')?.split(',').map((s: string): string => s.trim()) || ['http://localhost', 'http://127.0.0.1']),
+		ALLOWED_ORIGINS: new Set(getEnv.stringArray('/app/origins')),
 	}
 	private static readonly RATE_LIMIT_CLIENTS: Map<string, RateLimitMap> = new Map<string, RateLimitMap>()
 	private static readonly FILE_SETTINGS: Readonly<Record<string, FileSettings>> = {
@@ -66,8 +67,8 @@ export default class Sentinel {
 	 * they are removed from the map.
 	 */
 	private static resetRateLimits(): void {
-		const now: number = Date.now()
-		const window: number = this.CONFIG.RATE_LIMIT_WINDOW
+		const now: Readonly<number> = Date.now()
+		const window: Readonly<number> = this.CONFIG.RATE_LIMIT_WINDOW
 
 		for (const [ip, data] of this.RATE_LIMIT_CLIENTS) {
 			if (now - data.timestamp > window) {
@@ -88,7 +89,7 @@ export default class Sentinel {
 
 		if (this.CONFIG.RATE_LIMIT_METHOD_EXCLUDE.has(method)) return { rateLimited: false, rateLimitCount: 0 }
 
-		const now: number = Date.now()
+		const now: Readonly<number> = Date.now()
 		const clientData: RateLimitMap | undefined = this.RATE_LIMIT_CLIENTS.get(remoteIp)
 
 		if (!clientData || (now - clientData.timestamp > this.CONFIG.RATE_LIMIT_WINDOW)) {
@@ -96,7 +97,7 @@ export default class Sentinel {
 			return { rateLimited: false, rateLimitCount: 1 }
 		}
 
-		const newCount: number = clientData.count + 1
+		const newCount: Readonly<number> = clientData.count + 1
 		this.RATE_LIMIT_CLIENTS.set(remoteIp, { count: newCount, timestamp: clientData.timestamp })
 
 		return {
@@ -142,16 +143,16 @@ export default class Sentinel {
 		// Set default headers without overwriting existing ones.
 		DEFAULT_HEADERS.forEach((value: string, key: string): void => safeSetHeader(key, value))
 
-		const LOCAL_ORIGINS: string[] = ['http://localhost', 'http://127.0.0.1', 'http://0.0.0.0']
+		const LOCAL_ORIGINS: ReadonlyArray<string> = ['http://localhost', 'http://127.0.0.1', 'http://0.0.0.0']
 
-		if (Deno.env.get('APP_ENV') === 'production') {
+		if (cachedEnv.app.isProduction) {
 			LOCAL_ORIGINS.forEach((origin: string): boolean => this.CONFIG.ALLOWED_ORIGINS.delete(origin))
 		} else {
 			LOCAL_ORIGINS.forEach((origin: string): Set<string> => this.CONFIG.ALLOWED_ORIGINS.add(origin))
 		}
 
 		if (isDarkNet) {
-			const hostname: string | undefined = Deno.env.get('APP_HOSTNAME_V3')
+			const hostname: Readonly<string | undefined> = getEnv.string('/app/hostname_v3')
 			if (hostname) {
 				this.CONFIG.ALLOWED_ORIGINS.add(`http://${hostname}`)
 			}
@@ -171,7 +172,7 @@ export default class Sentinel {
 		}
 
 		// Response Time.
-		const responseTime: string = `${(performance.now() - startTime).toFixed(2)}ms`
+		const responseTime: Readonly<string> = `${(performance.now() - startTime).toFixed(2)}ms`
 
 		safeSetHeader('X-Response-Time', responseTime)
 
@@ -192,15 +193,15 @@ export default class Sentinel {
 	 */
 	public static async static(startTime: number, ctx: FreshContext<State>): Promise<Response> {
 		const nextResponse: Response = await ctx.next()
-		const pathname: string = ctx.url.pathname
-		const fileExtension: string | undefined = pathname.match(/\.([0-9a-z]+)(?:[?#]|$)/i)?.[1]?.toLowerCase()
+		const pathname: Readonly<string> = ctx.url.pathname
+		const fileExtension: Readonly<string> | undefined = pathname.match(/\.([0-9a-z]+)(?:[?#]|$)/i)?.[1]?.toLowerCase()
 
 		if (!fileExtension) return nextResponse
 
-		const filename: string = pathname.split('/').pop() || 'unknown'
-		const contentType: string = nextResponse.headers.get('content-type') || ''
+		const filename: Readonly<string> = pathname.split('/').pop() || 'unknown'
+		const contentType: Readonly<string> = nextResponse.headers.get('content-type') || ''
 		const headers: Headers = new Headers(nextResponse.headers)
-		const isDarkNet: boolean = ctx.state.context.useDarkNet && ctx.url.hostname === Deno.env.get('APP_HOSTNAME_V3')
+		const isDarkNet: boolean = ctx.state.context.useDarkNet && ctx.url.hostname === getEnv.string('/app/hostname_v3')
 
 		this.setSecurityHeaders(headers, Infinity, isDarkNet, startTime)
 
@@ -238,15 +239,15 @@ export default class Sentinel {
 	 * middleware or an error response if an exception occurs.
 	 */
 	public static async route(remoteIp: string, pathname: string, method: string, startTime: number, ctx: FreshContext<State>): Promise<Response> {
-		const isDarkNet: boolean = ctx.state.context.useDarkNet && ctx.url.hostname === Deno.env.get('APP_HOSTNAME_V3')
+		const isDarkNet: Readonly<boolean> = ctx.state.context.useDarkNet && ctx.url.hostname === getEnv.string('/app/hostname_v3')
 		const { rateLimited, rateLimitCount }: RateLimitResult = this.rateLimit(remoteIp, method)
 
 		if (rateLimited) return this.rateLimitedResponse(rateLimitCount, isDarkNet, startTime)
 
 		try {
 			const nextResponse: Response = await ctx.next()
-			const responseTime: string = this.setSecurityHeaders(nextResponse.headers, rateLimitCount, isDarkNet, startTime)
-			const cspReportRequest: boolean = pathname === '/api/v0/csp/report' && !JSON.parse(Deno.env.get('APP_WRITE_CSP_REPORT') || 'false')
+			const responseTime: Readonly<string> = this.setSecurityHeaders(nextResponse.headers, rateLimitCount, isDarkNet, startTime)
+			const cspReportRequest: Readonly<boolean> = pathname === '/api/v0/csp/report' && !getEnv.boolean('/app/write_csp_report')
 
 			if (!cspReportRequest) console.log(`${new Date().toISOString()}; ${remoteIp}; ${method}; ${pathname}; ${responseTime}`)
 

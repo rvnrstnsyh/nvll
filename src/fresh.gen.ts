@@ -4,6 +4,10 @@
 
 import * as $_views_home_layout from './routes/(views)/(home)/_layout.tsx'
 import * as $_views_home_index from './routes/(views)/(home)/index.tsx'
+import * as $_well_known_openpgpkey_domain_hu_hash_ from './routes/.well-known/openpgpkey/[domain]/hu/[hash].ts'
+import * as $_well_known_openpgpkey_domain_policy from './routes/.well-known/openpgpkey/[domain]/policy.ts'
+import * as $_well_known_openpgpkey_hu_hash_ from './routes/.well-known/openpgpkey/hu/[hash].ts'
+import * as $_well_known_openpgpkey_policy from './routes/.well-known/openpgpkey/policy.ts'
 import * as $_app from './routes/_app.tsx'
 import * as $_middleware from './routes/_middleware.ts'
 import * as $api_v0_csp_report from './routes/api/v0/csp/report.ts'
@@ -14,6 +18,10 @@ const manifest = {
 	routes: {
 		'./routes/(views)/(home)/_layout.tsx': $_views_home_layout,
 		'./routes/(views)/(home)/index.tsx': $_views_home_index,
+		'./routes/.well-known/openpgpkey/[domain]/hu/[hash].ts': $_well_known_openpgpkey_domain_hu_hash_,
+		'./routes/.well-known/openpgpkey/[domain]/policy.ts': $_well_known_openpgpkey_domain_policy,
+		'./routes/.well-known/openpgpkey/hu/[hash].ts': $_well_known_openpgpkey_hu_hash_,
+		'./routes/.well-known/openpgpkey/policy.ts': $_well_known_openpgpkey_policy,
 		'./routes/_app.tsx': $_app,
 		'./routes/_middleware.ts': $_middleware,
 		'./routes/api/v0/csp/report.ts': $api_v0_csp_report,

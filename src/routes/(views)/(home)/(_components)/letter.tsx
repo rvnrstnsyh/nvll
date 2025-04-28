@@ -1,19 +1,22 @@
 import { JSX } from 'preact/jsx-runtime'
 import { asset } from '$fresh/runtime.ts'
+import { anchorRel, anchorTarget } from '../../../../helpers/var/attributes.ts'
 
 export default function Letter(): JSX.Element {
 	return (
 		<section className='letter'>
 			<header>
 				<div className='link'>
-					[<a className='anchor-text' href='/eml/developer_insights_nvll-2025-02-14T23_24_33+07_00.eml'>Source Message</a>]
+					[<a className='anchor-text' href='/eml/developer_insights_nvll-2025-02-14T23_24_33+07_00.eml' rel={anchorRel} target={anchorTarget}>
+						Source Message
+					</a>]
 				</div>
 				<p>
 					Bandung, Indonesia<br />14 February 2025
 				</p>
 			</header>
 			<blockquote>
-				<img className='quote' src={asset('/png/quote.png')} alt='Quote' />
+				<img className='quote' src={asset('/svg/quote-min.svg')} alt='Quote' />
 				<div className='content'>
 					<p>
 						<em>
@@ -58,18 +61,24 @@ export default function Letter(): JSX.Element {
 				</div>
 				<footer>
 					<div className='left'>
-						<img className='avatar' src={asset('/jpg/avatar_default_0-20230707-0001.jpg')} alt='Avatar' />
+						<img className='avatar' src={asset('/webp/avatar_default_0-20230707-0001-min.webp')} alt='Avatar' />
 						<div className='bio'>
-							<h5>Rivane Rasetiansyah</h5>
+							<div className='name'>
+								<h5>Rivane Rasetiansyah</h5>
+							</div>
 							<p className='description'>
 								Software Developer
 								<br />
-								[<a className='anchor-text' href='/asc/publickey.asc'>PGP</a>] [<a className='anchor-text' href='/pdf/curriculum-vitae.pdf'>Resume</a>]
+								[<a className='anchor-text' href='/asc/publickey.asc' rel={anchorRel} target={anchorTarget}>
+									PGP
+								</a>] [<a className='anchor-text' href='/pdf/curriculum-vitae.pdf' rel={anchorRel} target={anchorTarget}>
+									Resume
+								</a>]
 							</p>
 						</div>
 					</div>
 					<div className='right'>
-						<img className='logo' src={asset('/png/logo.png')} alt='Logo' />
+						<img className='logo' src={asset('/svg/logo-min.svg')} alt='Logo' />
 					</div>
 				</footer>
 			</blockquote>

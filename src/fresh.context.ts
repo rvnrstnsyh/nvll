@@ -1,6 +1,8 @@
+import { cachedEnv } from './helpers/lib/environment.ts'
+
 export class Context {
 	public initialized: boolean = false
-	public useDarkNet: boolean = false
+	public useDarkNet: Readonly<boolean> = cachedEnv.app.useDarkNet
 
 	private static instance: Context | null = null
 
@@ -21,7 +23,6 @@ export class Context {
 				new Promise((resolve: (value: void | PromiseLike<void>) => void): void => {
 					// Presumably this involves connecting to a database or doing some heavy computation.
 					setTimeout(() => {
-						this.useDarkNet = /^[a-z2-7]{56}\.onion$/.test(String(Deno.env.get('APP_HOSTNAME_V3')).toLowerCase())
 						this.initialized = true
 						resolve()
 					}, 250)

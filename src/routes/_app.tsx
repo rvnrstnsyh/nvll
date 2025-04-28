@@ -1,9 +1,10 @@
 import { JSX } from 'preact/jsx-runtime'
 import { asset } from '$fresh/runtime.ts'
+import { getEnv } from '../helpers/lib/environment.ts'
 import { defineApp, RouteContext } from '$fresh/server.ts'
 
 export default defineApp((_request: Request, ctx: RouteContext<void, State>): JSX.Element => {
-	const onionLocation: string = `http://${Deno.env.get('APP_HOSTNAME_V3')?.toLowerCase()}${ctx.url.pathname}`
+	const onionLocation: Readonly<string> = `http://${getEnv.string('/app/hostname_v3')}${ctx.url.pathname}`
 
 	return (
 		// <!DOCTYPE html>

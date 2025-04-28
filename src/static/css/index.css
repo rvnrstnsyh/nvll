@@ -28,7 +28,7 @@
 /**?
   *? ----- LIST OF CONTENTS -----
   *! GLOBAL SECTION -----
-  *! NAVIGATION SECTION -----
+  *! COPYRIGHT SECTION -----
   *! HOME SECTION -----
   */
 
@@ -191,51 +191,51 @@ body {
   *! END GLOBAL SECTION -----
   */
 /**!
-  *! NAVIGATION SECTION -----
+  *! COPYRIGHT SECTION -----
   */
-nav.navigation {
+nav.copyright {
   @apply mx-auto
   w-full
   px-1.5
   max-w-[500px];
 }
-nav.navigation .wrapper {
+nav.copyright .wrapper {
   @apply flex
   flex-wrap
   items-start
   justify-between
   gap-2;
 }
-nav.navigation .wrapper .copyright {
+nav.copyright .wrapper p {
   @apply z-20
   text-xs
   text-gray-600;
 }
-nav.navigation .wrapper ul {
+nav.copyright .wrapper ul {
   @apply z-20
   flex
   flex-wrap
   items-center;
 }
-nav.navigation .wrapper ul li {
+nav.copyright .wrapper ul li {
   @apply relative
   inline-block
   pe-2
   text-xs;
 }
-nav.navigation .wrapper ul li a {
+nav.copyright .wrapper ul li a {
   @apply anchor-text
   text-xs;
 }
 /**!
-  *! END NAVIGATION SECTION -----
+  *! END COPYRIGHT SECTION -----
   */
 /**!
   *! HOME SECTION -----
   */
 main.home-layout .overlay {
   @apply fixed
-  bg-[url('../png/background.png')]
+  bg-[url('../webp/background-min.webp')]
   bg-no-repeat
   bg-cover
   z-10
@@ -342,6 +342,14 @@ main.home-layout section.home .letter blockquote footer .left img.avatar {
 main.home-layout section.home .letter blockquote footer .left .bio {
   @apply space-y-0.5;
 }
+main.home-layout section.home .letter blockquote footer .left .bio .name {
+  @apply flex
+  items-center
+  justify-center;
+}
+main.home-layout section.home .letter blockquote footer .left .bio .name .availability-indicator {
+  @apply m-2;
+}
 main.home-layout section.home .letter blockquote footer .left .bio p.description {
   @apply text-sm
   text-gray-500;
@@ -354,18 +362,27 @@ main.home-layout section.home .letter blockquote footer .right img.logo {
   h-[70px]
   object-contain;
 }
-main.home-layout section.home .contact {
+main.home-layout section.home .privacy {
   @apply w-full
   max-w-md
   mx-auto;
 }
-main.home-layout section.home .contact header {
+main.home-layout section.home .privacy header {
+  @apply space-y-2
+  mb-4;
+}
+main.home-layout section.home .contact-information {
+  @apply w-full
+  max-w-md
+  mx-auto;
+}
+main.home-layout section.home .contact-information header {
   @apply space-y-2;
 }
-main.home-layout section.home .contact .content ul {
+main.home-layout section.home .contact-information .content ul {
   @apply py-4;
 }
-main.home-layout section.home .contact .content ul li {
+main.home-layout section.home .contact-information .content ul li {
   @apply flex
   items-center
   gap-1
@@ -376,7 +393,7 @@ main.home-layout section.home .contact .content ul li {
   rounded-md
   px-2;
 }
-main.home-layout section.home .contact .content ul li .img-wrapper {
+main.home-layout section.home .contact-information .content ul li .img-wrapper {
   @apply w-6
   h-6
   flex
@@ -384,31 +401,22 @@ main.home-layout section.home .contact .content ul li .img-wrapper {
   justify-center
   shrink-0;
 }
-main.home-layout section.home .contact .content ul li .img-wrapper img {
+main.home-layout section.home .contact-information .content ul li .img-wrapper img {
   @apply w-5
   h-5
   object-contain;
 }
-main.home-layout section.home .contact .content ul li .img-wrapper img.bluesky {
+main.home-layout section.home .contact-information .content ul li .img-wrapper img.bluesky {
   @apply w-4
   h-4;
 }
-main.home-layout section.home .contact .content ul li .img-wrapper img.linkedin {
+main.home-layout section.home .contact-information .content ul li .img-wrapper img.linkedin {
   @apply w-3.5
   h-3.5;
 }
-main.home-layout section.home .contact .content ul li .img-wrapper img.github {
+main.home-layout section.home .contact-information .content ul li .img-wrapper img.github {
   @apply w-4
   h-4;
-}
-main.home-layout section.home .privacy {
-  @apply w-full
-  max-w-md
-  mx-auto;
-}
-main.home-layout section.home .privacy header {
-  @apply space-y-2
-  mb-4;
 }
 /**!
   *! END HOME SECTION -----

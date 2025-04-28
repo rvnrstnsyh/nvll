@@ -13,10 +13,10 @@ import { FreshContext } from '$fresh/server.ts'
  * @return {Promise<Response>} A promise that resolves to the response object.
  */
 export async function handler(request: Request, ctx: FreshContext<State>): Promise<Response> {
-	const startTime: number = performance.now()
-	const remoteIp: string = request.headers.get('X-Forwarded-For') || ctx.remoteAddr.hostname
-	const pathname: string = ctx.url.pathname
-	const method: string = request.method
+	const startTime: Readonly<number> = performance.now()
+	const remoteIp: Readonly<string> = request.headers.get('X-Forwarded-For') || ctx.remoteAddr.hostname
+	const pathname: Readonly<string> = ctx.url.pathname
+	const method: Readonly<string> = request.method
 
 	try {
 		// Memoize context initialization.

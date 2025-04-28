@@ -1,10 +1,11 @@
 import { defineConfig } from 'drizzle-kit'
+import { getEnv } from './src/helpers/lib/environment.ts'
 
 export default defineConfig({
 	out: '_drizzle',
-	schema: 'src/helpers/database/schemas/**/*schema.ts',
+	schema: 'src/database/schemas/**/*schema.ts',
 	dialect: 'postgresql',
 	dbCredentials: {
-		url: Deno.env.get('DB_URL') as string,
+		url: getEnv.string('/app/db/url'),
 	},
 })

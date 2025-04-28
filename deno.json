@@ -25,7 +25,7 @@
 	},
 	"compilerOptions": { "types": ["./definition.d.ts"], "jsx": "react-jsx", "jsxImportSource": "preact" },
 	"lint": {
-		"include": ["**/*.ts", "**/*.tsx", ".scripts/**/*.ts"],
+		"include": ["**/*.ts", "**/.*/**/*.ts", "**/*.tsx", "**/.*/**/*.tsx", ".scripts/**/*.ts"],
 		"exclude": ["**/*build/*", "**/*dist/*", "**/*fresh/*", "**/*.hbs"],
 		"rules": {
 			"tags": ["recommended", "fresh"],
@@ -40,7 +40,7 @@
 		"semiColons": false,
 		"singleQuote": true,
 		"proseWrap": "preserve",
-		"include": ["**/*.ts", "**/*.tsx", ".scripts/**/*.ts"],
+		"include": ["**/*.ts", "**/.*/**/*.ts", "**/*.tsx", "**/.*/**/*.tsx", ".scripts/**/*.ts"],
 		"exclude": ["**/*build/*", "**/*dist/*", "**/*fresh/*", "**/*.hbs"]
 	},
 	"exclude": ["**/*build/*", "**/*dist/*", "**/*fresh/*", "**/_fresh/*"],
@@ -49,9 +49,10 @@
 		"$std/": "https://deno.land/std@0.224.0/",
 		"@preact/signals": "https://esm.sh/*@preact/signals@1.2.2",
 		"@preact/signals-core": "https://esm.sh/*@preact/signals-core@1.5.1",
+		"confidence": "npm:/confidence@^5.0.1",
 		"drizzle-kit": "npm:/drizzle-kit@^0.31.0",
 		"drizzle-orm": "npm:/drizzle-orm@^0.42.0",
-		"postgres": "npm:postgres@^3.4.5",
+		"postgres": "npm:/postgres@^3.4.5",
 		"preact": "https://esm.sh/preact@10.22.0",
 		"preact/": "https://esm.sh/preact@10.22.0/",
 		"tailwindcss": "https://esm.sh/tailwindcss@3.4.1",

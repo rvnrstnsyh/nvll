@@ -72,7 +72,7 @@ async function main(): Promise<void> {
 		Deno.exit(1)
 	}
 
-	if (!(await runCommand(['deno', 'check', '**/*.ts', '**/*.tsx', '.scripts/**/*.ts']))) {
+	if (!(await runCommand(['deno', 'check', '**/*.ts', '**/.*/**/*.ts', '**/*.tsx', '**/.*/**/*.tsx', '.scripts/**/*.ts']))) {
 		console.error('Type checking failed.')
 		Deno.exit(1)
 	}
