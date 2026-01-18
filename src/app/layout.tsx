@@ -5,17 +5,13 @@ import PrelineScriptWrapper from '@/components/csr/preline/preline-script-wrappe
 import type { Metadata } from 'next'
 
 import { JSX } from 'react'
-import { Geist, Geist_Mono } from 'next/font/google'
+import { Montserrat } from 'next/font/google'
 import { NextFontWithVariable } from 'next/dist/compiled/@next/font'
 
-const geistSans: NextFontWithVariable = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin']
-})
-
-const geistMono: NextFontWithVariable = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin']
+const montserrat: NextFontWithVariable = Montserrat({
+  variable: '--font-montserrat',
+  subsets: ['latin'],
+  display: 'swap'
 })
 
 export const metadata: Metadata = {
@@ -40,7 +36,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           }}
         />
       </head>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>{children}</body>
+      <body className={`${montserrat.className} antialiased`}>{children}</body>
       <PrelineScriptWrapper />
     </html>
   )
