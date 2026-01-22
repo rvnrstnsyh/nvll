@@ -86,7 +86,7 @@
     cursor: pointer;
   }
 
-  /* Remove default focus styles (EXCEPT .btn) */
+  /* Remove default focus styles (EXCEPT nvll-ui='button') */
   input,
   textarea,
   select,

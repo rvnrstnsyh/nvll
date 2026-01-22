@@ -50,15 +50,12 @@ export const buttonStyles = cva(
       state: {
         idle: '',
         hover: apply(`
-          hover:-translate-x-px hover:-translate-y-px
-          hover:shadow-[3px_3px_0_var(--shadow-light)] dark:hover:shadow-[3px_3px_0_var(--shadow-dark)]
-          sm:hover:-translate-x-0.5 sm:hover:-translate-y-0.5
-          sm:hover:shadow-[4px_4px_0_var(--shadow-light)] sm:dark:hover:shadow-[4px_4px_0_var(--shadow-dark)]
+          hover:-translate-x-0.5 hover:-translate-y-0.5
+          hover:shadow-[4px_4px_0_#000000] dark:hover:shadow-[4px_4px_0_#ffffff]
         `),
         active: apply(`
           active:translate-x-0 active:translate-y-0
-          active:shadow-[1px_1px_0_var(--shadow-light)] dark:active:shadow-[1px_1px_0_var(--shadow-dark)]
-          sm:active:shadow-[2px_2px_0_var(--shadow-light)] sm:dark:active:shadow-[2px_2px_0_var(--shadow-dark)]
+          active:shadow-[2px_2px_0_#000000] dark:active:shadow-[2px_2px_0_#ffffff]
         `)
       },
       processing: {
@@ -70,7 +67,7 @@ export const buttonStyles = cva(
       {
         variant: 'primary',
         state: 'hover',
-        class: apply(`hover:bg-gray-900 dark:hover:bg-gray-100`)
+        class: apply(`hover:bg-[#333333] dark:hover:bg-gray-200`)
       }
     ],
     defaultVariants: {
