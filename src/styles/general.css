@@ -1,0 +1,18 @@
+.overlay {
+  @apply absolute
+  inset-0
+  pointer-events-none
+  z-0
+  bg-no-repeat
+  bg-cover
+  w-screen
+  max-w-lg
+  -translate-x-[20%]
+  -translate-y-[30%]
+  md:max-w-219.25
+  md:translate-y-0
+  opacity-100
+  dark:opacity-30
+  bg-[url('/images/svg/background-light.svg')]
+  dark:bg-[url('/images/svg/background-dark.svg')];
+}

@@ -85,6 +85,54 @@
   [role='button']:not(:disabled) {
     cursor: pointer;
   }
+
+  /* Remove default focus styles (EXCEPT .btn) */
+  input,
+  textarea,
+  select,
+  button:not([nvll-ui='button']) {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+
+  input:focus,
+  textarea:focus,
+  select:focus,
+  button:not([nvll-ui='button']):focus {
+    outline: none !important;
+    box-shadow: none !important;
+    ring: none !important;
+  }
+
+  input:active,
+  textarea:active,
+  select:active,
+  button:not([nvll-ui='button']):active {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Remove blue highlight on mobile */
+  input,
+  textarea,
+  select,
+  button {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  /* Allow text selection in inputs */
+  input,
+  textarea {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+  }
 }
 
 /* Defaults hover styles on all devices */
@@ -115,4 +163,5 @@ body {
   font-family: var(--font-sans), system-ui, sans-serif;
 }
 
-@import '../styles/home/index.css';
+@import '../styles/general.css';
+@import '../styles/animate.css';

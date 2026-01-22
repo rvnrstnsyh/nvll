@@ -1,12 +1,13 @@
 import '@/styles/index.css'
 
-import PrelineScriptWrapper from '@/components/csr/preline/preline-script-wrapper'
+import type { ReactNode } from 'react'
+import type { NextFontWithVariable } from 'next/dist/compiled/@next/font'
+
+import { Montserrat } from 'next/font/google'
+
+import PrelineScriptWrapper from '@/components/atoms/preline/preline-script-wrapper'
 
 import type { Metadata } from 'next'
-
-import { JSX } from 'react'
-import { Montserrat } from 'next/font/google'
-import { NextFontWithVariable } from 'next/dist/compiled/@next/font'
 
 const montserrat: NextFontWithVariable = Montserrat({
   variable: '--font-montserrat',
@@ -19,20 +20,21 @@ export const metadata: Metadata = {
   description: 'Privacy-oriented public service designed with user security and privacy in mind'
 }
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>): JSX.Element {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>): ReactNode {
   return (
-    <html lang="EN" suppressHydrationWarning>
+    // <!DOCTYPE html>
+    <html lang="en" suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function() {
-                const theme = localStorage.getItem('hs_theme');
-                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                const isDark = theme ? theme === 'dark' || (theme === 'auto' && prefersDark) : prefersDark;
-                if (isDark) {
-                  document.documentElement.classList.add('dark');
-                }
-              })()`
+            __html: `(function () {
+              const theme = localStorage.getItem('hs_theme')
+              const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+              const isDark = theme ? theme === 'dark' || (theme === 'auto' && prefersDark) : prefersDark
+              if (isDark) {
+                document.documentElement.classList.add('dark')
+              }
+            })()`
           }}
         />
       </head>
