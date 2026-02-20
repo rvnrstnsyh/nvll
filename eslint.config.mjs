@@ -68,7 +68,7 @@ export default defineConfig([
       'boundaries/ignore': ['**/*.test.{ts,tsx}', '**/*.spec.{ts,tsx}', '**/*.stories.{ts,tsx}', '**/__tests__/**', '**/__mocks__/**']
     }
   },
-  //  SPECIAL FILES - No restrictions
+  //  SPECIAL FILES & API ROUTES - No restrictions
   {
     files: [
       'src/app/**/layout.{ts,tsx}',
@@ -79,18 +79,21 @@ export default defineConfig([
       'src/app/**/global-error.{ts,tsx}',
       'src/app/**/template.{ts,tsx}',
       'src/app/**/default.{ts,tsx}',
+      'src/app/**/route.{ts,tsx}', // API routes
+      'src/app/**/actions.{ts,tsx}', // Server actions
+      'src/middleware.{ts,tsx}',
       'src/**/preline-*.{ts,tsx}',
       'src/**/*.config.{ts,tsx}',
-      'src/{helpers,lib,utils,types,constants,hooks,context,styles}/**/*.{ts,tsx}'
+      'src/{helpers,lib,utils,types,constants,hooks,context,styles,database}/**/*.{ts,tsx}'
     ],
     rules: {
       'import/no-internal-modules': 'off',
       'boundaries/element-types': 'off'
     }
   },
-  //  ATOMIC DESIGN ARCHITECTURE RULES
+  //  ATOMIC DESIGN ARCHITECTURE RULES (ONLY FOR COMPONENTS & PAGES)
   {
-    files: ['src/**/*.{ts,tsx}'],
+    files: ['src/components/**/*.{ts,tsx}', 'src/features/**/*.{ts,tsx}', 'src/app/**/page.{ts,tsx}'],
     ignores: [
       'src/app/**/layout.{ts,tsx}',
       'src/app/**/providers.{ts,tsx}',
@@ -100,9 +103,11 @@ export default defineConfig([
       'src/app/**/global-error.{ts,tsx}',
       'src/app/**/template.{ts,tsx}',
       'src/app/**/default.{ts,tsx}',
+      'src/app/**/route.{ts,tsx}', // Exclude API routes
+      'src/app/**/actions.{ts,tsx}', // Exclude server actions
       'src/**/preline-*.{ts,tsx}',
       'src/**/*.config.{ts,tsx}',
-      'src/{helpers,lib,utils,types,constants,hooks,context,styles}/**/*.{ts,tsx}'
+      'src/{helpers,lib,utils,types,constants,hooks,context,styles,database}/**/*.{ts,tsx}'
     ],
     plugins: {
       import: importPlugin,
@@ -148,6 +153,10 @@ export default defineConfig([
             '@/context/**',
             '@/styles/*',
             '@/styles/**',
+            // Database (should NOT be imported in components)
+            // If you need to access DB, use API routes or server actions
+            // '@/database/*',
+            // '@/database/**',
             // External packages
             '**/node_modules/**'
           ]
