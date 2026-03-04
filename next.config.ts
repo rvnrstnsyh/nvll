@@ -16,6 +16,7 @@ const nextConfig: NextConfig = {
   },
   // one hour in seconds
   expireTime: 3600,
+  allowedDevOrigins: ['localhost', '127.0.0.1', '::1', '[::1]', '[::ffff:127.0.0.1]'],
   typescript: {
     tsconfigPath: 'tsconfig.json'
   },
