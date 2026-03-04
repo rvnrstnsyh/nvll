@@ -67,7 +67,15 @@ export function InvitationForm({ onValidCode, className, ...props }: InvitationF
         label="Invitation code"
         error={!!errors.code}
         errorMessage={errors.code}
-        inputProps={{ id: 'invitationCode', name: 'invitationCode', type: 'text', required: true, autoComplete: 'off', value: invitationCode, onChange: (e) => setInvitationCode(e.target.value) }}
+        inputProps={{
+          id: 'invitationCode',
+          name: 'invitationCode',
+          type: 'text',
+          required: true,
+          autoComplete: 'off',
+          value: invitationCode,
+          onChange: (event) => setInvitationCode(event.target.value)
+        }}
       />
       <CheckboxField
         id="termsAndConditions"
@@ -75,7 +83,7 @@ export function InvitationForm({ onValidCode, className, ...props }: InvitationF
         label="Agree to the terms and conditions"
         subtext="Read on, it's just a little bit."
         checked={termsAccepted}
-        onChange={(e) => setTermsAccepted(e.target.checked)}
+        onChange={(event) => setTermsAccepted(event.target.checked)}
       />
       <SecurityNotice>
         Non-Violable Liberty Layers assumes no responsibility for any liabilities or damages arising from the use of its services, as each user is solely responsible for ensuring that their actions
