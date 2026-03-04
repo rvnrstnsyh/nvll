@@ -8,7 +8,7 @@ Each layer has a **single responsibility** and **clear dependency boundaries**.
 
 ## Layer Order
 
-atoms → molecules → organism → layouts → pages
+atoms → molecules → organism → template → pages
 
 Components may only import **from layers below them**.
 
@@ -20,7 +20,7 @@ Components may only import **from layers below them**.
 
 The smallest, most reusable UI building blocks.
 
-**Examples**
+#### Examples
 
 - Button
 - Input
@@ -28,7 +28,7 @@ The smallest, most reusable UI building blocks.
 - Icon
 - Spinner
 
-**Rules**
+#### Rules
 
 - No business logic
 - No data fetching
@@ -44,13 +44,13 @@ Atoms must be **completely context-agnostic**.
 
 Simple compositions of multiple atoms with a narrow responsibility.
 
-**Examples**
+#### Examples
 
 - FormField
 - SearchBox
 - UserBadge
 
-**Rules**
+#### Rules
 
 - May import from `atoms`
 - Light local logic is allowed
@@ -66,7 +66,7 @@ Molecules add **structure**, not **behavior**.
 
 Self-contained UI sections that represent meaningful parts of a page.
 
-**Examples**
+#### Examples
 
 - Navbar
 - Footer
@@ -74,35 +74,35 @@ Self-contained UI sections that represent meaningful parts of a page.
 - AuthForm
 - HomeHero
 
-**Rules**
+#### Rules
 
 - May use state and React hooks
 - May import from `atoms` and `molecules`
 - No routing
 - No direct API or server calls
-- No knowledge of pages or layouts
+- No knowledge of pages or template
 
 Organisms define **presentation-level intent**, not application flow.
 
 ---
 
-### `layouts/` — Page Layouts
+### `template/` — Page Template
 
 Reusable page skeletons that define overall structure.
 
-**Examples**
+#### Examples
 
-- DashboardLayout
-- AuthLayout
+- DashboardTemplate
+- AuthTemplate
 
-**Rules**
+#### Rules
 
 - Compose `organism` components
 - No business logic
 - No data fetching
 - No application state
 
-Layouts control **structure only**, not behavior.
+Template control **structure only**, not behavior.
 
 ---
 
@@ -116,7 +116,7 @@ Pages are responsible for:
 - Data fetching
 - Server actions
 - Feature composition
-- Passing data down into layouts and sections
+- Passing data down into template and sections
 
 Pages must remain **thin** and should not contain UI complexity.
 
@@ -126,7 +126,7 @@ Pages must remain **thin** and should not contain UI complexity.
 
 Allowed import direction:
 
-atoms → molecules → organism → layouts → pages
+atoms → molecules → organism → template → pages
 
 Forbidden:
 
@@ -143,10 +143,14 @@ All imports must go through a **public API (`index.ts`)**.
 
 Every component folder **must expose an `index.ts`**.
 
-**Correct**
+### Correct
 
 ```ts
 import { Button } from '@/components/atoms/button'
 ```
 
-**Incorrect** import { Button } from '@/components/atoms/button/button'
+### Incorrect
+
+```ts
+import { Button } from '@/components/atoms/button/button'
+```

@@ -3,18 +3,19 @@
 import { useState } from 'react'
 
 import type { ReactNode, FormEvent } from 'react'
+import type { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
 
 import { useRouter } from 'next/navigation'
 
-import { SignInLayout } from '@/components/templates/sign-in-layout'
+import { SignInTemplate } from '@/components/templates/sign-in-template'
 
 import { signInFeatureStyles } from './sign-in-feature.styles'
 
 import type { SignInFeatureProps } from './sign-in-feature.types'
 
 export function SignInFeature({ className, ...props }: SignInFeatureProps): ReactNode {
-  const router = useRouter()
-  const [showSuccess, setShowSuccess] = useState(false)
+  const router: AppRouterInstance = useRouter()
+  const [showSuccess, setShowSuccess] = useState<boolean>(false)
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault()
@@ -36,7 +37,7 @@ export function SignInFeature({ className, ...props }: SignInFeatureProps): Reac
 
   return (
     <main nvll-ui="sign-in-feature" className={signInFeatureStyles({ className })} {...props}>
-      <SignInLayout showSuccess={showSuccess} onSubmit={handleSubmit} />
+      <SignInTemplate showSuccess={showSuccess} onSubmit={handleSubmit} />
     </main>
   )
 }

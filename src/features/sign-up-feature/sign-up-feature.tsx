@@ -8,8 +8,8 @@ import type { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.
 
 import { useRouter } from 'next/navigation'
 
-import { InvitationLayout } from '@/components/templates/invitation-layout'
-import { SignUpLayout } from '@/components/templates/sign-up-layout'
+import { InvitationTemplate } from '@/components/templates/invitation-template'
+import { SignUpTemplate } from '@/components/templates/sign-up-template'
 
 import { signUpFeatureStyles } from './sign-up-feature.styles'
 
@@ -80,7 +80,7 @@ export function SignUpFeature({ className, ...props }: SignUpFeatureProps): Reac
 
   return (
     <main data-ui="sign-up-feature" className={signUpFeatureStyles({ className })} {...props}>
-      {step === 'invitation' ? <InvitationLayout onValidCode={handleValidCode} /> : <SignUpLayout showSuccess={showSuccess} onSubmit={handleSignUpSubmit} />}
+      {step === 'invitation' ? <InvitationTemplate onValidCode={handleValidCode} /> : <SignUpTemplate showSuccess={showSuccess} onSubmit={handleSignUpSubmit} />}
     </main>
   )
 }

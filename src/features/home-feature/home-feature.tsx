@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 
-import { HomeLayout } from '@/components/templates/home-layout'
+import { HomeTemplate } from '@/components/templates/home-template'
 
 import { homeFeatureStyles } from './home-feature.styles'
 
@@ -13,7 +13,7 @@ export function HomeFeature({ className, ...props }: HomeFeatureProps): ReactNod
 
   return (
     <main nvll-ui="home-feature" className={homeFeatureStyles({ className })} {...props}>
-      <HomeLayout />
+      <HomeTemplate />
     </main>
   )
 }
