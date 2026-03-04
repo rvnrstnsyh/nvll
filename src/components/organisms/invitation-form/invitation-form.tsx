@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 
-import type { ReactNode, FormEvent } from 'react'
+import type { ReactNode, SubmitEvent } from 'react'
 
 import { Button } from '@/components/atoms/button'
 
@@ -20,7 +20,7 @@ export function InvitationForm({ onValidCode, className, ...props }: InvitationF
   const [termsAccepted, setTermsAccepted] = useState(false)
   const [errors, setErrors] = useState({ code: '' })
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: SubmitEvent<HTMLFormElement>) => {
     event.preventDefault()
 
     // Validate

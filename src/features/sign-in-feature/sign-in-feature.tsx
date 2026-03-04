@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 
-import type { ReactNode, FormEvent } from 'react'
+import type { ReactNode, SubmitEvent } from 'react'
 import type { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
 
 import { useRouter } from 'next/navigation'
@@ -17,7 +17,7 @@ export function SignInFeature({ className, ...props }: SignInFeatureProps): Reac
   const router: AppRouterInstance = useRouter()
   const [showSuccess, setShowSuccess] = useState<boolean>(false)
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
+  const handleSubmit = async (event: SubmitEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault()
 
     // Your sign-in logic here

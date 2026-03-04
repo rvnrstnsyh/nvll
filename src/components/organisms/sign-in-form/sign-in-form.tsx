@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 
-import type { ReactNode, FormEvent } from 'react'
+import type { ReactNode, SubmitEvent } from 'react'
 
 import { Button } from '@/components/atoms/button'
 
@@ -20,7 +20,7 @@ export function SignInForm({ onSubmit, className, ...props }: SignInFormProps): 
   const [isProcessing, setIsProcessing] = useState(false)
   const [errors, _setErrors] = useState({ email: '', password: '' })
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: SubmitEvent<HTMLFormElement>) => {
     event.preventDefault()
     setIsProcessing(true)
 

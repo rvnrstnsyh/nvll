@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 
-import type { ReactNode, FormEvent } from 'react'
+import type { ReactNode, SubmitEvent } from 'react'
 
 import type { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime'
 
@@ -46,7 +46,7 @@ export function SignUpFeature({ className, ...props }: SignUpFeatureProps): Reac
     setStep('registration')
   }
 
-  const handleSignUpSubmit = async (event: FormEvent<HTMLFormElement>): Promise<void> => {
+  const handleSignUpSubmit = async (event: SubmitEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault()
 
     const formData: FormData = new FormData(event.currentTarget)

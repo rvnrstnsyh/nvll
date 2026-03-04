@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 
-import type { ReactNode, FormEvent } from 'react'
+import type { ReactNode, SubmitEvent } from 'react'
 
 import { Button } from '@/components/atoms/button'
 
@@ -24,7 +24,7 @@ export function SignUpForm({ onSubmit, className, ...props }: SignUpFormProps): 
     confirmPassword: ''
   })
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: SubmitEvent<HTMLFormElement>) => {
     event.preventDefault()
     setIsProcessing(true)
 
