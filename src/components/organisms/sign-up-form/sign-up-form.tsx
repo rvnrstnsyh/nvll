@@ -19,7 +19,6 @@ export function SignUpForm({ onSubmit, className, ...props }: SignUpFormProps): 
   const [isProcessing, setIsProcessing] = useState(false)
   const [errors, _setErrors] = useState({
     email: '',
-    username: '',
     password: '',
     confirmPassword: ''
   })
@@ -38,8 +37,13 @@ export function SignUpForm({ onSubmit, className, ...props }: SignUpFormProps): 
   return (
     <form nvll-ui="sign-up-form" className={signUpFormStyles({ className })} onSubmit={handleSubmit} noValidate {...props}>
       <FormGroup label="Email" error={!!errors.email} errorMessage={errors.email} inputProps={{ id: 'email', name: 'email', type: 'email', required: true, autoComplete: 'email' }} />
-      <FormGroup label="Username" error={!!errors.username} errorMessage={errors.username} inputProps={{ id: 'username', name: 'username', type: 'text', required: true, autoComplete: 'username' }} />
-      <PasswordField label="Password" error={!!errors.password} errorMessage={errors.password} inputProps={{ id: 'password', name: 'password', required: true, autoComplete: 'new-password' }} />
+      <PasswordField
+        label="Password"
+        error={!!errors.password}
+        errorMessage={errors.password}
+        inputProps={{ id: 'hs-strong-password-with-indicator-and-hint', name: 'password', required: true, autoComplete: 'new-password' }}
+        strengthHint
+      />
       <PasswordField
         label="Confirm Password"
         error={!!errors.confirmPassword}

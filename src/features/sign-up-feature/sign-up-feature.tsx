@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useSyncExternalStore, useState } from 'react'
 
 import type { ReactNode, SubmitEvent } from 'react'
 
@@ -15,35 +15,35 @@ import { signUpFeatureStyles } from './sign-up-feature.styles'
 
 import type { SignUpFeatureProps } from './sign-up-feature.types'
 
-// Helper function to check initial step
-function getInitialStep(): 'invitation' | 'registration' {
-  if (typeof window === 'undefined') return 'invitation'
-
-  const storedCode: string | null = sessionStorage.getItem('invitationCode')
-  const termsAccepted: string | null = sessionStorage.getItem('termsAccepted')
-
-  return storedCode && termsAccepted === 'true' ? 'registration' : 'invitation'
-}
-
-// Helper function to get initial code
-function getInitialCode(): string | null {
-  if (typeof window === 'undefined') return null
-
+function getInvitationSnapshot(): string | null {
   const storedCode: string | null = sessionStorage.getItem('invitationCode')
   const termsAccepted: string | null = sessionStorage.getItem('termsAccepted')
 
   return storedCode && termsAccepted === 'true' ? storedCode : null
 }
 
+function getServerSnapshot(): null {
+  return null
+}
+
 export function SignUpFeature({ className, ...props }: SignUpFeatureProps): ReactNode {
   const router: AppRouterInstance = useRouter()
-  const [step, setStep] = useState<'invitation' | 'registration'>(getInitialStep)
   const [showSuccess, setShowSuccess] = useState<boolean>(false)
-  const [_invitationCode, setInvitationCode] = useState<string | null>(getInitialCode)
 
-  const handleValidCode = (code: string): void => {
-    setInvitationCode(code)
-    setStep('registration')
+  // useSyncExternalStore safely bridges SSR (serverSnapshot = null) and
+  // client (reads sessionStorage) without needing setState in an effect.
+  // subscribe is a no-op because sessionStorage has no push notifications —
+  // step transitions are driven by explicit user actions below.
+  const sessionCode: string | null = useSyncExternalStore(() => () => {}, getInvitationSnapshot, getServerSnapshot)
+
+  // manualStep is set when the user completes the invitation form in-session.
+  // It takes priority over the session-derived value so the transition is instant.
+  const [manualStep, setManualStep] = useState<'invitation' | 'registration' | null>(null)
+
+  const step: 'invitation' | 'registration' = manualStep ?? (sessionCode ? 'registration' : 'invitation')
+
+  const handleValidCode = (_code: string): void => {
+    setManualStep('registration')
   }
 
   const handleSignUpSubmit = async (event: SubmitEvent<HTMLFormElement>): Promise<void> => {
@@ -51,28 +51,24 @@ export function SignUpFeature({ className, ...props }: SignUpFeatureProps): Reac
 
     const formData: FormData = new FormData(event.currentTarget)
     const _email: FormDataEntryValue | null = formData.get('email')
-    const _username: FormDataEntryValue | null = formData.get('username')
     const password: FormDataEntryValue | null = formData.get('password')
     const confirmPassword: FormDataEntryValue | null = formData.get('confirmPassword')
     const terms: FormDataEntryValue | null = formData.get('terms')
 
-    // Validate passwords match
     if (password !== confirmPassword) {
-      // Handle error
       return
     }
     if (!terms) {
-      // Handle error
       return
     }
-    // Simulate API call with invitation code
+
     await new Promise((resolve): NodeJS.Timeout => setTimeout(resolve, 1000))
-    // Clear session storage
+
     sessionStorage.removeItem('invitationCode')
     sessionStorage.removeItem('termsAccepted')
-    // Show success
+
     setShowSuccess(true)
-    // Redirect to sign in
+
     setTimeout(() => {
       router.push('/sign-in')
     }, 2000)

@@ -23,31 +23,61 @@ export default defineConfig([
       'boundaries/elements': [
         {
           type: 'atom',
-          pattern: 'src/components/atoms/**',
+          pattern: 'src/components/atoms/**/*',
+          mode: 'folder',
+          capture: ['elementName']
+        },
+        {
+          type: 'atom',
+          pattern: 'src/components/atoms/*',
           mode: 'folder',
           capture: ['elementName']
         },
         {
           type: 'molecule',
-          pattern: 'src/components/molecules/**',
+          pattern: 'src/components/molecules/**/*',
+          mode: 'folder',
+          capture: ['elementName']
+        },
+        {
+          type: 'molecule',
+          pattern: 'src/components/molecules/*',
           mode: 'folder',
           capture: ['elementName']
         },
         {
           type: 'organism',
-          pattern: 'src/components/organisms/**',
+          pattern: 'src/components/organisms/**/*',
+          mode: 'folder',
+          capture: ['elementName']
+        },
+        {
+          type: 'organism',
+          pattern: 'src/components/organisms/*',
           mode: 'folder',
           capture: ['elementName']
         },
         {
           type: 'template',
-          pattern: 'src/components/templates/**',
+          pattern: 'src/components/templates/**/*',
+          mode: 'folder',
+          capture: ['elementName']
+        },
+        {
+          type: 'template',
+          pattern: 'src/components/templates/*',
           mode: 'folder',
           capture: ['elementName']
         },
         {
           type: 'feature',
-          pattern: 'src/features/**',
+          pattern: 'src/features/**/*',
+          mode: 'folder',
+          capture: ['elementName']
+        },
+        {
+          type: 'feature',
+          pattern: 'src/features/*',
           mode: 'folder',
           capture: ['elementName']
         },
@@ -129,13 +159,18 @@ export default defineConfig([
             'react/*',
             'react-dom',
             'react-dom/*',
-            // Component public APIs (folder level only via index.ts)
+            // Component public APIs (any subfolder depth via index.ts)
             '@/components/atoms/*',
+            '@/components/atoms/**/*',
             '@/components/molecules/*',
+            '@/components/molecules/**/*',
             '@/components/organisms/*',
+            '@/components/organisms/**/*',
             '@/components/templates/*',
+            '@/components/templates/**/*',
             // Features public APIs
             '@/features/*',
+            '@/features/**/*',
             // Shared utilities (allowed deeper imports)
             '@/helpers/*',
             '@/helpers/**',
@@ -172,69 +207,69 @@ export default defineConfig([
           message: '${file.type} is not allowed to import ${dependency.type}',
           rules: [
             //  ========================================
-            //  ATOMS - Completely isolated
+            //  ATOMS - Can import other atoms & shared
             //  ========================================
             {
               from: ['atom'],
-              disallow: ['atom', 'molecule', 'organism', 'template', 'feature', 'page'],
-              message: 'Atoms must be isolated. Cannot import: ${dependency.type} "${dependency.name}".\n   Atoms can only use basic HTML elements and shared utilities.'
-            },
-            {
-              from: ['atom'],
-              allow: ['shared'],
-              message: 'Atoms can import from shared utilities'
-            },
-            //  ========================================
-            //  MOLECULES - Only atoms
-            //  ========================================
-            {
-              from: ['molecule'],
               allow: ['atom', 'shared'],
-              message: 'Molecules can import atoms and shared utilities'
+              message: 'Atoms can import other atoms and shared utilities'
+            },
+            {
+              from: ['atom'],
+              disallow: ['molecule', 'organism', 'template', 'feature', 'page'],
+              message: 'Atoms cannot import: ${dependency.type} "${dependency.name}".\n   Atoms can only import other atoms and shared utilities.'
+            },
+            //  ========================================
+            //  MOLECULES - Same level & below (atoms) + shared
+            //  ========================================
+            {
+              from: ['molecule'],
+              allow: ['molecule', 'atom', 'shared'],
+              message: 'Molecules can import other molecules, atoms, and shared utilities'
             },
             {
               from: ['molecule'],
-              disallow: ['molecule', 'organism', 'template', 'feature', 'page'],
-              message: 'Molecules cannot import: ${dependency.type} "${dependency.name}".\n   Molecules can only import from atoms.'
-            },
-            //  ========================================
-            //  ORGANISMS - Molecules & atoms only (NO other organisms!)
-            //  ========================================
-            {
-              from: ['organism'],
-              allow: ['molecule', 'atom', 'shared'],
-              message: 'Organisms can import molecules, atoms, and shared utilities'
-            },
-            {
-              from: ['organism'],
               disallow: ['organism', 'template', 'feature', 'page'],
-              message: 'Organisms cannot import: ${dependency.type} "${dependency.name}".\n   Organisms importing organisms is NOT allowed!\n   Use templates to compose multiple organisms together.'
+              message: 'Molecules cannot import: ${dependency.type} "${dependency.name}".\n   Molecules can only import from molecules and below.'
             },
             //  ========================================
-            //  TEMPLATES - Organisms, molecules, atoms
+            //  ORGANISMS - Same level & below (molecules, atoms) + shared
             //  ========================================
             {
-              from: ['template'],
+              from: ['organism'],
               allow: ['organism', 'molecule', 'atom', 'shared'],
-              message: 'Templates can import organisms, molecules, atoms, and shared utilities'
+              message: 'Organisms can import other organisms, molecules, atoms, and shared utilities'
+            },
+            {
+              from: ['organism'],
+              disallow: ['template', 'feature', 'page'],
+              message: 'Organisms cannot import: ${dependency.type} "${dependency.name}".\n   Organisms can only import from organisms and below.'
+            },
+            //  ========================================
+            //  TEMPLATES - Same level & below (organisms, molecules, atoms) + shared
+            //  ========================================
+            {
+              from: ['template'],
+              allow: ['template', 'organism', 'molecule', 'atom', 'shared'],
+              message: 'Templates can import other templates, organisms, molecules, atoms, and shared utilities'
             },
             {
               from: ['template'],
-              disallow: ['template', 'feature', 'page'],
-              message: 'Templates cannot import: ${dependency.type} "${dependency.name}".\n   Templates should compose organisms, not other templates or features.'
+              disallow: ['feature', 'page'],
+              message: 'Templates cannot import: ${dependency.type} "${dependency.name}".\n   Templates can only import from templates and below.'
             },
             //  ========================================
-            //  FEATURES - Templates & organisms (compose UI)
+            //  FEATURES - Same level & below (templates, organisms, molecules, atoms) + shared
             //  ========================================
             {
               from: ['feature'],
-              allow: ['template', 'organism', 'shared'],
-              message: 'Features can import templates, organisms, and shared utilities'
+              allow: ['feature', 'template', 'organism', 'molecule', 'atom', 'shared'],
+              message: 'Features can import other features, templates, organisms, molecules, atoms, and shared utilities'
             },
             {
               from: ['feature'],
-              disallow: ['atom', 'molecule', 'feature', 'page'],
-              message: 'Features cannot import: ${dependency.type} "${dependency.name}".\n   Features should use templates and organisms, not low-level components.'
+              disallow: ['page'],
+              message: 'Features cannot import: ${dependency.type} "${dependency.name}".\n   Features cannot import pages.'
             },
             //  ========================================
             //  PAGES - Only features
