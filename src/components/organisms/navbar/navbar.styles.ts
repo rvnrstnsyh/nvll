@@ -21,3 +21,5 @@ export const navbarContentStyles = cva(
     max-h-[600px]:landscape:py-3
   `)
 )
+
+export const navbarCtaWrapperStyles = cva(apply('flex gap-x-4'))
