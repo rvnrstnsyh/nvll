@@ -11,14 +11,14 @@ export const buttonStyles = cva(
     variants: {
       variant: {
         primary: apply(`
-          bg-black dark:bg-white
-          text-white dark:text-black
-          border-black dark:border-white
+          bg-[#000000] dark:bg-[#FFFFFF]
+          text-[#FFFFFF] dark:text-[#000000]
+          border-[#000000] dark:border-[#FFFFFF]
         `),
         outlinePrimary: apply(`
           bg-transparent
-          text-black dark:text-white
-          border-black dark:border-white
+          text-[#000000] dark:text-[#FFFFFF]
+          border-[#000000] dark:border-[#FFFFFF]
         `)
       },
       size: {
@@ -51,11 +51,11 @@ export const buttonStyles = cva(
         idle: '',
         hover: apply(`
           hover:-translate-x-0.5 hover:-translate-y-0.5
-          hover:shadow-[4px_4px_0_#000000] dark:hover:shadow-[4px_4px_0_#ffffff]
+          hover:shadow-[4px_4px_0_#000000] dark:hover:shadow-[4px_4px_0_#FFFFFF]
         `),
         active: apply(`
           active:translate-x-0 active:translate-y-0
-          active:shadow-[2px_2px_0_#000000] dark:active:shadow-[2px_2px_0_#ffffff]
+          active:shadow-[2px_2px_0_#000000] dark:active:shadow-[2px_2px_0_#FFFFFF]
         `)
       },
       processing: {
@@ -67,7 +67,7 @@ export const buttonStyles = cva(
       {
         variant: 'primary',
         state: 'hover',
-        class: apply(`hover:bg-[#333333] dark:hover:bg-gray-200`)
+        class: apply(`hover:bg-[#000000] dark:hover:bg-[#FFFFFF]`)
       }
     ],
     defaultVariants: {
@@ -113,7 +113,7 @@ export const buttonLoaderStyles = cva(
 export const loaderBarStyles = cva(
   apply(`
     w-[2.5px] h-3 sm:w-0.75 sm:h-4
-    bg-white dark:bg-black
+    bg-[#FFFFFF] dark:bg-[#000000]
     animate-[loaderPulse_1s_ease-in-out_infinite]
   `)
 )
