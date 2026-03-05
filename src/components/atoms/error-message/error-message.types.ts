@@ -7,4 +7,5 @@ import type { VariantProps } from 'class-variance-authority'
 export interface ErrorMessageProps extends HTMLAttributes<HTMLSpanElement>, VariantProps<typeof errorMessageStyles> {
   show?: boolean
   children?: ReactNode
+  className?: string
 }

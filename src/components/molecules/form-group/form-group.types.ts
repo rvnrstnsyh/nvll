@@ -11,4 +11,5 @@ export interface FormGroupProps extends HTMLAttributes<HTMLDivElement>, VariantP
   error?: boolean
   errorMessage?: ReactNode
   inputProps?: FormInputProps
+  className?: string
 }

@@ -10,9 +10,9 @@ export const epochInfoStyles = cva(apply(`block mb-1 sm:mb-0`), {
       lg: apply(`text-base sm:text-lg`)
     },
     variant: {
-      default: apply(`text-black dark:text-white`),
-      dim: apply(`text-gray-600 dark:text-gray-400`),
-      muted: apply(`text-gray-500 dark:text-gray-500`)
+      default: apply(`text-[#000000] dark:text-[#FFFFFF]`),
+      dim: apply(`text-[#4A5565] dark:text[#99A1AF]`),
+      muted: apply(`text-[#6A7282] dark:text-[#6A7282]`)
     }
   },
   defaultVariants: {

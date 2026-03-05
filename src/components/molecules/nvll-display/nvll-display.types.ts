@@ -8,4 +8,5 @@ export interface NvllDisplayProps extends HTMLAttributes<HTMLDivElement>, Varian
   text?: string
   topText?: string
   bottomText?: string
+  className?: string
 }

@@ -9,7 +9,7 @@ import type { PasswordHintItemProps } from './password-hint-item.types'
 
 export const PasswordHintItem = ({ satisfied, children }: PasswordHintItemProps): ReactNode => {
   return (
-    <li className={passwordHintItemStyles({ satisfied })}>
+    <li nvll-ui="password-hint-item" className={passwordHintItemStyles({ satisfied })}>
       {satisfied ? <CheckIcon /> : <CrossIcon />}
       {children}
     </li>

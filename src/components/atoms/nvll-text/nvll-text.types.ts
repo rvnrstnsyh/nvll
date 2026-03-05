@@ -8,4 +8,5 @@ export interface NvllTextProps extends Omit<HTMLAttributes<HTMLHeadingElement>, 
   text?: string
   position?: 'top' | 'bottom' | null | undefined
   style?: CSSProperties | undefined
+  className?: string
 }

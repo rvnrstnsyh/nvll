@@ -8,4 +8,5 @@ export interface SuccessMessageProps extends HTMLAttributes<HTMLDivElement>, Var
   show?: boolean
   title?: string
   message?: string
+  className?: string
 }

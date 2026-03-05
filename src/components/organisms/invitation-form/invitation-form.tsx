@@ -15,10 +15,10 @@ import { invitationFormStyles } from './invitation-form.styles'
 import type { InvitationFormProps } from './invitation-form.types'
 
 export function InvitationForm({ onValidCode, className, ...props }: InvitationFormProps): ReactNode {
-  const [isProcessing, setIsProcessing] = useState(false)
-  const [invitationCode, setInvitationCode] = useState('')
-  const [termsAccepted, setTermsAccepted] = useState(false)
-  const [errors, setErrors] = useState({ code: '' })
+  const [isProcessing, setIsProcessing] = useState<boolean>(false)
+  const [invitationCode, setInvitationCode] = useState<string>('')
+  const [termsAccepted, setTermsAccepted] = useState<boolean>(false)
+  const [errors, setErrors] = useState<Record<string, string>>({ code: '' })
 
   const handleSubmit = async (event: SubmitEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -42,7 +42,7 @@ export function InvitationForm({ onValidCode, className, ...props }: InvitationF
       await new Promise((resolve) => setTimeout(resolve, 1000))
 
       // TODO: Replace with actual validation
-      const isValid = invitationCode === 'NVLL2024' // Example validation
+      const isValid: boolean = invitationCode === 'NVLL2024' // Example validation
 
       if (isValid) {
         // Store in sessionStorage (not localStorage to avoid browser storage restriction)
@@ -62,7 +62,7 @@ export function InvitationForm({ onValidCode, className, ...props }: InvitationF
   }
 
   return (
-    <form data-ui="invitation-form" className={invitationFormStyles({ className })} onSubmit={handleSubmit} noValidate {...props}>
+    <form nvll-ui="invitation-form" className={invitationFormStyles({ className })} onSubmit={handleSubmit} noValidate {...props}>
       <FormGroup
         label="Invitation code"
         error={!!errors.code}

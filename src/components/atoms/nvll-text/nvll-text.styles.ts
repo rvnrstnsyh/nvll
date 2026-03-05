@@ -6,7 +6,7 @@ export const nvllTextStyles = cva(
   apply(`
     font-bold
     text-[30vw] md:text-[27vw]
-    text-[#00000020] dark:text-[#ffffff20]
+    text-[#00000020] dark:text-[#FFFFFF20]
   `),
   {
     variants: {

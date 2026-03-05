@@ -10,12 +10,11 @@ export const searchFieldStyles = cva(
 
 export const searchFieldInnerStyles = cva(
   apply(`
-    relative w-md transition-all duration-200
-    border-2
-    bg-transparent border-black dark:border-white
+    relative w-md transition-all duration-200 border-2
+    bg-transparent border-[#000000] dark:border-[#FFFFFF]
     focus-within:-translate-x-0.5 focus-within:-translate-y-0.5
-    focus-within:shadow-[4px_4px_0_#000000] dark:focus-within:shadow-[4px_4px_0_#ffffff]
-    max-[480px]:focus-within:shadow-[3px_3px_0_#000000] max-[480px]:dark:focus-within:shadow-[3px_3px_0_#ffffff]
+    focus-within:shadow-[4px_4px_0_#000000] dark:focus-within:shadow-[4px_4px_0_#FFFFFF]
+    max-[480px]:focus-within:shadow-[3px_3px_0_#000000] max-[480px]:dark:focus-within:shadow-[3px_3px_0_#FFFFFF]
     max-[480px]:focus-within:-translate-x-px max-[480px]:focus-within:-translate-y-px
   `)
 )

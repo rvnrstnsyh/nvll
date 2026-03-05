@@ -18,8 +18,8 @@ export const passwordToggleStyles = cva(
     px-2 sm:px-3
     font-bold tracking-[0.5px]
     text-[9px] sm:text-[10px]
-    bg-black dark:bg-white
-    text-white dark:text-black
+    bg-[#000000] dark:bg-[#FFFFFF]
+    text-[#FFFFFF] dark:text-[#000000]
     active:scale-[0.98]
   `)
 )

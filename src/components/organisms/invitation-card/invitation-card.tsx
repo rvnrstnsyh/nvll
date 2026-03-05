@@ -13,7 +13,7 @@ import type { InvitationCardProps } from './invitation-card.types'
 
 export function InvitationCard({ onValidCode, className, ...props }: InvitationCardProps): ReactNode {
   return (
-    <div data-ui="invitation-card" className={invitationCardStyles({ className })} {...props}>
+    <div nvll-ui="invitation-card" className={invitationCardStyles({ className })} {...props}>
       <InvitationHeader />
       <InvitationForm onValidCode={onValidCode} />
       <Divider text="Already registered?" />

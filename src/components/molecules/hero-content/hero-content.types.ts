@@ -9,4 +9,5 @@ export interface HeroContentProps extends HTMLAttributes<HTMLDivElement>, Varian
   children?: ReactNode
   animationDelay?: string
   style?: CSSProperties | undefined
+  className?: string
 }

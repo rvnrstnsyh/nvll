@@ -5,7 +5,7 @@ import { apply } from '@/helpers/tailwind'
 export const homeTemplateStyles = cva(
   apply(`
     relative select-none overflow-hidden
-    bg-white dark:bg-gray-900
+    bg-[#FFFFFF] dark:bg-[#101828]
   `)
 )
 

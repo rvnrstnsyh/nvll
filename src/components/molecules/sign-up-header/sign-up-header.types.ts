@@ -8,4 +8,5 @@ export interface SignUpHeaderProps extends HTMLAttributes<HTMLDivElement>, Varia
   title?: string
   description?: string
   href?: string
+  className?: string
 }

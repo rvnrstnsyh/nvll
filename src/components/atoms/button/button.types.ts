@@ -11,4 +11,5 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>, Va
   state?: 'idle' | 'hover' | 'active' | null | undefined
   text?: ReactNode
   processing?: boolean
+  className?: string
 }

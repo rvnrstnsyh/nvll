@@ -8,4 +8,5 @@ export interface HomeHeroProps extends HTMLAttributes<HTMLElement>, VariantProps
   description?: ReactNode
   nvllText?: string
   showNvll?: boolean
+  className?: string
 }

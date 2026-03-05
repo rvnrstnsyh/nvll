@@ -1,3 +1,5 @@
 import type { SVGAttributes } from 'react'
 
-export type CrossIconProps = SVGAttributes<SVGSVGElement>
+export interface CrossIconProps extends SVGAttributes<SVGSVGElement> {
+  className?: string
+}

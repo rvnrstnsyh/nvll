@@ -16,7 +16,7 @@ export const navbarContentStyles = cva(
   apply(`
     flex flex-wrap items-center
     pt-4 pb-3 md:pt-5 md:pb-0
-    text-black dark:text-white
+    text-[#000000] dark:text-[#FFFFFF]
     gap-y-2
     max-[480px]:pt-3 max-[480px]:pb-2.5
     max-h-[600px]:landscape:pt-2 max-h-[600px]:landscape:pb-2

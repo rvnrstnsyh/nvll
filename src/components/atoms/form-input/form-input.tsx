@@ -6,9 +6,9 @@ import { formInputStyles, inputWrapperStyles } from './form-input.styles'
 
 import type { FormInputProps } from './form-input.types'
 
-export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(({ error, className, wrapperClassName, ...props }, ref): ReactNode => {
+export const FormInput = forwardRef<HTMLInputElement, FormInputProps>(({ error, wrapperClassName, className, ...props }, ref): ReactNode => {
   return (
-    <div className={inputWrapperStyles({ error, className: wrapperClassName })}>
+    <div nvll-ui="form-input" className={inputWrapperStyles({ error, className: wrapperClassName })}>
       <input nvll-ui="form-input" ref={ref} className={formInputStyles({ className })} {...props} />
     </div>
   )

@@ -11,4 +11,5 @@ export interface GreenwichClockProps extends Omit<HTMLAttributes<HTMLSpanElement
   label?: string
   updateInterval?: number
   onTimeChange?: (time: string) => void
+  className?: string
 }

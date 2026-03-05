@@ -31,7 +31,7 @@ const HINTS = [
 
 export const PasswordHintList = ({ password }: PasswordHintListProps): ReactNode => {
   return (
-    <div className={passwordHintListWrapperStyles()}>
+    <div nvll-ui="password-hint-list" className={passwordHintListWrapperStyles()}>
       <h4 className={passwordHintListTitleStyles()}>Your password requirements:</h4>
       <ul className={passwordHintListStyles()}>
         {HINTS.map(({ label, test }) => (

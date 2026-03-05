@@ -1,3 +1,5 @@
 import type { SVGAttributes } from 'react'
 
-export type CheckIconProps = SVGAttributes<SVGSVGElement>
+export interface CheckIconProps extends SVGAttributes<SVGSVGElement> {
+  className?: string
+}

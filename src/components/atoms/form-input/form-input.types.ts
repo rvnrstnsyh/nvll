@@ -7,4 +7,5 @@ import type { VariantProps } from 'class-variance-authority'
 export interface FormInputProps extends InputHTMLAttributes<HTMLInputElement>, VariantProps<typeof formInputStyles> {
   error?: boolean
   wrapperClassName?: string
+  className?: string
 }

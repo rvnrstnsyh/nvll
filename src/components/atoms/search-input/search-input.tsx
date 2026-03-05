@@ -7,7 +7,7 @@ import { searchInputStyles } from './search-input.styles'
 import type { SearchInputProps } from './search-input.types'
 
 export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(({ className, ...props }, ref): ReactNode => {
-  return <input type="search" ref={ref} className={searchInputStyles({ className })} {...props} />
+  return <input nvll-ui="search-input" className={searchInputStyles({ className })} type="search" ref={ref} {...props} />
 })
 
 SearchInput.displayName = 'SearchInput'

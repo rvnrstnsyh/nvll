@@ -7,4 +7,5 @@ import type { VariantProps } from 'class-variance-authority'
 export interface EpochInfoProps extends HTMLAttributes<HTMLSpanElement>, VariantProps<typeof epochInfoStyles> {
   size?: 'sm' | 'md' | 'lg' | null | undefined
   value?: string
+  className?: string
 }

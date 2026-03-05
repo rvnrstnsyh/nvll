@@ -7,7 +7,7 @@ export const dividerStyles = cva(
     text-center my-5 sm:my-6 relative
     before:absolute before:top-1/2 before:left-0 before:right-0 
     before:-translate-y-1/2 before:h-0.5
-    before:bg-black dark:before:bg-white
+    before:bg-[#000000] dark:before:bg-[#FFFFFF]
   `)
 )
 
@@ -16,7 +16,7 @@ export const dividerTextStyles = cva(
     relative z-1 font-bold uppercase tracking-wide
     px-3 sm:px-4
     text-[10px] sm:text-xs
-    bg-white dark:bg-gray-800
-    text-black dark:text-white
+    bg-[#FFFFFF] dark:bg-[#1E2939]
+    text-[#000000] dark:text-[#FFFFFF]
   `)
 )

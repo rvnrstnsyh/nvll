@@ -4,9 +4,9 @@ import { searchLabelStyles } from './search-label.styles'
 
 import type { SearchLabelProps } from './search-label.types'
 
-export const SearchLabel = ({ className, children, ...props }: SearchLabelProps): ReactNode => {
+export const SearchLabel = ({ children, className, ...props }: SearchLabelProps): ReactNode => {
   return (
-    <label className={searchLabelStyles({ className })} {...props}>
+    <label nvll-ui="search-label" className={searchLabelStyles({ className })} {...props}>
       {children}
     </label>
   )

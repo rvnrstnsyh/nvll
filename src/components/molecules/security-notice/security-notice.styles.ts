@@ -8,7 +8,7 @@ export const securityNoticeStyles = cva(
     pl-3 sm:pl-4 pr-2 sm:pr-3 py-2 sm:py-2.5
     text-[10px]
     border-l-2
-    text-gray-400 dark:text-gray-500
-    border-gray-200 dark:border-gray-600
+    text-[#99A1AF] dark:text-[#6A7282]
+    border-[#E5E7EB] dark:border-[#4A5565]
   `)
 )

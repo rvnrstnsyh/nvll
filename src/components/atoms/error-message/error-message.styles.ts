@@ -7,7 +7,7 @@ export const errorMessageStyles = cva(
     font-bold tracking-[0.5px]
     opacity-0 -translate-y-2 transition-all duration-200
     text-[9px] sm:text-[10px] leading-relaxed
-    text-[#dc3545] dark:text-[#f87171]
+    text-[#DC3545] dark:text-[#F87171]
   `),
   {
     variants: {

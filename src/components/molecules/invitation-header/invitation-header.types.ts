@@ -8,4 +8,5 @@ export interface InvitationHeaderProps extends HTMLAttributes<HTMLDivElement>, V
   title?: string
   description?: string
   href?: string
+  className?: string
 }

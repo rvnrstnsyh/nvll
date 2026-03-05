@@ -10,4 +10,5 @@ export interface HomeTemplateProps extends HTMLAttributes<HTMLDivElement>, Varia
   description?: ReactNode
   nvllText?: string
   showNvll?: boolean
+  className?: string
 }

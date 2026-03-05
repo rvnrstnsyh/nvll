@@ -14,7 +14,7 @@ export const forgotPasswordLinkStyles = cva(
     no-underline font-semibold cursor-pointer z-10
     transition-all duration-200
     text-[10px] sm:text-xs
-    text-black dark:text-white
+    text-[#000000] dark:text-[#FFFFFF]
     hover:underline
   `)
 )

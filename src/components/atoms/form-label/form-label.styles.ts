@@ -6,6 +6,6 @@ export const formLabelStyles = cva(
   apply(`
     block mb-2 font-bold uppercase tracking-wide
     text-[10px] sm:text-xs
-    text-black dark:text-white
+    text-[#000000] dark:text-[#FFFFFF]
   `)
 )

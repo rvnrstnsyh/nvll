@@ -24,14 +24,14 @@ export const successMessageStyles = cva(
 export const successIconStyles = cva(
   apply(`
     flex items-center justify-center mx-auto
-    font-black
+    font-[#000000]
     w-10 h-10 sm:w-12 sm:h-12
     mb-3 sm:mb-4
     text-lg sm:text-xl
     border-2
-    bg-black dark:bg-white
-    text-white dark:text-black
-    border-black dark:border-white
+    bg-[#000000] dark:bg-[#FFFFFF]
+    text-[#FFFFFF] dark:text-[#000000]
+    border-[#000000] dark:border-[#FFFFFF]
     animate-[successPop_0.5s_ease-out]
   `)
 )
@@ -40,7 +40,7 @@ export const successTitleStyles = cva(
   apply(`
     font-bold uppercase tracking-wide mb-1
     text-lg sm:text-xl
-    text-black dark:text-white
+    text-[#000000] dark:text-[#FFFFFF]
   `)
 )
 
@@ -48,6 +48,6 @@ export const successTextStyles = cva(
   apply(`
     font-bold uppercase tracking-[0.5px] leading-relaxed
     text-[10px] sm:text-xs
-    text-[#666666] dark:text-gray-400
+    text-[#666666] dark:text-[#99A1AF]
   `)
 )

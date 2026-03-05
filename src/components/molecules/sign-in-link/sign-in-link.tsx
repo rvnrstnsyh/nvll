@@ -10,8 +10,8 @@ import type { SignInLinkProps } from './sign-in-link.types'
 
 export function SignInLink({ href = '/sign-in', text = 'Sign In', ...props }: SignInLinkProps): ReactNode {
   return (
-    <div className={signInLinkWrapperStyles()}>
-      <Link href={href} nvll-ui="sign-in-link" {...props}>
+    <div nvll-ui="sign-in-link" className={signInLinkWrapperStyles()}>
+      <Link href={href} {...props}>
         <Button text={text} variant="outlinePrimary" state="hover" fullWidth />
       </Link>
     </div>

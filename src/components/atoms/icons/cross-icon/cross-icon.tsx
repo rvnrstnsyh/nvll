@@ -7,6 +7,7 @@ import type { CrossIconProps } from './cross-icon.types'
 export const CrossIcon = ({ className, ...props }: CrossIconProps): ReactNode => {
   return (
     <svg
+      nvll-ui="cross-icon"
       className={crossIconStyles({ className })}
       xmlns="http://www.w3.org/2000/svg"
       width="24"

@@ -5,6 +5,6 @@ import { apply } from '@/helpers/tailwind'
 export const invitationTemplateStyles = cva(
   apply(`
     w-screen min-h-screen grid place-items-center relative
-    bg-white dark:bg-gray-900
+    bg-[#FFFFFF] dark:bg-[#101828]
   `)
 )

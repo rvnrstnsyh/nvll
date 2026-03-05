@@ -7,4 +7,5 @@ import type { VariantProps } from 'class-variance-authority'
 export interface HomeInfoProps extends HTMLAttributes<HTMLDivElement>, VariantProps<typeof homeInfoStyles> {
   epochValue?: string
   showClock?: boolean
+  className?: string
 }

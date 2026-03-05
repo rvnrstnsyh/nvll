@@ -1,3 +1,5 @@
 import type { SVGAttributes } from 'react'
 
-export type SearchIconProps = SVGAttributes<SVGSVGElement>
+export interface SearchIconProps extends SVGAttributes<SVGSVGElement> {
+  className?: string
+}

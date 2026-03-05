@@ -1,3 +1,5 @@
 import type { InputHTMLAttributes } from 'react'
 
-export type SearchInputProps = InputHTMLAttributes<HTMLInputElement>
+export interface SearchInputProps extends InputHTMLAttributes<HTMLInputElement> {
+  className?: string
+}

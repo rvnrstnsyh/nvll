@@ -8,4 +8,5 @@ export interface CheckboxFieldProps extends Omit<InputHTMLAttributes<HTMLInputEl
   id?: string
   label?: ReactNode
   subtext?: ReactNode
+  className?: string
 }

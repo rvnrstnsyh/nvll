@@ -7,6 +7,7 @@ import type { CheckIconProps } from './check-icon.types'
 export const CheckIcon = ({ className, ...props }: CheckIconProps): ReactNode => {
   return (
     <svg
+      nvll-ui="check-icon"
       className={checkIconStyles({ className })}
       xmlns="http://www.w3.org/2000/svg"
       width="24"

@@ -6,8 +6,8 @@ import type { ForgotPasswordLinkProps } from './forgot-password-link.types'
 
 export function ForgotPasswordLink({ href = '#', children = 'Forgot password?', className, ...props }: ForgotPasswordLinkProps): ReactNode {
   return (
-    <div className={linkWrapperStyles()}>
-      <a nvll-ui="forgot-password-link" href={href} className={forgotPasswordLinkStyles({ className })} {...props}>
+    <div nvll-ui="forgot-password-link" className={linkWrapperStyles()}>
+      <a className={forgotPasswordLinkStyles({ className })} href={href} {...props}>
         {children}
       </a>
     </div>

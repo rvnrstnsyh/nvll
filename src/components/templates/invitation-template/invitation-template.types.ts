@@ -6,4 +6,5 @@ import type { VariantProps } from 'class-variance-authority'
 
 export interface InvitationTemplateProps extends HTMLAttributes<HTMLDivElement>, VariantProps<typeof invitationTemplateStyles> {
   onValidCode?: (code: string) => void
+  className?: string
 }

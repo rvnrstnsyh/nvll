@@ -12,4 +12,5 @@ export interface PasswordFieldProps extends HTMLAttributes<HTMLDivElement>, Vari
   errorMessage?: ReactNode
   inputProps?: FormInputProps
   strengthHint?: boolean
+  className?: string
 }
