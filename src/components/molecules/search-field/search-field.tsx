@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 
-import { SearchIcon } from '@/components/atoms/search-icon'
+import { SearchIcon } from '@/components/atoms/icons/search-icon'
 import { SearchInput } from '@/components/atoms/search-input'
 import { SearchLabel } from '@/components/atoms/search-label'
 
