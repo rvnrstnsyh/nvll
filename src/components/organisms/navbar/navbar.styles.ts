@@ -14,12 +14,34 @@ export const navbarContainerStyles = cva(
 
 export const navbarContentStyles = cva(
   apply(`
-    flex items-center justify-between
-    py-5 md:py-6
+    flex flex-wrap items-center
+    pt-4 pb-3 md:pt-5 md:pb-0
     text-black dark:text-white
-    max-[480px]:py-4
-    max-h-[600px]:landscape:py-3
+    gap-y-2
+    max-[480px]:pt-3 max-[480px]:pb-2.5
+    max-h-[600px]:landscape:pt-2 max-h-[600px]:landscape:pb-2
   `)
 )
 
-export const navbarCtaWrapperStyles = cva(apply('flex gap-x-4'))
+export const navbarInfoStyles = cva(
+  apply(`
+    order-1
+    shrink-0
+  `)
+)
+
+export const navbarCtaStyles = cva(
+  apply(`
+    order-2
+    ml-auto
+    shrink-0
+  `)
+)
+
+export const navbarSearchStyles = cva(
+  apply(`
+    order-3
+    w-full
+    pb-1 md:pb-2
+  `)
+)

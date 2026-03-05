@@ -4,15 +4,11 @@ import { apply } from '@/helpers/tailwind'
 
 export const searchInputStyles = cva(
   apply(`
-    block w-md pl-10 pr-4 py-2 text-sm
-    bg-white text-gray-900 border-2 border-black
-    placeholder:text-gray-400
-    shadow-sm
-    focus:outline-none focus:ring-2
+    block w-full pl-10 pr-4 py-2 sm:py-1.75
+    bg-transparent border-none outline-none
+    text-sm font-medium
+    text-black dark:text-white
+    placeholder:text-[#999999] dark:placeholder:text-gray-500
     transition-colors duration-200
-    dark:bg-gray-900
-    dark:text-white
-    dark:border-white
-    dark:placeholder:text-gray-400
   `)
 )

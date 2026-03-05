@@ -10,7 +10,7 @@ import type { SearchFieldProps } from './search-field.types'
 
 const LABEL_TEXT = 'Search by Address / Txn Hash / Signature Hash / Epoch'
 const PLACEHOLDER_TEXT = 'Search by Address / Txn Hash / Sig Hash / Epoch'
-const INPUT_ID = 'search'
+const INPUT_ID = 'home-search-box'
 
 export const SearchField = ({ className, inputProps, ...props }: SearchFieldProps): ReactNode => {
   return (
