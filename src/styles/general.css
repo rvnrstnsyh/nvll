@@ -1,3 +1,7 @@
+/* ----------------------------------
+     GENERAL
+  ---------------------------------- */
+
 .overlay {
   @apply absolute
   inset-0
@@ -15,4 +19,416 @@
   dark:opacity-30
   bg-[url('/images/svg/background-light.svg')]
   dark:bg-[url('/images/svg/background-dark.svg')];
+}
+
+/* ----------------------------------
+     OVERSEER PANEL
+  ---------------------------------- */
+
+/* ── Trigger button ── */
+.overseer-panel-btn {
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  width: 48px;
+  height: 48px;
+  cursor: pointer;
+  z-index: 1000;
+  -webkit-tap-highlight-color: transparent;
+  animation: overseer-panel-pop 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.overseer-panel-btn.is-hidden {
+  pointer-events: none;
+  animation: overseer-panel-pop-out 0.3s ease forwards;
+}
+
+@media (min-width: 480px) {
+  .overseer-panel-btn {
+    bottom: 20px;
+    right: 20px;
+    width: 52px;
+    height: 52px;
+  }
+}
+
+@media (min-width: 768px) {
+  .overseer-panel-btn {
+    bottom: 24px;
+    right: 24px;
+    width: 54px;
+    height: 54px;
+  }
+}
+
+/* ── Parallax ── */
+.overseer-panel-layer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: calc(-50% + var(--ox, 0px)) calc(-50% + var(--oy, 0px));
+  transition: translate 0.1s ease-out;
+  will-change: translate;
+}
+
+.overseer-panel-layer-hair {
+  rotate: 0deg;
+  transition:
+    translate 0.1s ease-out,
+    rotate 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.overseer-panel-btn:hover .overseer-panel-layer-hair {
+  rotate: -270deg;
+}
+
+/* ── Greeting caret (pseudo-element) ── */
+.overseer-panel-greet::after {
+  content: '';
+  position: absolute;
+  right: -6px;
+  top: 60%;
+  transform: translateY(-50%);
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+}
+
+.overseer-panel-greet {
+  opacity: 0;
+  transform: translateX(10px) scale(0.85);
+  transform-origin: right center;
+  transition:
+    opacity 0.22s ease,
+    transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.overseer-panel-greet.is-visible {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+  pointer-events: auto;
+}
+
+/* ── Chat window ── */
+.overseer-panel-win {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
+  opacity: 0;
+  transform: translateY(100%);
+  pointer-events: none;
+  transition:
+    opacity 0.35s ease,
+    transform 0.35s cubic-bezier(0.32, 0.72, 0, 1),
+    width 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+    height 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+    border-radius 0.3s ease,
+    box-shadow 0.3s ease;
+  z-index: 1001;
+  overflow: hidden;
+  overscroll-behavior: contain;
+  will-change: transform, opacity;
+}
+
+.overseer-panel-win.is-open {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+}
+
+@media (min-width: 480px) {
+  .overseer-panel-win {
+    top: auto;
+    left: auto;
+    bottom: 16px;
+    right: 16px;
+    width: clamp(280px, 88vw, 340px);
+    height: clamp(360px, 65vh, 500px);
+    max-height: calc(100dvh - 100px);
+    border-radius: 0 12px 12px 0;
+    box-shadow:
+      0 8px 36px rgba(0, 0, 0, 0.2),
+      0 2px 6px rgba(0, 0, 0, 0.08);
+    transform: translateY(12px) scale(0.96);
+    transition:
+      opacity 0.3s ease,
+      transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+      width 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+      height 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+      border-radius 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+
+  .overseer-panel-win.is-open {
+    transform: translateY(0) scale(1);
+  }
+
+  .overseer-panel-win.is-expanded {
+    top: 0 !important;
+    left: auto !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: clamp(320px, 92vw, 400px) !important;
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+    border-radius: 0 !important;
+    box-shadow: -4px 0 24px rgba(0, 0, 0, 0.15) !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .overseer-panel-win {
+    bottom: 20px;
+    right: 20px;
+    width: 340px;
+    height: 500px;
+    max-height: calc(100dvh - 110px);
+    border-radius: 0 12px 12px 0;
+  }
+
+  .overseer-panel-win.is-expanded {
+    width: 400px !important;
+    height: 100dvh !important;
+    max-height: 100dvh !important;
+    top: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    left: auto !important;
+    border-radius: 0 !important;
+    box-shadow: -4px 0 24px rgba(0, 0, 0, 0.15) !important;
+  }
+}
+
+@media (min-width: 1280px) {
+  .overseer-panel-win {
+    width: 360px;
+    height: 520px;
+    right: 28px;
+    bottom: 24px;
+    border-radius: 0 12px 12px 0;
+  }
+
+  .overseer-panel-win.is-expanded {
+    width: 460px !important;
+    border-radius: 0 !important;
+  }
+}
+
+/* ── Desktop sidebar ── */
+.overseer-panel-sidebar {
+  position: fixed;
+  z-index: 1000;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  pointer-events: none;
+  overflow: hidden;
+  border-radius: 12px 0 0 12px;
+  transform: scale(0.96);
+  transition:
+    opacity 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+    transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+    width 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+    height 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+    right 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+    top 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+    bottom 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+    border-radius 0.3s ease;
+  will-change: transform, opacity, right, height;
+}
+
+.overseer-panel-sidebar.is-open {
+  opacity: 1;
+  pointer-events: all;
+  width: 48px;
+  height: 500px;
+  transform: scale(1);
+}
+
+.overseer-panel-sidebar.is-expanded {
+  border-radius: 0;
+}
+
+@media (min-width: 480px) {
+  .overseer-panel-sidebar {
+    bottom: 16px;
+  }
+
+  .overseer-panel-sidebar.is-open {
+    width: 48px;
+    height: clamp(360px, 65vh, 500px);
+  }
+}
+
+@media (min-width: 768px) {
+  .overseer-panel-sidebar {
+    bottom: 20px;
+  }
+
+  .overseer-panel-sidebar.is-open {
+    height: 500px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .overseer-panel-sidebar {
+    bottom: 24px;
+  }
+
+  .overseer-panel-sidebar.is-open {
+    height: 520px;
+  }
+}
+
+/* ── Mobile sidebar drawer ── */
+.overseer-panel-mob-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 220px;
+  z-index: 1003;
+  transform: translateX(-100%);
+  transition: transform 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+  overflow: hidden;
+}
+
+.overseer-panel-mob-sidebar.is-open {
+  transform: translateX(0);
+}
+
+@media (min-width: 480px) {
+  .overseer-panel-mob-sidebar {
+    display: none;
+  }
+}
+
+/* ── Desktop sidebar tooltip ── */
+.overseer-panel-sb-tooltip {
+  position: absolute;
+  left: calc(100% + 8px);
+  top: 50%;
+  transform: translateY(-50%);
+  background: #18191c;
+  color: #fff;
+  padding: 5px 9px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  z-index: 10;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.overseer-panel-sb-item:hover .overseer-panel-sb-tooltip {
+  opacity: 1;
+}
+
+/* ── Sidebar item hover transition ── */
+.overseer-panel-sb-item {
+  transition:
+    border-radius 0.2s ease,
+    background 0.18s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.overseer-panel-sb-item:hover,
+.overseer-panel-sb-item.active {
+  border-radius: 14px;
+}
+
+/* ── Scrollbar ── */
+.overseer-panel-msgs::-webkit-scrollbar {
+  width: 3px;
+}
+
+.overseer-panel-msgs::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.overseer-panel-sb-items::-webkit-scrollbar {
+  display: none;
+}
+
+/* ── Message animation ── */
+.overseer-panel-msg {
+  animation: overseer-panel-msg-in 0.25s ease both;
+}
+
+.overseer-panel-msg.grouped {
+  margin-top: -3px;
+}
+
+.overseer-panel-msg.grouped .overseer-panel-avatar {
+  visibility: hidden;
+}
+
+/* ── AI bubble radius chain (:has) ── */
+.overseer-panel-msg-ai:not(.grouped) .overseer-panel-bubble-ai {
+  border-radius: 3px 14px 14px 14px;
+}
+
+.overseer-panel-msg-ai:not(.grouped) + .overseer-panel-msg-ai.grouped .overseer-panel-bubble-ai,
+.overseer-panel-msg-ai.grouped + .overseer-panel-msg-ai.grouped .overseer-panel-bubble-ai {
+  border-radius: 3px 14px 14px 3px;
+}
+
+.overseer-panel-msg-ai.grouped:not(:has(+ .overseer-panel-msg-ai.grouped)) .overseer-panel-bubble-ai {
+  border-radius: 3px 14px 14px 14px;
+}
+
+/* ── Typing dots ── */
+.overseer-panel-dot {
+  animation: overseer-panel-bounce 1.3s ease infinite;
+}
+
+.overseer-panel-dot:nth-child(2) {
+  animation-delay: 0.18s;
+}
+
+.overseer-panel-dot:nth-child(3) {
+  animation-delay: 0.36s;
+}
+
+/* ── Icon button hover ── */
+.overseer-panel-icon-btn {
+  transition: background 0.18s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.overseer-panel-icon-btn:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.overseer-panel-icon-btn:active {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+/* ── Burger/expand breakpoint visibility ── */
+.overseer-panel-burger-btn {
+  display: flex;
+}
+
+.overseer-panel-expand-btn {
+  display: none;
+}
+
+@media (min-width: 480px) {
+  .overseer-panel-burger-btn {
+    display: none;
+  }
+
+  .overseer-panel-expand-btn {
+    display: flex;
+  }
 }

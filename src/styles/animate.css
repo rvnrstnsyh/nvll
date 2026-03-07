@@ -1,3 +1,7 @@
+/* ----------------------------------
+     HOME
+  ---------------------------------- */
+
 @keyframes nvll-from-right {
   from {
     transform: translateX(20vw);
@@ -66,5 +70,60 @@
   }
   100% {
     transform: scale(1);
+  }
+}
+
+/* ----------------------------------
+     OVERSEER PANEL
+  ---------------------------------- */
+
+@keyframes overseer-panel-pop {
+  0% {
+    transform: scale(0.3, 0.5);
+    opacity: 0;
+  }
+  40% {
+    transform: scale(1.15, 0.85);
+    opacity: 1;
+  }
+  65% {
+    transform: scale(0.92, 1.15);
+  }
+  80% {
+    transform: scale(1.04, 0.96);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes overseer-panel-pop-out {
+  to {
+    transform: scale(0.1);
+    opacity: 0;
+  }
+}
+
+@keyframes overseer-panel-msg-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes overseer-panel-bounce {
+  0%,
+  60%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.5;
+  }
+  30% {
+    transform: translateY(-5px);
+    opacity: 1;
   }
 }

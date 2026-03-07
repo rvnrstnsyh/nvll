@@ -1,5 +1,7 @@
 import type { ReactNode } from 'react'
 
+import OverseerPanel from '@/components/atoms/overseer-panel'
+
 import { HomeTemplate } from '@/components/templates/home-template'
 
 import { homeFeatureStyles } from './home-feature.styles'
@@ -14,6 +16,7 @@ export function HomeFeature({ className, ...props }: HomeFeatureProps): ReactNod
   return (
     <main nvll-ui="home-feature" className={homeFeatureStyles({ className })} {...props}>
       <HomeTemplate />
+      <OverseerPanel />
     </main>
   )
 }
