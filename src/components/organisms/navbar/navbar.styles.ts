@@ -15,33 +15,16 @@ export const navbarContainerStyles = cva(
 export const navbarContentStyles = cva(
   apply(`
     flex flex-wrap items-center
-    pt-4 pb-3 md:pt-5 md:pb-0
+    py-4 md:py-5
     text-[#000000] dark:text-[#FFFFFF]
-    gap-y-2
-    max-[480px]:pt-3 max-[480px]:pb-2.5
-    max-h-[600px]:landscape:pt-2 max-h-[600px]:landscape:pb-2
+    gap-y-3 gap-x-4
+    max-[480px]:py-3
+    max-h-[600px]:landscape:py-2
   `)
 )
 
-export const navbarInfoStyles = cva(
-  apply(`
-    order-1
-    shrink-0
-  `)
-)
+export const navbarInfoStyles = cva(apply(`order-1 shrink-0`))
 
-export const navbarCtaStyles = cva(
-  apply(`
-    order-2
-    ml-auto
-    shrink-0
-  `)
-)
+export const navbarCtaStyles = cva(apply(`order-3 shrink-0 ml-auto`))
 
-export const navbarSearchStyles = cva(
-  apply(`
-    order-3
-    w-full
-    pb-1 md:pb-2
-  `)
-)
+export const navbarSearchStyles = cva(apply(`order-2 basis-full max-w-101.75`))
